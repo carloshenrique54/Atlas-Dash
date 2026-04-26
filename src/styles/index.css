@@ -1,0 +1,18 @@
+:root{
+    --Azul-Escuro: #080b2a;
+    --Azul-Escuro-Fundos: #111650;
+    --Azul-Claro: #dff2ff;
+    --Azul-Botao: #3647ff;
+    --Branco-Fundo: #fcfcfc ;
+    --Laranja-Botoes: #ff7203;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../assets/fonts/InterFont.ttf");
+}
+
+@font-face {
+    font-family: "OpenSans";
+    src: url("../assets/fonts/OpenSansFont.ttf");
+}
