@@ -1,0 +1,10 @@
+.modalAviso{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    z-index: 999;
+    position: fixed;
+    background-color: red;
+}

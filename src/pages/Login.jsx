@@ -1,6 +1,6 @@
 import { supabase } from "../services/supabase"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import "../styles/Login.css"
 
 function Login(){
@@ -52,7 +52,7 @@ function Login(){
                 <button type="submit">Fazer Login</button>
                 <div className="links">
                     <a href="https://localhost:3000/cadastrostartup">Fazer Cadastro</a>
-                    <a href="https://localhost:3000/redefinirsenha">Esqueci minha senha</a>
+                    <Link to="/redefinirsenha">Esqueci minha senha</Link>
                 </div>
             </form>
         </main>

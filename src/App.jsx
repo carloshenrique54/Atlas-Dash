@@ -11,6 +11,7 @@ import Login from "./pages/Login.jsx"
 import Dashboard from './pages/Dashboard.jsx'
 import Tarefas from "./pages/Tarefas.jsx"
 import Agenda from './pages/Agenda.jsx'
+import RedefinirSenha from './pages/RedefinirSenha.jsx'
 
 // Arquivos .CSS
 import './styles/App.css'
@@ -19,15 +20,16 @@ function App() {
   return (
     <BrowserRouter>
     
-    {location.pathname !== "/" ? <Sidebar/> : null}
+    {location.pathname !== "/" ? location.pathname !== "/redefinirsenha" ? <Sidebar/> : null : null}
 
     <div className='telas'>
-      {location.pathname !== "/" ? <Header /> : null}
+      {location.pathname !== "/" ? location.pathname !== "/redefinirsenha" ? <Header /> : null : null}
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/tarefas" element={<Tarefas />}/>
         <Route path="/agenda" element={<Agenda />}/>
+        <Route path='/redefinirsenha' element={<RedefinirSenha />}/>
       </Routes>
     </div>
     </BrowserRouter>

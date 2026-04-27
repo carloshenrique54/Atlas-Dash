@@ -41,6 +41,7 @@ form input{
     border-radius: 13px;
     outline: none;
     border: 2px solid rgba(0, 0, 0, 0.080);
+    transition: ease 0.3s;
 }
 
 form input:focus{
