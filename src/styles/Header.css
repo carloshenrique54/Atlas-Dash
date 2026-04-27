@@ -1,0 +1,61 @@
+header{
+    display: flex;
+    padding: 20px;
+    padding-bottom: 0;
+    padding-top: 0;
+    font-family: 'Inter';
+    box-shadow: 0px 2px 10px rgba(154, 154, 154, 0.121);
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--Branco-Fundo);
+    margin-bottom: 0;
+    padding-right: 0;
+}
+
+header h3{
+    color: grey;
+    font-family: "OpenSans";
+    font-weight: 600;
+    font-size: 16px;
+    padding-top: 0;
+    margin-top: 5px;
+}
+
+header h2{
+    display: flex;
+    font-size: 30px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+header .finalHeader{
+    display: flex;
+    flex-direction: row;
+    margin-right: 40px;
+    align-items: center;
+    gap: 35px;
+}
+
+.notificacao{
+    font-size: 26px;
+    padding: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 100%;
+    background-color: rgb(212, 212, 212);
+}
+
+header input{
+    font-family: "OpenSans";
+    padding: 10px;
+    border-radius: 13px;
+    outline: none;
+    width: 250px;
+    border: 2px solid rgba(0, 0, 0, 0.080);
+    transition: ease 0.3s;
+}
+
+header input:focus{
+    border-color: var(--Azul-Botao);
+}
+

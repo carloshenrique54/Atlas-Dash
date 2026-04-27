@@ -7,6 +7,11 @@ function Login(){
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const usuario = localStorage.getItem("usuario")
+
+    if (usuario){
+        navigate("/dashboard")
+    }
 
     async function RealizarLogin(e) {
         e.preventDefault()
@@ -24,7 +29,7 @@ function Login(){
         console.log(!usuarios.length === 0)
         
         if (usuarios.length === 0) {
-            alert("Porra")
+            alert("Usuario não encontrado")
             return
         }
 
@@ -33,7 +38,7 @@ function Login(){
         navigate("/dashboard")
     }
     return(
-        <main>
+        <main className="mainLogin">
             <form onSubmit={RealizarLogin}>
                 <h1>Login</h1>
                 <div className="loginInputs">
@@ -45,6 +50,10 @@ function Login(){
                     <input onChange={e => setSenha(e.target.value)} value={senha} type="password" />
                 </div>
                 <button type="submit">Fazer Login</button>
+                <div className="links">
+                    <a href="https://localhost:3000/cadastrostartup">Fazer Cadastro</a>
+                    <a href="https://localhost:3000/redefinirsenha">Esqueci minha senha</a>
+                </div>
             </form>
         </main>
     )

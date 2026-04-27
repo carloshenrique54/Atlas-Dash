@@ -1,0 +1,49 @@
+.sidebar{
+    background-color: var(--Azul-Escuro);
+    display: flex;
+    color: (--Branco-Fundo);
+    flex-direction: column;
+    height: 100vh;
+    color: white;
+    width: 260px;
+    transition: ease 0.4s;
+}
+
+.sidebar.fechada{
+    width: 5%;
+}
+
+aside h2{
+    font-family: "Inter";
+    font-size: 50px;
+    margin-bottom: 40px;
+    padding: 25px;
+    padding-top: 0;
+}
+
+aside nav{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+aside nav a{
+    font-family: "OpenSans";
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    transition: ease 0.3s;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+aside nav a:hover{
+    background-color: var(--Azul-Escuro-Fundos);
+    border-left: 5px solid var(--Azul-Claro);
+}
+
+.ativo{
+    background-color: var(--Azul-Escuro-Fundos);
+    border-left: 5px solid var(--Azul-Claro);
+}
