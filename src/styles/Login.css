@@ -55,3 +55,7 @@ form div{
     flex-direction: column;
     gap: 10px;
 }
+
+form button{
+    background-color: var(--Azul-Botao);
+}

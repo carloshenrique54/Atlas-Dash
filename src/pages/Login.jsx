@@ -1,17 +1,19 @@
 import { supabase } from "../services/supabase"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import "../styles/Login.css"
 
 function Login(){
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
 
     async function RealizarLogin(e) {
         e.preventDefault()
         
-        const {data: resposta, error} = await supabase
+        const {data: usuarios, error} = await supabase
         .from("usuarios")
-        .select("email", "senha")
+        .select("*")
         .eq("email", email)
         .eq("senha", senha)
 
@@ -19,7 +21,16 @@ function Login(){
             alert("Erro: " + error)
         }
 
-        console.log(resposta)
+        console.log(!usuarios.length === 0)
+        
+        if (usuarios.length === 0) {
+            alert("Porra")
+            return
+        }
+
+        localStorage.setItem("usuario", JSON.stringify(usuarios[0]))
+        console.log(localStorage)
+        navigate("/dashboard")
     }
     return(
         <main>
