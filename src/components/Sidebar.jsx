@@ -23,11 +23,11 @@ function Sidebar(){
                 <Link to={"/dashboard"} className={pagina === "dashboard" && "ativo"} onClick={() => setPagina("dashboard")}>Dashboard</Link>
                 <Link to={"/tarefas"} className={pagina === "tarefas" && "ativo"} onClick={() => setPagina("tarefas")}>Tarefas</Link>
                 <Link to={"/agenda"} className={pagina === "agenda" && "ativo"} onClick={() => setPagina("agenda")}>Agenda</Link>
-                <Link className={pagina === "projetos" && "ativo"} onClick={() => setPagina("projetos")}>Projetos</Link>
-                <Link className={pagina === "equipe" && "ativo"} onClick={() => setPagina("equipe")}>Equipe</Link>
-                <Link className={pagina === "relatorios" && "ativo"} onClick={() => setPagina("relatorios")}>Relatórios</Link>
-                <Link className={pagina === "perfil" && "ativo"} onClick={() => setPagina("perfil")}>Perfil</Link>
-                <Link className={pagina === "configurações" && "ativo"} onClick={() => setPagina("configurações")}>Configurações</Link>
+                <Link to={"/projetos"} className={pagina === "projetos" && "ativo"} onClick={() => setPagina("projetos")}>Projetos</Link>
+                <Link to={"/equipe"} className={pagina === "equipe" && "ativo"} onClick={() => setPagina("equipe")}>Equipe</Link>
+                <Link to={"/relatorios"} className={pagina === "relatorios" && "ativo"} onClick={() => setPagina("relatorios")}>Relatórios</Link>
+                <Link to={"/perfil"} className={pagina === "perfil" && "ativo"} onClick={() => setPagina("perfil")}>Perfil</Link>
+                <Link to={"/configuracoes"} className={pagina === "configurações" && "ativo"} onClick={() => setPagina("configurações")}>Configurações</Link>
             </nav>
             <button onClick={FecharSidebar} >Fechar</button>
         </aside>

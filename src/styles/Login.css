@@ -10,7 +10,7 @@
     background-image: url("../assets/images/fundo\ -\ login.png");
 }
 
-form{
+.mainLogin form{
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -28,6 +28,7 @@ form{
 form h1{
     font-family: "Inter";
     font-size: 40px;
+    color: var(--Azul-Escuro);
 }
 
 form label{
@@ -44,7 +45,7 @@ form input{
     transition: ease 0.3s;
 }
 
-form input:focus{
+form input:focus, textarea:focus, select:focus{
     border-color: var(--Azul-Botao);
 }
 
@@ -69,6 +70,7 @@ form button{
 
 form button:hover{
     transform: scale(1.05, 1.05);
+    background-color: var(--Laranja-Botoes);
 }
 
 main form .links{
@@ -89,4 +91,9 @@ main form .links{
 .links a:hover{
     transform: scale(1.05, 1.05);
     color: var(--Azul-Botao);
+}
+
+.logoForm{
+    width: 60%;
+    margin-top: -150px;
 }

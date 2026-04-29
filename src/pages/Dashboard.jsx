@@ -1,17 +1,29 @@
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
+import { useState } from "react"
 import CalendarioDash from "../components/Calendario.jsx"
 import "../styles/Dashboard.css"
 
 function Dashboard(){
-    const navigate = useNavigate()
     const usuario = localStorage.getItem("usuario")
+
+    if (!usuario || usuario === "undefined") {
+        localStorage.removeItem("usuario")
+        alert("Erro desconhecido, tente novamente")
+        return <Navigate to="/" replace/>
+    }
+
+    const [stats, setStats] = useState({
+        atrasadas: 0,
+        hoje: 0,
+        pendentes: 0,
+    })
+    
+    if (!usuario){
+        return <Navigate to="/" replace state={{ erro: "Faça login primeiro" }} />
+    }
+
     const usuarioObj = JSON.parse(usuario)
     const usuarioNome = usuarioObj.nome
-
-    if (!usuario){
-        alert("Por favor, realize o login")
-        navigate("/")
-    }
     
     return(
         <main className="mainDashboard">

@@ -1,0 +1,237 @@
+main.semTarefas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.semTarefas .abrirFormsTarefaBotao {
+    background-color: var(--Laranja-Botoes);
+    padding: 15px;
+    color: white;
+    font-size: 18px;
+    font-family: "Inter";
+    box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
+    border: none;
+    border-radius: 15px;
+    transition: ease 0.3s;
+}
+
+.semTarefas .abrirFormsTarefaBotao:hover {
+    transform: scale(1.03, 1.03);
+    box-shadow: 0px 1px 15px var(--Laranja-Botoes-Brilho);
+}
+
+.semTarefas h1 {
+    font-family: "Inter";
+}
+
+.criarTarefa {
+    display: flex;
+    z-index: 2;
+    position: absolute;
+    background-color: var(--Branco-Fundo);
+    flex-direction: row;
+    gap: 30px;
+    width: 75%;
+    margin: 90px;
+    margin-left: 86px;
+    transform: translateY(0);
+    transition: ease 0.5s;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.criarTarefa.Escondido {
+    transform: translateY(-2000px);
+}
+
+.criarTarefa input,
+select {
+    padding: 10px;
+    font-family: "OpenSans";
+    background-color: white;
+    border-radius: 13px;
+    outline: none;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    transition: ease 0.3s;
+}
+
+.criarTarefa textarea {
+    padding: 10px;
+    font-family: "OpenSans";
+    background-color: white;
+    border-radius: 13px;
+    outline: none;
+    height: 170px;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+}
+
+.botoesTarefas {
+    display: flex;
+    flex-direction: row;
+}
+
+.esquerdaTarefa {
+    flex: 1 1 50%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.direitaTarefa {
+    flex: 1 1 50%;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.botaoFecharTarefas{
+    background-color: transparent;
+    color: var(--Azul-Escuro);
+    border: 3px solid rgba(0, 0, 0, 0.080);
+}
+
+.botaoFecharTarefas:hover{
+    background-color: transparent;
+}
+
+.abrirFormsTarefaBotao.escondido{
+    opacity: 0;
+}
+
+.tarefaCalendario {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.tarefaCalendario .react-calendar__navigation {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    margin-bottom: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tarefaCalendario .react-calendar__navigation__prev2-button,
+.tarefaCalendario .react-calendar__navigation__next2-button {
+    display: none !important;
+}
+
+.tarefaCalendario .react-calendar__navigation__prev-button,
+.tarefaCalendario .react-calendar__navigation__next-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px !important;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e2a3a;
+    padding: 0;
+    border-radius: 6px;
+    transition: background 0.2s;
+    line-height: 1;
+}
+
+.tarefaCalendario .react-calendar__navigation__prev-button:hover,
+.tarefaCalendario .react-calendar__navigation__next-button:hover {
+    background-color: rgba(0, 0, 0, 0.07);
+}
+
+.tarefaCalendario .react-calendar__navigation__label {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e2a3a;
+    pointer-events: none;
+    background: none !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tarefaCalendario .react-calendar__month-view__weekdays {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    background-color: #1e2a3a;
+    border-radius: 6px;
+    margin-bottom: 2px;
+}
+
+.tarefaCalendario .react-calendar__month-view__weekdays__weekday {
+    text-align: center;
+    padding: 6px 0;
+    box-sizing: border-box;
+}
+
+.tarefaCalendario .react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.tarefaCalendario .react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+}
+
+.tarefaCalendario .react-calendar__tile {
+    width: 100%;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 7px 4px;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    color: #222;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.tarefaCalendario .react-calendar__tile:hover {
+    background-color: rgba(255, 107, 53, 0.12);
+    color: var(--Laranja-Botoes, #ff6b35);
+}
+
+.tarefaCalendario .react-calendar__tile--now {
+    background-color: rgba(255, 107, 53, 0.15);
+    color: var(--Laranja-Botoes, #ff6b35);
+    font-weight: 700;
+}
+
+.tarefaCalendario .react-calendar__tile--active,
+.tarefaCalendario .react-calendar__tile--active:hover {
+    background-color: var(--Laranja-Botoes, #ff6b35);
+    color: #fff;
+    font-weight: 700;
+}
+
+.tarefaCalendario .react-calendar__month-view__days__day--neighboringMonth {
+    color: #bbb;
+}
+
+.tarefaCalendario .react-calendar__viewContainer {
+    display: block;
+}

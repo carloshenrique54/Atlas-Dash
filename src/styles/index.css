@@ -5,6 +5,11 @@
     --Azul-Botao: #3647ff;
     --Branco-Fundo: #fcfcfc ;
     --Laranja-Botoes: #ff7203;
+    --Laranja-Botoes-Brilho: #ff7f1c8d;
+}
+
+textarea{
+    resize: none;
 }
 
 @font-face {
