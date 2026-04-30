@@ -81,6 +81,28 @@ select {
     gap: 10px;
 }
 
+.modalAvisoTarefas{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 90%;
+    z-index: 999;
+    position: fixed;
+    background-color: #ffa7a7;
+    color: #500000;
+    transition: ease 0.4s;
+    transform: translateY(-100px);
+    opacity: 0;
+    margin: 0;
+    border: none;
+}
+
+.modalAvisoTarefas.ativo{
+    transform: translateY(0);
+    opacity: 100%;
+}
+
 .direitaTarefa {
     flex: 1 1 50%;
     min-width: 0;
@@ -90,17 +112,68 @@ select {
     gap: 8px;
 }
 
-.botaoFecharTarefas{
+.subtarefa{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    background-color: rgb(234, 234, 234) ;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-family: "OpenSans";
+}
+
+.inputSubtarefa{
+    display: flex;
+    flex-direction: row;
+}
+
+.inputSubtarefa input{
+    width: 80%;
+}
+
+.inputSubtarefa button{
+    width: 10%;
+}
+
+.subtarefa button{
+    display: flex;
+    color: black;
+    background-color: transparent;
+    width: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.listaSubtarefas{
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto; 
+}
+
+.subtarefa button:hover{
+    background-color: transparent;
+    color: var(--Laranja-Botoes);
+}
+
+.botaoAdicionarSubtarefa{
+    align-self: center;
+    width: 80%;
+}
+
+.botaoFecharTarefas {
     background-color: transparent;
     color: var(--Azul-Escuro);
     border: 3px solid rgba(0, 0, 0, 0.080);
 }
 
-.botaoFecharTarefas:hover{
+.botaoFecharTarefas:hover {
     background-color: transparent;
 }
 
-.abrirFormsTarefaBotao.escondido{
+.abrirFormsTarefaBotao.escondido {
     opacity: 0;
 }
 
@@ -234,4 +307,33 @@ select {
 
 .tarefaCalendario .react-calendar__viewContainer {
     display: block;
+}
+
+.filtrosTarefas{
+    display: flex;
+    margin: 70px;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+.filtrosTarefas .botaoFiltroTarefas{
+    background-color: white;
+    border: none;
+    color: var(--Azul-Escuro);
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(135, 135, 135, 0.254);
+    transition: ease 0.3s;
+}
+
+.filtrosTarefas .botaoFiltroTarefas:hover{
+    transform: scale(1.05, 1.05);
+}
+
+.botaoFiltroTarefas.ativo{
+    background-color: var(--Azul-Escuro);
+    color: white;
 }

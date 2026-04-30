@@ -10,10 +10,12 @@
     color: #500000;
     transition: ease 0.4s;
     transform: translateY(-100px);
+    opacity: 0;
 }
 
 .modalAviso.ativo{
     transform: translateY(0);
+    opacity: 100%;
 }
 
 .toast{
@@ -28,8 +30,10 @@
     color: #083300;
     transition: ease 0.4s;
     transform: translateY(-100px);
+    opacity: 0;
 }
 
 .toast.ativo{
     transform: translateY(0);
+    opacity: 100%;
 }
