@@ -1,0 +1,778 @@
+/* ─── Página ───────────────────────────────────────────────────────── */
+.perfilPage {
+  min-height: 100vh;
+  background: var(--Azul-Claro);
+  padding: 32px 40px 60px;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+.perfilLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-size: 15px;
+  color: #a0aab8;
+}
+
+/* ─── Layout ───────────────────────────────────────────────────────── */
+.perfilLayout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ─── Sidebar ──────────────────────────────────────────────────────── */
+.perfilSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 24px;
+}
+
+.perfilSideCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid #e8edf3;
+  overflow: hidden;
+}
+
+/* Banner + avatar */
+.perfilBanner {
+  height: 90px;
+  background: linear-gradient(135deg, var(--Azul-Escuro) 0%, var(--Azul-Botao) 100%);
+  position: relative;
+}
+
+.perfilBanner--empresa {
+  background: linear-gradient(135deg, var(--Azul-Escuro-Fundos) 0%, var(--Azul-Botao) 100%);
+}
+
+.perfilAvatarBig {
+  position: absolute;
+  bottom: -28px;
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--Azul-Escuro);
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+}
+
+.perfilSideInfo {
+  padding: 36px 20px 20px;
+}
+
+.perfilNomeLinha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.perfilNomeLinha h2 {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.perfilCargo {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 4px 0 10px;
+}
+
+.perfilBio {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #4a5568;
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+.perfilMetaLista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.perfilMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+}
+
+.perfilMetaItem svg { color: #8a97a8; font-size: 13px; flex-shrink: 0; }
+
+/* Links sociais */
+.perfilSideTitulo {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 16px 20px 8px;
+  margin: 0;
+}
+
+.perfilLinkItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-top: 1px solid #f0f2f5;
+}
+
+.perfilLinkIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--Azul-Escuro-Fundos);
+  flex-shrink: 0;
+}
+
+.perfilLinkConteudo { flex: 1; min-width: 0; }
+
+.perfilLinkLabel {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: #8a97a8;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ─── Main content ─────────────────────────────────────────────────── */
+.perfilMain {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.perfilCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid #e8edf3;
+  padding: 22px 24px;
+}
+
+.perfilCardTitulo {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.perfilCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* ─── Contato ──────────────────────────────────────────────────────── */
+.perfilContatoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.perfilContatoItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e8edf3;
+}
+
+.perfilContatoIconeWrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #e8edf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--Azul-Escuro-Fundos);
+  flex-shrink: 0;
+}
+
+.perfilContatoLabel {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: #8a97a8;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.perfilContatoValor {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ─── Habilidades ──────────────────────────────────────────────────── */
+.perfilChipsArea {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  align-items: center;
+}
+
+.perfilChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f2f5;
+  color: var(--Azul-Escuro);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  border: 1.5px solid #e8edf3;
+}
+
+.perfilChipRemove {
+  background: none;
+  border: none;
+  color: #E24B4A;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.perfilChipAdd {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px dashed #c4cdd8;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.perfilChipAdd:hover { border-color: var(--Azul-Botao); color: var(--Azul-Botao); }
+
+.perfilAddChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── Experiência ──────────────────────────────────────────────────── */
+.perfilExpItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e8edf3;
+  margin-top: 10px;
+  transition: border-color 0.15s;
+}
+
+.perfilExpItem:hover { border-color: rgba(54,71,255,.3); }
+
+.perfilExpIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #e8edf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--Azul-Escuro-Fundos);
+  flex-shrink: 0;
+}
+
+.perfilExpInfo { flex: 1; min-width: 0; }
+
+.perfilExpCargo {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+}
+
+.perfilExpEmpresa {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Botao);
+  margin: 0 0 2px;
+}
+
+.perfilExpPeriodo {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+}
+
+/* ─── Projetos ─────────────────────────────────────────────────────── */
+.perfilProjetoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e8edf3;
+  margin-top: 10px;
+  transition: border-color 0.15s;
+}
+
+.perfilProjetoItem:hover { border-color: rgba(54,71,255,.3); }
+
+.perfilProjetoIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #e8edf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: var(--Azul-Escuro-Fundos);
+  flex-shrink: 0;
+}
+
+.perfilProjetoInfo { flex: 1; min-width: 0; }
+
+.perfilProjetoNomeLinha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.perfilProjetoNome {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.perfilProjetoDesc {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0 0 8px;
+}
+
+.perfilProjetoStatus {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  border-radius: 20px;
+  padding: 2px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.perfilProjetoStatus--ativo { background: rgba(29,158,117,.12); color: #1D9E75; }
+.perfilProjetoStatus--conc  { background: var(--Azul-Claro); color: var(--Azul-Escuro-Fundos); }
+
+.perfilProjetoBarWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfilProjetoBar {
+  flex: 1;
+  height: 6px;
+  border: none;
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #e8edf3;
+  overflow: hidden;
+}
+
+.perfilProjetoBar::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
+.perfilProjetoBar::-webkit-progress-value { background: var(--Azul-Escuro-Fundos); border-radius: 999px; }
+.perfilProjetoBar::-moz-progress-bar      { background: var(--Azul-Escuro-Fundos); border-radius: 999px; }
+
+.perfilProjetoPct {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro-Fundos);
+  min-width: 34px;
+  text-align: right;
+}
+
+/* ─── Campos editáveis ─────────────────────────────────────────────── */
+.perfilEditableField { flex: 1; min-width: 0; }
+
+.perfilEditableRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.perfilEditableRow span {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.perfilPlaceholder { color: #b0bec5 !important; font-style: italic; }
+
+.perfilInput {
+  border: 1.5px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  outline: none;
+  background: #fafbfc;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.perfilInput:focus { border-color: var(--Azul-Botao); }
+
+.perfilInput--sm { width: 140px; }
+
+.perfilInput textarea { resize: none; }
+
+/* Botões */
+.perfilIconBtn {
+  background: none;
+  border: 1.5px solid #e8edf3;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: #8a97a8;
+  flex-shrink: 0;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+
+.perfilIconBtn:hover { background: #f0f2f5; color: var(--Azul-Escuro); }
+.perfilIconBtn--ok   { color: #1D9E75; border-color: rgba(29,158,117,.3); }
+.perfilIconBtn--ok:hover { background: rgba(29,158,117,.1); }
+.perfilIconBtn--no   { color: #E24B4A; border-color: rgba(226,75,74,.3); }
+.perfilIconBtn--no:hover { background: rgba(226,75,74,.1); }
+
+.perfilTextBtn {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: var(--Azul-Botao);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.perfilTextBtn:hover { color: var(--Azul-Escuro-Fundos); }
+
+/* ─── Modal adicionar experiência ──────────────────────────────────── */
+.perfilOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8,11,42,.5);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.perfilModal {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 20px 60px rgba(8,11,42,.25);
+  animation: perfilModalIn 0.2s ease;
+  overflow: hidden;
+}
+
+@keyframes perfilModalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.perfilModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 22px 16px;
+  border-bottom: 1.5px solid #f0f2f5;
+}
+
+.perfilModalHeader h3 {
+  font-size: 16px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.perfilModalCorpo {
+  padding: 20px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.perfilModalCorpo label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.perfilModalLinha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.perfilTipoRow {
+  display: flex;
+  gap: 10px;
+}
+
+.perfilTipoBotao {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1.5px solid #e8edf3;
+  background: #f5f7fa;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.perfilTipoBotao.ativo {
+  border-color: var(--Azul-Botao);
+  background: rgba(54,71,255,.07);
+  color: var(--Azul-Botao);
+  font-weight: 600;
+}
+
+.perfilSalvarBtn {
+  background: var(--Azul-Botao);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background 0.15s;
+}
+
+.perfilSalvarBtn:hover { background: var(--Azul-Escuro-Fundos); }
+
+/* ─── Visão dono ───────────────────────────────────────────────────── */
+.perfilAvatarEmpresa {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--Azul-Escuro-Fundos);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.perfilEmpresaNome {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 4px;
+}
+
+.perfilEmpresaStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.perfilStatCard {
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.perfilStatCard--azul    { background: rgba(54,71,255,.07); }
+.perfilStatCard--verde   { background: rgba(29,158,117,.1); }
+.perfilStatCard--neutro  { background: #f0f2f5; }
+.perfilStatCard--amarelo { background: rgba(239,159,39,.1); }
+
+.perfilStatIcone {
+  font-size: 18px;
+  color: var(--Azul-Escuro-Fundos);
+  margin-bottom: 2px;
+}
+
+.perfilStatCard strong {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+}
+
+.perfilStatCard span {
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+}
+
+/* Membros */
+.perfilMembroItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.perfilMembroItem:last-child { border-bottom: none; }
+
+.perfilMembroAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--Azul-Escuro-Fundos);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.perfilMembroInfo { flex: 1; min-width: 0; }
+
+.perfilMembroNome {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+}
+
+.perfilMembroEmail {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+}
+
+.perfilMembroStats {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro-Fundos);
+  font-weight: 600;
+}
+
+/* ─── Vazio ────────────────────────────────────────────────────────── */
+.perfilVazio {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #b0bec5;
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
+}
+
+/* ─── Responsivo ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .perfilLayout         { grid-template-columns: 1fr; }
+  .perfilSidebar        { position: static; }
+  .perfilContatoGrid    { grid-template-columns: 1fr; }
+  .perfilEmpresaStats   { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .perfilPage           { padding: 16px 16px 40px; }
+}

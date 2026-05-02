@@ -1,0 +1,310 @@
+/* ─── Página ───────────────────────────────────────────────────────── */
+.cfgPage {
+  min-height: 100vh;
+  background: var(--Azul-Claro);
+  padding: 32px 40px 60px;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.cfgTituloPage {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 28px;
+}
+
+/* ─── Seção ────────────────────────────────────────────────────────── */
+.cfgSecao {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid #e8edf3;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.cfgSecaoTitulo {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 16px;
+}
+
+/* ─── Lista de itens ───────────────────────────────────────────────── */
+.cfgLista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cfgItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #f5f7fa;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e8edf3;
+  transition: border-color 0.15s;
+}
+
+.cfgItem:hover { border-color: #c4cdd8; }
+
+.cfgItemEsq {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.cfgItemIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.cfgItemIcone--roxo    { background: rgba(124,58,237,.12);  color: #7c3aed; }
+.cfgItemIcone--azul    { background: rgba(54,71,255,.1);    color: var(--Azul-Botao); }
+.cfgItemIcone--verde   { background: rgba(29,158,117,.12);  color: #1D9E75; }
+.cfgItemIcone--laranja { background: rgba(255,114,3,.12);   color: var(--Laranja-Botoes); }
+.cfgItemIcone--vermelho{ background: rgba(226,75,74,.1);    color: #E24B4A; }
+.cfgItemIcone--cinza   { background: #e8edf3;               color: #8a97a8; }
+
+.cfgItemTitulo {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+}
+
+.cfgItemSub {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+}
+
+.cfgItemDir { flex-shrink: 0; }
+
+/* ─── Toggle ───────────────────────────────────────────────────────── */
+.cfgToggle {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: #d1d9e0;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.cfgToggle--on { background: var(--Azul-Escuro-Fundos); }
+
+.cfgToggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: left 0.2s;
+}
+
+.cfgToggle--on .cfgToggleThumb { left: 23px; }
+
+/* ─── Select de idioma ─────────────────────────────────────────────── */
+.cfgSelect {
+  appearance: none;
+  -webkit-appearance: none;
+  background: #ffffff;
+  border: 1.5px solid #d8e0ea;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.cfgSelect:focus,
+.cfgSelect:hover { border-color: var(--Azul-Botao); }
+
+/* ─── Botão link "Alterar" ─────────────────────────────────────────── */
+.cfgLinkBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Botao);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.cfgLinkBtn:hover { color: var(--Azul-Escuro-Fundos); }
+
+/* ─── Overlay modal ────────────────────────────────────────────────── */
+.cfgOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8,11,42,.5);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ─── Modal alterar senha ──────────────────────────────────────────── */
+.cfgModal {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 20px 60px rgba(8,11,42,.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: cfgModalIn 0.2s ease;
+}
+
+@keyframes cfgModalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.cfgModalTitulo {
+  font-size: 17px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 4px;
+}
+
+.cfgLabel {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: -4px;
+}
+
+.cfgInput {
+  border: 1.5px solid #d8e0ea;
+  border-radius: 10px;
+  padding: 10px 13px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  outline: none;
+  background: #fafbfc;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.cfgInput:focus { border-color: var(--Azul-Botao); }
+
+.cfgSenhaErro {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #E24B4A;
+  background: rgba(226,75,74,.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0;
+}
+
+.cfgSenhaOk {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: #1D9E75;
+  background: rgba(29,158,117,.1);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.cfgModalBotoes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cfgBotaoSalvar {
+  background: var(--Azul-Botao);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cfgBotaoSalvar:hover:not(:disabled) { background: var(--Azul-Escuro-Fundos); }
+.cfgBotaoSalvar:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.cfgBotaoCancelar {
+  background: #f0f2f5;
+  color: var(--Azul-Escuro);
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cfgBotaoCancelar:hover { background: var(--Azul-Claro); }
+
+/* ─── Modo escuro (base) ───────────────────────────────────────────── */
+body.modoEscuro {
+  background-color: #0f1117 !important;
+  color: #e0e6ef !important;
+}
+
+body.modoEscuro .cfgPage     { background: #0f1117; }
+body.modoEscuro .cfgSecao    { background: #1a1f2e; border-color: #2a3148; }
+body.modoEscuro .cfgItem     { background: #232940; border-color: #2a3148; }
+body.modoEscuro .cfgItemTitulo { color: #e0e6ef; }
+body.modoEscuro .cfgTituloPage,
+body.modoEscuro .cfgSecaoTitulo { color: #e0e6ef; }
+
+/* ─── Modo compacto ────────────────────────────────────────────────── */
+body.modoCompacto .cfgItem { padding: 9px 14px; }
+body.modoCompacto .cfgItemIcone { width: 30px; height: 30px; font-size: 13px; }
+
+/* ─── Responsivo ───────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .cfgPage { padding: 20px 16px 40px; }
+}

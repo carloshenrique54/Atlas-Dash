@@ -43,7 +43,7 @@ aside nav a:hover{
     border-left: 5px solid var(--Azul-Claro);
 }
 
-.ativo{
+aside nav .ativo{
     background-color: var(--Azul-Escuro-Fundos);
     border-left: 5px solid var(--Azul-Claro);
 }

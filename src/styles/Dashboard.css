@@ -1,116 +1,677 @@
-body{
-    background-color: var(--Azul-Claro);
+/* ─── Base ─────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--Azul-Claro);
 }
 
-.mainDashboard{
-    background-color:  var(--Azul-Claro);
+.mainDashboard {
+  background-color: var(--Azul-Claro);
+  min-height: 89vh;
+  font-family: "Inter", sans-serif;
 }
 
-.mainDashboard p{
-    display: flex;
-    font-family: "OpenSans";
-    padding: 20px;
-    margin-top: 0;
+.dashLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: var(--Azul-Escuro-Fundos);
+  opacity: 0.6;
 }
 
-.atraso{
-    color: rgb(224, 0, 0);
-    padding-left: 5px;
-    padding-right: 5px;
+/* ─── Saudação ─────────────────────────────────────────────────────── */
+.dashSaudacao {
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  color: var(--Azul-Escuro);
+  padding: 24px 40px 8px;
+  margin: 0;
 }
 
-.evento{
-    color: var(--Azul-Escuro-Fundos);
-    padding-left: 5px;
+.dashDestAtraso { color: #E24B4A; }
+.dashDestInfo   { color: var(--Azul-Escuro-Fundos); }
+
+/* ─── Cards topo ───────────────────────────────────────────────────── */
+.dashCards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  padding: 16px 40px;
 }
 
-.cardDashboard{
-    display: flex;
-    padding: 20px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: column;
-    background-color: white;
-    width: 19%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 8px rgba(0, 1, 90, 0.263);
+.dashCards--4 {
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.cardDashboard p{
-    padding: 0;
+.dashCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1.5px solid transparent;
+  transition: box-shadow 0.15s, transform 0.15s;
 }
 
-.cardDashboard h2{
-    font-family: 'Inter';
-    font-size: 16px;
+.dashCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
 }
 
-.cardDashboard h3{
-    font-family: "Inter";
-    font-size: 30px;
-    margin-top: 15px;
-    margin-bottom: 15px;
+.dashCard--neutro  { border-color: var(--Azul-Claro); }
+.dashCard--verde   { border-color: rgba(29,158,117,.25); background: #f4fff9; }
+.dashCard--amarelo { border-color: rgba(239,159,39,.25); background: #fffdf4; }
+.dashCard--vermelho{ border-color: rgba(226,75,74,.25);  background: #fff5f5; }
+.dashCard--azul    { border-color: rgba(54,71,255,.2);   background: #f5f6ff; }
+
+/* Ícone FontAwesome */
+.dashCardIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
-.midDashboard{
-    display: flex;
-    justify-content: space-evenly;
+.dashCardIcone--neutro  { background: rgba(8,11,42,.07);     color: var(--Azul-Escuro-Fundos); }
+.dashCardIcone--verde   { background: rgba(29,158,117,.12);  color: #1D9E75; }
+.dashCardIcone--amarelo { background: rgba(239,159,39,.15);  color: #EF9F27; }
+.dashCardIcone--vermelho{ background: rgba(226,75,74,.12);   color: #E24B4A; }
+.dashCardIcone--azul    { background: rgba(54,71,255,.1);    color: var(--Azul-Botao); }
+
+.dashCard h3 {
+  font-size: 28px;
+  font-family: "OpenSans", sans-serif;
+  font-weight: 700;
+  color: var(--Azul-Escuro);
+  margin: 0;
 }
 
-.topDashboard{
-    height: 70px;
+.dashCard p,
+.dashCard small {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+  padding: 0;
 }
 
-.cardDashboard.tarefasAtrasadas{
-    box-shadow: 0px 0px 15px rgba(255, 84, 84, 0.311);
-    background-color: rgb(255, 251, 251);
+/* Cards funcionário — topo com badge */
+.dashCardTopo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.cardDashboard.tarefasConcluidas{
-    box-shadow: 0px 0px 15px rgba(127, 255, 110, 0.395);
-    background-color: rgb(247, 255, 247);
+.dashCardTopo small {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: #8a97a8;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.lowDashboard{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-top: 40px;
+.dashCardTopo h3 { font-size: 32px; margin-top: 4px; }
+
+.dashCardBadge {
+  font-size: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.tarefasDash{
-    display: flex;
+.dashCardBadge--neutro  { background: #eef2f7;                   color: var(--Azul-Escuro-Fundos); }
+.dashCardBadge--vermelho{ background: rgba(226,75,74,.12);        color: #E24B4A; }
+.dashCardBadge--verde   { background: rgba(29,158,117,.12);       color: #1D9E75; }
+.dashCardBadge--azul    { background: rgba(54,71,255,.1);         color: var(--Azul-Botao); }
+
+.dashCardAvisoTexto {
+  font-size: 12px !important;
+  color: #E24B4A !important;
+  font-weight: 600;
 }
 
-.lowCardDash h2, h3{
-    font-family: "Inter";
+/* ─── Progresso geral (dono) ───────────────────────────────────────── */
+.dashProgresso {
+  margin: 0 40px 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid var(--Azul-Claro);
+  padding: 18px 24px;
 }
 
-.lowCardDash{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 30%;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(122, 122, 122, 0.132);
-    border-radius: 15px;
+.dashProgressoTopo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Azul-Escuro);
 }
 
-.calendarioDash{
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 10px;
+.dashProgressoPct {
+  color: var(--Azul-Botao);
+  font-size: 15px;
 }
 
-.agendaDash.react-calendar{
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0px 0px 10px rgba(122, 122, 122, 0.132);
-    padding: 15px;
+.dashProgressoBar {
+  width: 100%;
+  height: 8px;
+  background: #e8edf3;
+  border-radius: 999px;
+  overflow: hidden;
 }
 
-.agendaDash.react-calendar__tile--active {
-    background: var(--Azul-Botao);
-    color: white;
-    border-radius: 5px;
+.dashProgressoFill {
+  height: 100%;
+  background: var(--Azul-Botao);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+/* ─── Meio (dono): gráfico + projetos ──────────────────────────────── */
+.dashMeio {
+  display: flex;
+  gap: 16px;
+  padding: 0 40px 24px;
+}
+
+.dashGraficoCard {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid var(--Azul-Claro);
+  padding: 22px 24px;
+}
+
+.dashGraficoCard h2,
+.dashProjetosCard h2 {
+  font-family: "OpenSans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--Azul-Escuro);
+  margin: 0 0 18px;
+}
+
+.dashProjetosCard {
+  width: 300px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid var(--Azul-Claro);
+  padding: 22px 24px;
+}
+
+.dashProjetosList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashProjetoItem { display: flex; flex-direction: column; gap: 6px; }
+
+.dashProjetoNomePct {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+}
+
+.dashProjetoPct {
+  font-weight: 600;
+  color: var(--Azul-Escuro-Fundos);
+}
+
+.dashProjetoBar {
+  height: 6px;
+  background: #e8edf3;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dashProjetoFill {
+  height: 100%;
+  background: var(--Azul-Escuro-Fundos);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* ─── Lista funcionários (dono) ────────────────────────────────────── */
+.dashFuncLista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 40px;
+}
+
+.dashFuncCard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid var(--Azul-Claro);
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color 0.15s;
+}
+
+.dashFuncCard:hover { border-color: var(--Azul-Botao); }
+
+.dashFuncEsq {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashFuncAvatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--Azul-Escuro-Fundos);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashFuncNome {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+}
+
+.dashFuncOnline {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1D9E75;
+  display: inline-block;
+}
+
+.dashFuncCargo {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+.dashFuncDir {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.dashFuncStats {
+  display: flex;
+  gap: 18px;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Azul-Escuro);
+}
+
+.dashFuncStats small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: #8a97a8;
+}
+
+.dashFuncFeitas { color: var(--Azul-Botao); }
+.dashFuncAtraso { color: #E24B4A; }
+
+.dashFuncBarWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashFuncBar {
+  width: 100px;
+  height: 6px;
+  background: #e8edf3;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dashFuncBarFill {
+  height: 100%;
+  background: var(--Azul-Escuro-Fundos);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.dashFuncPct {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro-Fundos);
+  min-width: 36px;
+}
+
+/* ─── Dashboard funcionário — parte baixa ──────────────────────────── */
+.dashBaixo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 0 40px;
+  align-items: start;   /* cards ficam com altura do próprio conteúdo */
+}
+
+/* Visão geral não estica — fica menor naturalmente */
+.dashVisaoGeral {
+  align-self: start;
+}
+
+.dashBaixoCard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1.5px solid var(--Azul-Claro);
+  padding: 22px;
+}
+
+.dashBaixoCard h2 {
+  font-family: "OpenSans", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--Azul-Escuro);
+  margin: 0 0 18px;
+}
+
+/* ─── Visão geral (funcionário) ────────────────────────────────────── */
+.dashPrioridadeItem { margin-bottom: 16px; }
+
+.dashPrioridadeNomePct {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  margin-bottom: 6px;
+}
+
+/* ── progress nativo ── */
+.dashProgress {
+  width: 100%;
+  height: 7px;
+  border: none;
+  border-radius: 999px;
+  overflow: hidden;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #e8edf3;
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+.dashProgress::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
+.dashProgress::-webkit-progress-value { background: var(--bar-cor, var(--Azul-Botao)); border-radius: 999px; transition: width .5s ease; }
+
+/* Firefox */
+.dashProgress::-moz-progress-bar { background: var(--bar-cor, var(--Azul-Botao)); border-radius: 999px; }
+
+.dashStatusRow {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dashStatusChip {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  background: #f5f7fa;
+  border: 1.5px solid #e8edf3;
+}
+
+.dashStatusChip strong { font-size: 14px; margin-left: 2px; }
+
+.dashChipDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── Mini calendário (funcionário) ────────────────────────────────── */
+.dashCalCard {
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashCal.react-calendar {
+  width: 100%;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  background: transparent;
+}
+
+.dashCal.react-calendar .react-calendar__navigation { margin-bottom: 10px; }
+
+.dashCal.react-calendar .react-calendar__navigation__label {
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--Azul-Escuro);
+  background: none;
+  border: none;
+  cursor: default;
+}
+
+.dashCal.react-calendar .react-calendar__navigation__arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--Azul-Escuro);
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  transition: background 0.12s;
+}
+
+.dashCal.react-calendar .react-calendar__navigation__arrow:hover { background: var(--Azul-Claro); }
+
+.dashCal.react-calendar .react-calendar__navigation__prev2-button,
+.dashCal.react-calendar .react-calendar__navigation__next2-button { display: none; }
+
+.dashCal.react-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--Azul-Botao);
+  text-transform: capitalize;
+}
+
+.dashCal.react-calendar .react-calendar__tile {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  cursor: pointer;
+  padding: 6px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: background 0.12s;
+}
+
+.dashCal.react-calendar .react-calendar__tile:hover { background: var(--Azul-Claro); }
+
+.dashCal.react-calendar .react-calendar__tile--now abbr {
+  color: var(--Laranja-Botoes);
+  font-weight: 700;
+}
+
+.dashCal.react-calendar .react-calendar__tile--active,
+.dashCal.react-calendar .react-calendar__tile--active:hover {
+  background: var(--Azul-Escuro) !important;
+  border-radius: 8px;
+}
+
+.dashCal.react-calendar .react-calendar__tile--active abbr { color: #fff !important; }
+
+.dashCal.react-calendar .react-calendar__month-view__days__day--neighboringMonth { opacity: 0.3; }
+
+.dashCalDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--Azul-Botao);
+  display: block;
+}
+
+.dashCalEvento {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f5f7fa;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid #e8edf3;
+}
+
+.dashCalEventoVazio {
+  justify-content: center;
+  color: #a0aab8;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  background: transparent;
+  border-color: transparent;
+}
+
+.dashCalEventoBarra {
+  width: 3px;
+  min-height: 36px;
+  border-radius: 2px;
+  background: var(--Laranja-Botoes);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.dashCalEventoTitulo {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+  padding: 0;
+}
+
+.dashCalEventoSub {
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Atividade recente (funcionário) ──────────────────────────────── */
+.dashAtividadeLista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dashAtividadeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.dashAtividadeAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--Azul-Escuro-Fundos);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashAtividadeTexto p {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+  padding: 0;
+  line-height: 1.4;
+}
+
+.dashAtividadeTexto small {
+  font-size: 11px;
+  color: #a0aab8;
+  font-family: "Inter", sans-serif;
+}
+
+/* ─── Utilitários ──────────────────────────────────────────────────── */
+.dashVazio {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #a0aab8;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ─── Responsivo ────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .dashCards       { grid-template-columns: repeat(3, 1fr); }
+  .dashCards--4    { grid-template-columns: repeat(2, 1fr); }
+  .dashMeio        { flex-direction: column; }
+  .dashProjetosCard{ width: 100%; }
+  .dashBaixo       { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  .dashCards,
+  .dashSaudacao,
+  .dashProgresso,
+  .dashMeio,
+  .dashFuncLista,
+  .dashBaixo { padding-left: 16px; padding-right: 16px; }
 }

@@ -1,52 +1,401 @@
-.mainAgenda{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-evenly;
-    margin-top: 100px;
+/* ─── Layout principal ─────────────────────────────────────────────── */
+.mainAgenda {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 20px 38px;
+  padding-bottom: 0;
+  min-height: calc(100vh - 106px);
+  background: rgb(242, 243, 243);
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
 }
 
-.calendarioDireito{
-    display: flex;
+.agendaEsquerda {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.agendaDireita {
+  width: 320px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid var(--Azul-Claro);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+
+/* ─── Wrapper do calendário ─────────────────────────────────────────── */
+.calWrapper {
+  width: 100%;
+}
+
+/* ─── react-calendar — reset e base ────────────────────────────────── */
+.AgendaCal.react-calendar {
+  width: 100%;
+  border: 1.5px solid var(--Azul-Claro);
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ─── Navegação (mês / ano + setas) ────────────────────────────────── */
+.AgendaCal.react-calendar .react-calendar__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  margin: 0;
+  background: #ffffff;
+}
+
+.AgendaCal.react-calendar .react-calendar__navigation__label {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  background: none;
+  border: none;
+  cursor: default;
+  pointer-events: none;
+  flex: 1;
+  text-align: center;
+  padding: 0;
+  text-transform: capitalize;
+}
+
+.AgendaCal.react-calendar .react-calendar__navigation__arrow {
+  background: none;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--Azul-Escuro);
+  font-size: 15px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.AgendaCal.react-calendar .react-calendar__navigation__arrow:hover {
+  background: var(--Azul-Claro);
+}
+
+/* Esconde botões decade que react-calendar adiciona */
+.AgendaCal.react-calendar .react-calendar__navigation__prev2-button,
+.AgendaCal.react-calendar .react-calendar__navigation__next2-button {
+  display: none;
+}
+
+/* ─── Cabeçalho dos dias da semana ─────────────────────────────────── */
+.AgendaCal.react-calendar .react-calendar__month-view__weekdays {
+  background: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.AgendaCal.react-calendar .react-calendar__month-view__weekdays__weekday {
+  padding: 14px 0;
+  text-align: center;
+}
+
+.AgendaCal.react-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+/* ─── Grade de dias ─────────────────────────────────────────────────── */
+.AgendaCal.react-calendar .react-calendar__month-view__days {
+  padding: 8px 12px 16px;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile {
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  height: 64px;
+  font-size: 15px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  cursor: pointer;
+  transition: background 0.12s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile abbr {
+  display: block;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile:hover {
+  background: var(--Azul-Claro);
+}
+
+/* Dia atual */
+.AgendaCal.react-calendar .react-calendar__tile--now {
+  background: none;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile--now abbr {
+  color: var(--Laranja-Botoes);
+  font-weight: 700;
+}
+
+/* Hoje com borda arredondada leve */
+.AgendaCal.react-calendar .react-calendar__tile--now:not(.react-calendar__tile--active) {
+  background: rgba(255, 114, 3, 0.08);
+  border-radius: 10px;
+}
+
+/* Dia selecionado */
+.AgendaCal.react-calendar .react-calendar__tile--active,
+.AgendaCal.react-calendar .react-calendar__tile--active:hover {
+  background: var(--Azul-Escuro) !important;
+  border-radius: 10px;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile--active abbr {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Dias de outros meses */
+.AgendaCal.react-calendar .react-calendar__month-view__days__day--neighboringMonth {
+  opacity: 0.35;
+}
+
+/* ─── Dots de tarefas ───────────────────────────────────────────────── */
+.calDots {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  height: 6px;
+}
+
+.calDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.AgendaCal.react-calendar .react-calendar__tile--active .calDot {
+  opacity: 0.7;
+}
+
+/* ─── Painel direito — header ───────────────────────────────────────── */
+.agendaDireitaHeader {
+  padding: 18px 18px 12px;
+  border-bottom: 1.5px solid var(--Azul-Claro);
+  background: var(--Azul-Escuro);
+}
+
+.agendaDireitaData {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: #ffffff;
+  margin: 0 0 3px;
+  text-transform: capitalize;
+}
+
+.agendaDireitaCount {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Claro);
+  opacity: 0.8;
+}
+
+/* ─── Lista de eventos ──────────────────────────────────────────────── */
+.agendaEventosLista {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.agendaEventoCard {
+  background: var(--Branco-Fundo);
+  border-radius: 12px;
+  padding: 13px 15px;
+  border: 1.5px solid var(--Azul-Claro);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.agendaEventoCard:hover {
+  border-color: var(--Azul-Botao);
+  box-shadow: 0 0 0 3px rgba(54, 71, 255, 0.07);
+}
+
+.agendaEventoTopo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.agendaEventoDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.agendaEventoTipo {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.agendaEventoTitulo {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.agendaEventoHora {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0;
+}
+
+.agendaEventoDesc {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #4a5568;
+  margin: 2px 0 0;
+  line-height: 1.5;
+}
+
+/* Responsável */
+.agendaEventoResponsavel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: var(--Azul-Escuro-Fundos);
+}
+
+.agendaEventoResponsavelAvatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--Azul-Botao);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ─── Sem eventos ───────────────────────────────────────────────────── */
+.agendaSemEventos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 20px;
+  color: #a0aab8;
+  text-align: center;
+}
+
+.agendaSemEventos p {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+.agendaSemEventosIcone {
+  font-size: 30px;
+  opacity: 0.35;
+}
+
+/* Loading */
+.agendaLoadingDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--Azul-Botao);
+  animation: agendaPulse 1s infinite ease-in-out;
+}
+
+@keyframes agendaPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50%       { opacity: 1;   transform: scale(1.1); }
+}
+
+/* ─── Legenda ───────────────────────────────────────────────────────── */
+.agendaLegenda {
+  padding: 10px 18px 14px;
+  border-top: 1.5px solid var(--Azul-Claro);
+  display: flex;
+  gap: 14px;
+}
+
+.agendaLegendaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: var(--Azul-Escuro);
+}
+
+.agendaLegendaDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ─── Responsivo ────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .mainAgenda {
     flex-direction: column;
-    align-items: center;
-    background-color: white;
-    margin-right: 100px;
-    width: 35%;
-    border-radius: 15px;
-}
+    padding: 24px 16px;
+  }
 
-.calendarioDireito h2{
-    font-family: "Inter";
-}
-
-.calendarioContainer{
+  .agendaDireita {
     width: 100%;
-}
-
-.Agenda.react-calendar{
-    border-radius: 15px;
-    border: none;
-    width: 100%;
-    box-shadow: 0px 0px 10px rgba(122, 122, 122, 0.132);
-    padding: 15px;
-}
-
-.calendarioEsquerda{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 65%;
-    margin-left: 35px;
-    margin-right: 35px;
-}
-
-.agenda.react-calendar__tile--active {
-    background: var(--Azul-Botao);
-    color: white;
-    border-radius: 5px;
-}
-
-.agenda.react-calendar__navigation{
-    color: green
+  }
 }

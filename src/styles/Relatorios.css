@@ -1,0 +1,556 @@
+/* ─── Página ───────────────────────────────────────────────────────── */
+.relPage {
+  background: var(--Azul-Claro);
+  padding: 32px 40px 60px;
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: 89vh;
+  overflow-y: scroll;
+}
+
+.relLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #a0aab8;
+}
+
+/* ─── Top bar ──────────────────────────────────────────────────────── */
+.relTopBar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.relSubtitulo {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 0 0 4px;
+}
+
+.relTitulo {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.relExportBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--Laranja-Botoes);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  box-shadow: 0 4px 14px var(--Laranja-Botoes-Brilho);
+}
+
+.relExportBtn:hover {
+  background: #e06500;
+  transform: translateY(-1px);
+}
+
+/* ─── Filtros de período ───────────────────────────────────────────── */
+.relPeriodos {
+  display: flex;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 12px;
+  padding: 6px;
+  width: fit-content;
+}
+
+.relPeriodoBotao {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.relPeriodoBotao:hover { color: var(--Azul-Escuro); background: #f5f7fa; }
+
+.relPeriodoBotao.ativo {
+  background: var(--Azul-Escuro);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ─── Stat cards ───────────────────────────────────────────────────── */
+.relCards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.relCard {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.relCard:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+.relCard--neutro   { border-color: #e8edf3; }
+.relCard--verde    { border-color: rgba(29,158,117,.25); background: #f4fff9; }
+.relCard--amarelo  { border-color: rgba(239,159,39,.25); background: #fffdf4; }
+.relCard--vermelho { border-color: rgba(226,75,74,.25);  background: #fff5f5; }
+.relCard--azul     { border-color: rgba(54,71,255,.2);   background: #f5f6ff; }
+
+.relCardIcone {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.relCardIcone--neutro   { background: rgba(8,11,42,.06);     color: var(--Azul-Escuro-Fundos); }
+.relCardIcone--verde    { background: rgba(29,158,117,.12);  color: #1D9E75; }
+.relCardIcone--amarelo  { background: rgba(239,159,39,.15);  color: #EF9F27; }
+.relCardIcone--vermelho { background: rgba(226,75,74,.12);   color: #E24B4A; }
+.relCardIcone--azul     { background: rgba(54,71,255,.1);    color: var(--Azul-Botao); }
+
+.relCard strong {
+  font-size: 26px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  line-height: 1;
+}
+
+.relCard span {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+}
+
+/* ─── Barra de progresso ───────────────────────────────────────────── */
+.relProgressoWrap {
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.relProgressoTopo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin-bottom: 10px;
+}
+
+.relProgressoTopo strong { color: var(--Azul-Escuro); font-size: 14px; }
+
+.relProgressoBar {
+  width: 100%;
+  height: 9px;
+  border: none;
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #e8edf3;
+  overflow: hidden;
+}
+
+.relProgressoBar::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
+.relProgressoBar::-webkit-progress-value { background: var(--Azul-Escuro-Fundos); border-radius: 999px; transition: width .6s; }
+.relProgressoBar::-moz-progress-bar      { background: var(--Azul-Escuro-Fundos); border-radius: 999px; }
+
+/* ─── Linha do meio ────────────────────────────────────────────────── */
+.relMeio {
+  display: flex;
+  gap: 16px;
+}
+
+/* Gráfico principal */
+.relGraficoCard {
+  flex: 1;
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 14px;
+  padding: 22px 22px 14px;
+}
+
+.relGraficoTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.relGraficoTituloLinha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.relGraficoTituloLinha h3 {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.relGraficoIcone { color: #8a97a8; font-size: 14px; }
+
+/* Painel comparação */
+.relComparacaoCard {
+  width: 280px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 14px;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.relComparacaoTituloLinha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a97a8;
+  font-size: 14px;
+}
+
+.relComparacaoTituloLinha h3 {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.relCompItem { display: flex; flex-direction: column; gap: 4px; }
+
+.relCompLabel {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+}
+
+.relCompValorLinha {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.relCompValor {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+}
+
+.relCompDelta {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.relCompDelta--down { color: #E24B4A; }
+.relCompDelta--up   { color: #1D9E75; }
+
+.relCompSub {
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  color: #b0bec5;
+}
+
+.relCompDivider { height: 1px; background: #f0f2f5; }
+
+/* Overdue mini bars */
+.relOverdueChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 40px;
+  margin-top: 6px;
+}
+
+.relOverdueBar {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  cursor: default;
+}
+
+.relOverdueFill {
+  width: 100%;
+  background: #E24B4A;
+  border-radius: 3px 3px 0 0;
+  min-height: 4px;
+  transition: height 0.3s;
+}
+
+/* ─── Linha de baixo ───────────────────────────────────────────────── */
+.relBaixo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Prioridades */
+.relPrioridadesCard,
+.relHistoricoCard {
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.relCardTituloLinha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.relCardTituloLinha h3 {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0;
+}
+
+.relCardTituloIcone { color: #8a97a8; font-size: 14px; }
+
+.relPrioItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #f5f7fa;
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1.5px solid #e8edf3;
+}
+
+.relPrioEsq {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.relPrioBadge {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.relPrioTitulo {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+}
+
+.relPrioSub {
+  font-size: 11px;
+  font-family: "Inter", sans-serif;
+  color: #b0bec5;
+  margin: 0;
+}
+
+.relPrioDias {
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.relPrioDias--urgente { color: var(--Laranja-Botoes); font-weight: 600; }
+
+/* Histórico */
+.relHistItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.relHistAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--Azul-Escuro-Fundos);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.relHistTexto p {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 2px;
+  line-height: 1.4;
+}
+
+.relHistTexto small {
+  font-size: 11px;
+  color: #b0bec5;
+  font-family: "Inter", sans-serif;
+}
+
+.relHistDestaque {
+  color: var(--Azul-Botao);
+  font-weight: 600;
+}
+
+/* ─── Projetos (visão dono) ────────────────────────────────────────── */
+.relProjetosCard {
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+.relProjetosCard h3 {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: "OpenSans", sans-serif;
+  color: var(--Azul-Escuro);
+  margin: 0 0 16px;
+}
+
+.relProjetosLista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.relProjetoItem { display: flex; flex-direction: column; gap: 6px; }
+
+.relProjetoNomePct {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+}
+
+.relProjetoNomePct strong { font-size: 13px; font-weight: 700; }
+
+.relProjetoBar {
+  width: 100%;
+  height: 7px;
+  border: none;
+  border-radius: 999px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #e8edf3;
+  overflow: hidden;
+}
+
+.relProjetoBar::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
+.relProjetoBar::-webkit-progress-value { background: var(--proj-cor, var(--Azul-Botao)); border-radius: 999px; transition: width .5s; }
+.relProjetoBar::-moz-progress-bar      { background: var(--proj-cor, var(--Azul-Botao)); border-radius: 999px; }
+
+/* ─── Vazio ────────────────────────────────────────────────────────── */
+.relVazio {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #b0bec5;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ─── Print / Export PDF ───────────────────────────────────────────── */
+@media print {
+  body { background: #fff !important; }
+
+  .relPage {
+    background: #fff !important;
+    padding: 20px !important;
+  }
+
+  .relExportBtn,
+  .relPeriodos { display: none !important; }
+
+  .relCard,
+  .relProgressoWrap,
+  .relGraficoCard,
+  .relComparacaoCard,
+  .relPrioridadesCard,
+  .relHistoricoCard,
+  .relProjetosCard {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .relMeio,
+  .relBaixo { break-inside: avoid; }
+}
+
+/* ─── Responsivo ───────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .relCards { grid-template-columns: repeat(3, 1fr); }
+  .relMeio  { flex-direction: column; }
+  .relComparacaoCard { width: 100%; }
+  .relBaixo { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  .relPage  { padding: 20px 16px 40px; }
+  .relCards { grid-template-columns: repeat(2, 1fr); }
+}
