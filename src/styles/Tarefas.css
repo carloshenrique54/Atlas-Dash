@@ -31,8 +31,6 @@ main.semTarefas {
     box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
     border: none;
     border-radius: 15px;
-    margin: 55px;
-    margin-right: 100px;
     transition: ease 0.3s;
 }
 
@@ -40,9 +38,10 @@ main.semTarefas {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 40px;
+    margin: 40px;
 }
 
 .botoesTopTarefas .abrirFormsTarefaBotao:hover{
@@ -203,7 +202,7 @@ select {
     justify-content: center;
     text-align: center;
     width: 90%;
-    z-index: 999;
+    z-index: 9999;
     position: fixed;
     background-color: #ffa7a7;
     color: #500000;
@@ -422,8 +421,12 @@ select {
 
 .filtrosTarefas{
     display: flex;
-    margin: 70px;
-    margin-top: 50px;
+    gap: 20px;
+}
+
+.filtrosdotoptarefas{
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -454,7 +457,8 @@ select {
     width: 95%;
     flex-direction: column;
     row-gap: 20px;
-    max-height: 700px;
+    max-height: 515px;
+    padding-right: 10px;
     margin-bottom: 0;
     overflow-y: auto;
 }
@@ -464,7 +468,7 @@ select {
     flex-direction: column;
     background-color: var(--Branco-Fundo);
     align-items: center;
-    padding: 25px;
+    padding: 20px;
     justify-content: space-between;  
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.080);
@@ -489,6 +493,14 @@ select {
 .nomeDescricao{
     display: flex;
     flex-direction: column;
+}
+
+#descricao{
+    border: 3px solid rgba(0, 0, 0, 0.080);
+    outline: none;
+    border-radius: 10px;
+    padding: 10px;
+    height: 100px;
 }
 
 .subtarefasLista{

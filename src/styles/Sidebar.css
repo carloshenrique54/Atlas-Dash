@@ -1,49 +1,145 @@
-.sidebar{
-    background-color: var(--Azul-Escuro);
-    display: flex;
-    color: (--Branco-Fundo);
-    flex-direction: column;
-    height: 100vh;
-    color: white;
-    width: 260px;
-    transition: ease 0.4s;
+/* ─── Sidebar ──────────────────────────────────────────────────────── */
+.sidebar {
+  background-color: var(--Azul-Escuro);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 240px;
+  flex-shrink: 0;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: sticky;
+  top: 0;
 }
 
-.sidebar.fechada{
-    width: 5%;
+.sidebar--fechada {
+  width: 64px;
 }
 
-aside h2{
-    font-family: "Inter";
-    font-size: 50px;
-    margin-bottom: 40px;
-    padding: 25px;
-    padding-top: 0;
+/* ─── Header (logo + botão) ────────────────────────────────────────── */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 16px 20px;
+  min-height: 72px;
+  flex-shrink: 0;
 }
 
-aside nav{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.sidebarLogo {
+  font-family: "Inter", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
 }
 
-aside nav a{
-    font-family: "OpenSans";
-    font-size: 20px;
-    text-decoration: none;
-    color: white;
-    padding: 20px;
-    transition: ease 0.3s;
-    padding-top: 10px;
-    padding-bottom: 10px;
+/* Botão de toggle (seta) */
+.sidebarToggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-aside nav a:hover{
-    background-color: var(--Azul-Escuro-Fundos);
-    border-left: 5px solid var(--Azul-Claro);
+.sidebarToggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
 }
 
-aside nav .ativo{
-    background-color: var(--Azul-Escuro-Fundos);
-    border-left: 5px solid var(--Azul-Claro);
+/* Quando fechado, o ícone gira 180° para apontar para a direita */
+.sidebarToggle--virado {
+  transform: rotate(180deg);
+}
+
+/* Quando a sidebar está fechada, o botão fica centralizado */
+.sidebar--fechada .sidebarHeader {
+  justify-content: center;
+  padding: 24px 0 20px;
+}
+
+/* ─── Navegação ────────────────────────────────────────────────────── */
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 10px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebarNav::-webkit-scrollbar { width: 0; }
+
+/* ─── Link ─────────────────────────────────────────────────────────── */
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  border-left: 3px solid transparent;
+  min-width: 0;
+}
+
+.sidebarLink:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.sidebarLink--ativo {
+  background: var(--Azul-Escuro-Fundos);
+  color: #ffffff;
+  border-left-color: var(--Azul-Claro);
+  font-weight: 600;
+}
+
+/* Ícone */
+.sidebarLinkIcone {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 18px;
+  text-align: center;
+}
+
+/* Label some com transição */
+.sidebarLinkLabel {
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.sidebar--fechada .sidebarLinkLabel {
+  opacity: 0;
+  width: 0;
+}
+
+/* Quando fechado, centraliza o ícone */
+.sidebar--fechada .sidebarLink {
+  justify-content: center;
+  padding: 11px 0;
+  border-left-color: transparent;
+}
+
+.sidebar--fechada .sidebarLink--ativo {
+  background: var(--Azul-Escuro-Fundos);
+  border-radius: 10px;
 }

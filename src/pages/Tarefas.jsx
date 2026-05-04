@@ -263,8 +263,9 @@ function Tarefas() {
   });
 
   const lista = (
-    <main>
+    <main className="mainTarefas">
       <div className="botoesTopTarefas">
+        <div className="filtrosdotoptarefas">
         {/* ── Filtros originais (botões) ── */}
         <div className="filtrosTarefas">
           {["todas","pendentes","em_progresso","concluidas"].map((f) => (
@@ -307,6 +308,7 @@ function Tarefas() {
           )}
 
           <span className="filtrosResultados">{tarefasFiltradas.length} resultado(s)</span>
+        </div>
         </div>
 
         {!isFuncionario && (

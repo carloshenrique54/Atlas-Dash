@@ -8,8 +8,45 @@
     --Laranja-Botoes-Brilho: #ff7f1c8d;
 }
 
+.modalAvisoTarefas{
+    font-family: "OpenSans";
+}
+
+.modalAviso{
+    font-family: "OpenSans";
+}
+
+.toast{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 90%;
+    z-index: 9999;
+    position: fixed;
+    transition: ease 0.4s;
+    transform: translateY(-100px);
+    opacity: 0;
+    margin: 0;
+    border: none;
+}
+
 textarea{
     resize: none;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #3647ff;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #202a9a;
+}
+
+::-webkit-scrollbar{
+    background-color: transparent;
+    width: 8px;
 }
 
 @font-face {

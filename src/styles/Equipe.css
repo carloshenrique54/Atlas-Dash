@@ -1,6 +1,7 @@
 /* ─── Página equipe ────────────────────────────────────────────────── */
 .equipePage {
-  min-height: 100vh;
+  max-height: 87vh;
+  overflow-y: auto;
   background: var(--Azul-Claro);
   padding: 32px 40px 60px;
   font-family: "Inter", sans-serif;
@@ -749,38 +750,28 @@
 }
 
 /* ─── Aba Perfil ────────────────────────────────────────────────────── */
-.detalhePerfil {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.detalhePerfilSecao { display: flex; flex-direction: column; gap: 12px; }
-
-.detalhePerfilTitulo {
-  font-size: 13px;
-  font-weight: 700;
-  font-family: "OpenSans", sans-serif;
-  color: #8a97a8;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
-}
-
 .detalhePerfilGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .detalhePerfilItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   background: #f5f7fa;
   border-radius: 10px;
-  padding: 12px 14px;
+  padding: 13px 14px;
   border: 1.5px solid #e8edf3;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+}
+
+.detalhePerfilIcone {
+  font-size: 15px;
+  color: #8a97a8;
+  margin-top: 2px;
+  flex-shrink: 0;
 }
 
 .detalhePerfilLabel {
@@ -790,6 +781,8 @@
   color: #8a97a8;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 3px;
 }
 
 .detalhePerfilValor {
@@ -797,6 +790,14 @@
   font-family: "Inter", sans-serif;
   color: var(--Azul-Escuro);
   font-weight: 500;
+  margin: 0;
+}
+
+.detalhePerfilProgressoSub {
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  margin: 4px 0 0;
 }
 
 /* ─── Responsivo ───────────────────────────────────────────────────── */

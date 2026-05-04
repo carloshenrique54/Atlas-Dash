@@ -1,37 +1,61 @@
 import { useState } from "react"
+import { Link, useLocation } from "react-router-dom"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {
+  faGauge, faListCheck, faCalendarDays, faFolderOpen,
+  faUsers, faChartBar, faUser, faGear, faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons"
 import "../styles/Sidebar.css"
-import { Link } from "react-router-dom"
 
-function Sidebar(){
-    const [abrirSidebar, setAbrirSidebar] = useState(true)
-    const [pagina, setPagina] = useState("dashboard")
+const LINKS = [
+  { to: "/dashboard",     label: "Dashboard",     icon: faGauge },
+  { to: "/tarefas",       label: "Tarefas",        icon: faListCheck },
+  { to: "/agenda",        label: "Agenda",          icon: faCalendarDays },
+  { to: "/projetos",      label: "Projetos",        icon: faFolderOpen },
+  { to: "/equipe",        label: "Equipe",          icon: faUsers },
+  { to: "/relatorios",    label: "Relatórios",      icon: faChartBar },
+  { to: "/perfil",        label: "Perfil",          icon: faUser },
+  { to: "/configuracoes", label: "Configurações",   icon: faGear },
+]
 
-    function FecharSidebar(){
-        console.log(abrirSidebar)
-        if (abrirSidebar){
-            setAbrirSidebar(false)
-        }
-        else{
-            setAbrirSidebar(true)
-        }
-    }
+function Sidebar() {
+  const [aberta, setAberta] = useState(true)
+  const location = useLocation()
 
-    return(
-        <aside className={abrirSidebar ? "sidebar" : "sidebar fechada"}>
-            <h2>Atlas</h2>
-            <nav>
-                <Link to={"/dashboard"} className={pagina === "dashboard" && "ativo"} onClick={() => setPagina("dashboard")}>Dashboard</Link>
-                <Link to={"/tarefas"} className={pagina === "tarefas" && "ativo"} onClick={() => setPagina("tarefas")}>Tarefas</Link>
-                <Link to={"/agenda"} className={pagina === "agenda" && "ativo"} onClick={() => setPagina("agenda")}>Agenda</Link>
-                <Link to={"/projetos"} className={pagina === "projetos" && "ativo"} onClick={() => setPagina("projetos")}>Projetos</Link>
-                <Link to={"/equipe"} className={pagina === "equipe" && "ativo"} onClick={() => setPagina("equipe")}>Equipe</Link>
-                <Link to={"/relatorios"} className={pagina === "relatorios" && "ativo"} onClick={() => setPagina("relatorios")}>Relatórios</Link>
-                <Link to={"/perfil"} className={pagina === "perfil" && "ativo"} onClick={() => setPagina("perfil")}>Perfil</Link>
-                <Link to={"/configuracoes"} className={pagina === "configurações" && "ativo"} onClick={() => setPagina("configurações")}>Configurações</Link>
-            </nav>
-            <button onClick={FecharSidebar} >Fechar</button>
-        </aside>
-    )
+  return (
+    <aside className={aberta ? "sidebar" : "sidebar sidebar--fechada"}>
+
+      {/* Cabeçalho com logo e botão de toggle */}
+      <div className="sidebarHeader">
+        {aberta && <h2 className="sidebarLogo">Atlas</h2>}
+        <button
+          className={`sidebarToggle ${aberta ? "" : "sidebarToggle--virado"}`}
+          onClick={() => setAberta(v => !v)}
+          title={aberta ? "Recolher menu" : "Expandir menu"}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+      </div>
+
+      {/* Navegação */}
+      <nav className="sidebarNav">
+        {LINKS.map(({ to, label, icon }) => {
+          const ativo = location.pathname === to
+          return (
+            <Link
+              key={to}
+              to={to}
+              className={`sidebarLink ${ativo ? "sidebarLink--ativo" : ""}`}
+              title={!aberta ? label : ""}
+            >
+              <FontAwesomeIcon icon={icon} className="sidebarLinkIcone" />
+              {aberta && <span className="sidebarLinkLabel">{label}</span>}
+            </Link>
+          )
+        })}
+      </nav>
+    </aside>
+  )
 }
 
 export default Sidebar

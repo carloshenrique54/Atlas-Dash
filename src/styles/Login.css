@@ -25,10 +25,26 @@
     gap: 10px;
 }
 
+.loginFuncionarioBotao{
+    padding: 13px;
+    font-size: 16px;
+}
+
+
+
+.loginBotaoSecundario{
+    padding: 13px;
+    font-size: 16px;
+}
+
 form h1{
     font-family: "Inter";
     font-size: 40px;
     color: var(--Azul-Escuro);
+}
+
+.loginInputs input{
+    padding: 13px;
 }
 
 form label{
@@ -95,5 +111,4 @@ main form .links{
 
 .logoForm{
     width: 60%;
-    margin-top: -150px;
 }
