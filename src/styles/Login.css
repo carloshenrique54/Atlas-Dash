@@ -30,8 +30,6 @@
     font-size: 16px;
 }
 
-
-
 .loginBotaoSecundario{
     padding: 13px;
     font-size: 16px;
@@ -41,6 +39,7 @@ form h1{
     font-family: "Inter";
     font-size: 40px;
     color: var(--Azul-Escuro);
+    margin-top: 10px;
 }
 
 .loginInputs input{
@@ -111,4 +110,26 @@ main form .links{
 
 .logoForm{
     width: 60%;
+}
+
+.toast{
+    position: fixed;
+    background: #95ff9e;
+    color: rgb(8, 51, 0);
+    padding: 20px;
+    display: flex;
+    transform: translateY(-1000px);
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.17em;
+    z-index: 999;
+    transition: 0.8s ease;
+    font-family: "OpenSans";
+}
+
+.toast.ativo{
+    transform: translateY(0);
 }

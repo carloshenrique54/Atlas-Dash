@@ -1,6 +1,6 @@
 /* ─── Página ───────────────────────────────────────────────────────── */
 .projetosPage {
-  min-height: 100vh;
+  min-height: 85vh;
   background: var(--Azul-Claro);
   padding: 32px 40px 60px;
   font-family: "Inter", sans-serif;
@@ -116,23 +116,21 @@
 
 /* Botão novo projeto */
 .projetosBotaoNovo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--Azul-Botao);
-  color: #ffffff;
+  background-color: var(--Laranja-Botoes);
+  padding: 15px;
+  color: white;
+  font-size: 18px;
+  font-family: "Inter";
+  box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
   border: none;
-  border-radius: 12px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.15s;
-  white-space: nowrap;
+  border-radius: 15px;
+  transition: ease 0.3s;
 }
 
-.projetosBotaoNovo:hover { background: var(--Azul-Escuro-Fundos); }
+.projetosBotaoNovo:hover{
+  transform: scale(1.03, 1.03);
+  box-shadow: 0px 1px 15px var(--Laranja-Botoes-Brilho);
+}
 
 /* ─── Grid de cards — scroll quando lotado ─────────────────────────── */
 .projetosGrid {
@@ -327,14 +325,43 @@
 .projetosFormHeader {
   display: flex;
   align-items: center;
+  flex-direction: row;
   justify-content: space-between;
   padding: 22px 28px 18px;
-  border-bottom: 1.5px solid var(--Azul-Claro);
+  border-bottom: 1.5px solid rgba(0,0,0,0.08);
   position: sticky;
   top: 0;
   background: #fff;
+  width: 93.2%;
   z-index: 1;
   border-radius: 20px 20px 0 0;
+}
+
+.projetosFormHeader h2 {
+  font-family: "OpenSans", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  width: 20px;
+  text-align: start;
+  color: var(--Azul-Escuro);
+  margin: 0;
+  flex: 1;
+}
+
+.projetosFormHeader h2{
+  text-align: start;
+  width: 20px;
+}
+
+.projetosFormHeader .projetosFormFechar{
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #8a97a8;
+  cursor: pointer;
+  padding: 4px 8px;
+  width: 5%;
+  border-radius: 8px;
 }
 
 .projetosFormHeader h2 {
@@ -344,6 +371,8 @@
   color: var(--Azul-Escuro);
   margin: 0;
   text-align: center;
+  width: 20px;
+  text-align: start;
   flex: 1;
 }
 
@@ -493,6 +522,7 @@
   gap: 12px;
   padding: 10px 12px;
   border-radius: 8px;
+  width: 90%;
   cursor: pointer;
   border: 1.5px solid transparent;
   transition: background 0.12s, border-color 0.12s;
@@ -584,4 +614,8 @@
   .projetosPage          { padding: 20px 16px 40px; }
   .projetosGrid          { grid-template-columns: 1fr; }
   .projetosFormCorpo     { grid-template-columns: 1fr; }
+}
+
+.projetosFormHeaderTitulo{
+  width: 20px;
 }

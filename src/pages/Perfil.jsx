@@ -11,6 +11,7 @@ import {
   faGithub, faLinkedin,
 } from "@fortawesome/free-brands-svg-icons"
 import "../styles/Perfil.css"
+import { useNavigate } from "react-router-dom"
 
 // ── helpers ──────────────────────────────────────────────────────────
 function Chip({ label, onRemove }) {
@@ -71,6 +72,11 @@ function Perfil() {
   const [tarefas, setTarefas]       = useState([])
   const [funcionarios, setFuncionarios] = useState([])
   const [carregando, setCarregando] = useState(true)
+  const navigate = useNavigate
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // Edição de habilidades
   const [novaHabilidade, setNovaHabilidade] = useState("")

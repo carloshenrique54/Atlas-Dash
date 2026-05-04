@@ -12,6 +12,7 @@ import {
   PieChart, Pie, Cell, Legend,
 } from "recharts"
 import "../styles/Equipe.css"
+import { useNavigate } from "react-router-dom"
 
 const DIAS_PROXIMO = 5
 
@@ -26,6 +27,7 @@ function FuncionarioDetalhe({ funcionario, tarefas, projetos, escopo, idEmpresa,
   const [toastOn, setToastOn]       = useState(false)
 
   const iniciais = funcionario.nome.split(" ").slice(0, 2).map(n => n[0]).join("").toUpperCase()
+  const usuario = JSON.parse(localStorage.getItem("usuario"))
 
   const hoje = new Date(); hoje.setHours(0, 0, 0, 0)
   const proxLimit = new Date(hoje); proxLimit.setDate(hoje.getDate() + DIAS_PROXIMO)
@@ -92,6 +94,11 @@ function FuncionarioDetalhe({ funcionario, tarefas, projetos, escopo, idEmpresa,
   const proximas   = tarefas.filter(isProximo).length
   const atrasadas  = tarefas.filter(isAtrasada).length
   const progresso  = total > 0 ? Math.round((concluidas / total) * 100) : 0
+  const navigate = useNavigate
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // ── Dados gráficos ────────────────────────────────────────────────────
   const porPrioridade = ["alta", "media", "baixa"].map(p => ({
@@ -165,7 +172,7 @@ function FuncionarioDetalhe({ funcionario, tarefas, projetos, escopo, idEmpresa,
     <div className="detalhePage">
 
       {/* Toast */}
-      <div className={`detalheToast ${toastOn ? "ativo" : ""}`}>{toastMsg}</div>
+      <div className={`detalheToast ${toastOn ? "ativo" : ""}`}><h3>{toastMsg}</h3></div>
 
       {/* Voltar */}
       <button className="detalhVoltar" onClick={onVoltar}>

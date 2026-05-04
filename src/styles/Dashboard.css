@@ -5,7 +5,7 @@ body {
 
 .mainDashboard {
   background-color: var(--Azul-Claro);
-  min-height: 89vh;
+  min-height: 85vh;
   font-family: "Inter", sans-serif;
 }
 

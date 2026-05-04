@@ -54,10 +54,6 @@ function Header(){
                 <h2>{tituloHeader}</h2>
                 <h3>{nomeDia}, {dia} de {nomeMeses} de {ano}</h3>
             </div>
-            <div className="finalHeader">
-                <input placeholder="Pesquisar"/>
-                <FontAwesomeIcon className="notificacao" icon={faBell} />
-            </div>
         </header>
     )
 }

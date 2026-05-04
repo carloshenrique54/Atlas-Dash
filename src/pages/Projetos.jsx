@@ -12,6 +12,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons"
 import "../styles/Projetos.css"
+import { useNavigate } from "react-router-dom"
 
 function Projetos() {
   const usuario    = localStorage.getItem("usuario")
@@ -42,14 +43,10 @@ function Projetos() {
   const [participantes, setParticipantes] = useState([]) // cpfs selecionados
 
   // Toast
-  const [toastMsg, setToastMsg]   = useState("")
-  const [toastTipo, setToastTipo] = useState("ok") // "ok" | "erro"
-  const [toastOn, setToastOn]     = useState(false)
-
-  async function showToast(msg, tipo = "ok") {
-    setToastMsg(msg); setToastTipo(tipo); setToastOn(true)
-    await delay(2500); setToastOn(false)
-  }
+  const [abrirToastErro, setAbrirToastErro]       = useState(false)
+  const [mensagemErroToast, setMensagemErroToast]  = useState("")
+  const [abrirToastCerto, setAbrirToastcerto]      = useState(false)
+  const [mensagemCertoToast, setMensagemCertoToast] = useState("")
 
   // ── Detectar escopo ──────────────────────────────────────────────────
   useEffect(() => {
@@ -169,9 +166,12 @@ function Projetos() {
 
     const { error } = await supabase.from("projetos").insert([payload])
 
-    if (error) { showToast("Erro ao criar projeto: " + error.message, "erro"); return }
+    if (error) {setMensagemErroToast("Erro ao criar projeto: " + error.message, "erro"); setAbrirToastErro(true); await delay(2000) ; setAbrirToastErro(false) ; return }
 
-    showToast("Projeto criado!")
+    setMensagemCertoToast("Projeto criado!");
+    setAbrirForm(false)
+    await delay(2000);
+    setAbrirToastcerto(false)
     setAbrirForm(false)
     setNomeProjeto(""); setDescProjeto(""); setPrazoProjeto("")
     setTags([]); setParticipantes([])
@@ -199,13 +199,14 @@ function Projetos() {
 
   // ── Render ───────────────────────────────────────────────────────────
   return (
+    <>
+    <div className={!abrirToastErro ? "modalAviso" : "modalAviso ativo"}>
+                <h3>{mensagemErroToast}</h3>
+            </div>
+            <div className={!abrirToastCerto ? "toast" : "toast ativo"}>
+                {mensagemCertoToast}
+            </div>
     <div className="projetosPage">
-
-      {/* Toast */}
-      <div className={`projetosToast projetosToast--${toastTipo} ${toastOn ? "ativo" : ""}`}>
-        {toastMsg}
-      </div>
-
       {/* Barra topo */}
       <div className="projetosTopBar">
         <div className="projetosBusca">
@@ -243,7 +244,7 @@ function Projetos() {
         <div className="projetosFormOverlay" onClick={(e) => { if (e.target === e.currentTarget) setAbrirForm(false) }}>
           <form className="projetosForm" onSubmit={cadastrarProjeto}>
             <div className="projetosFormHeader">
-              <h2>Novo Projeto</h2>
+              <h2 className="projetosFormHeaderTitulo">Novo Projeto</h2>
               <button type="button" className="projetosFormFechar" onClick={() => setAbrirForm(false)}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
@@ -417,6 +418,7 @@ function Projetos() {
         </div>
       )}
     </div>
+    </>
   )
 }
 

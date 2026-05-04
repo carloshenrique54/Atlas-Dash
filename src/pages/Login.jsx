@@ -1,5 +1,5 @@
 import { supabase } from "../services/supabase"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import logo from "../assets/images/LogoEscura.png"
 import "../styles/Login.css"
@@ -14,6 +14,11 @@ function Login() {
     const [mensagemErroToast, setMensagemErroToast]  = useState("")
     const [abrirToastCerto, setAbrirToastcerto]      = useState(false)
     const [mensagemCertoToast, setMensagemCertoToast] = useState("")
+    const usuario = JSON.parse(localStorage.getItem("usuario"))
+
+    useEffect(() => {
+        if(usuario){navigate("/dashboard")}
+    }, [navigate]) 
 
     async function RealizarLogin(e) {
         e.preventDefault()
@@ -103,7 +108,7 @@ function Login() {
                     </button>
 
                     <div className="links">
-                        <a href="/cadastrostartup">Fazer Cadastro</a>
+                        <a href="https://localhost:3000/cadastrostartup">Fazer Cadastro</a>
                         <Link to="/redefinirsenha">Esqueci minha senha</Link>
                     </div>
                 </form>

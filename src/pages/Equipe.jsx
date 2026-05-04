@@ -8,6 +8,7 @@ import {
 import { faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import FuncionarioDetalhe from "./FuncionarioDetalhe"
 import "../styles/Equipe.css"
+import { useNavigate } from "react-router-dom"
 
 function Equipe() {
   const usuario    = localStorage.getItem("usuario")
@@ -24,6 +25,11 @@ function Equipe() {
   const [copiado, setCopiado]           = useState(false)
   const [busca, setBusca]               = useState("")
   const [funcionarioSelecionado, setFuncionarioSelecionado] = useState(null)
+  const navigate = useNavigate
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // ── Detectar escopo ──────────────────────────────────────────────────
   useEffect(() => {

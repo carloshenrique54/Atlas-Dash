@@ -73,7 +73,12 @@ function Configuracoes() {
 
   // ── Segurança ─────────────────────────────────────────────────────
   const [auth2fa,    setAuth2fa]    = usePref("auth2fa",    false)
+  const usuario = JSON.parse(localStorage.getItem("usuario"))
   const [bloqSessao, setBloqSessao] = usePref("bloqSessao", true)
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // Aplica classes de aparência ao montar e sempre que os valores mudarem
   useEffect(() => {

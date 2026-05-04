@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import CalendarioAgenda from "../components/CalendarioAgenda.jsx";
 import "../styles/Agenda.css";
+import { useNavigate } from "react-router-dom";
 
 function Agenda() {
   const usuario = localStorage.getItem("usuario");
@@ -15,6 +16,11 @@ function Agenda() {
   const [funcionarios, setFuncionarios] = useState([]);
   const [dataSelecionada, setDataSelecionada] = useState(new Date());
   const [carregando, setCarregando] = useState(true);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // Detecta se é startup ou empresa (mesma lógica de Tarefas.jsx)
   useEffect(() => {

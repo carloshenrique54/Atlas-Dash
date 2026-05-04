@@ -1,6 +1,6 @@
 /* ─── Página ───────────────────────────────────────────────────────── */
 .perfilPage {
-  height: 87vh;
+  height: 85vh;
   background: var(--Azul-Claro);
   padding: 32px 40px 60px;
   font-family: "Inter", sans-serif;
@@ -786,3 +786,53 @@
   gap: 8px;
   margin: 0;
 }
+
+body.modoEscuro .perfilPage{
+  background: var(--Azul-Escuro);
+}
+
+body.modoEscuro .perfilPage .perfilSideCard{
+  background: #1a1f2e;
+  border-color: #2a3148;
+  color: white;
+}
+
+body.modoEscuro .perfilPage .perfilSideCard h2{
+  color: white;
+}
+
+body.modoEscuro .perfilPage .perfilSideCard span{
+  color: white;
+}
+
+body.modoEscuro .perfilPage .perfilSideCard h4{
+  color: white;
+}
+
+body.modoEscuro .perfilCard{
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .perfilStatIcone{
+  color: white;
+}
+
+body.modoEscuro .perfilCard strong{
+  color: white;
+}
+
+body.modoEscuro .perfilCard h3{
+  color: white;
+}
+
+body.modoEscuro .perfilCard p{
+  color: white;
+}
+
+
+body.modoEscuro .perfilCard span{
+  color: rgba(255, 255, 255, 0.47);
+}
+
+body.modoEscuro .perfilStatCard--neutro  { background: #f0f2f539; }

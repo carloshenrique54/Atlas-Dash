@@ -1,5 +1,5 @@
 import { supabase } from "../services/supabase"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import logo from "../assets/images/LogoEscura.png"
 import "../styles/Login.css"
@@ -88,6 +88,10 @@ function LoginFuncionario() {
         setAbrirToastcerto(false)
         navigate("/dashboard", { replace: true })
     }
+
+    useEffect(() => {
+        if(usuario){navigate("/dashboard")}
+    }, [navigate]) 
 
     return (
         <>

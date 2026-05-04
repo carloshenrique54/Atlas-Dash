@@ -1,7 +1,7 @@
 :root{
     --Azul-Escuro: #080b2a;
     --Azul-Escuro-Fundos: #111650;
-    --Azul-Claro: #e2e2e2;
+    --Azul-Claro: #f9f6f6;
     --Azul-Botao: #3647ff;
     --Branco-Fundo: #fcfcfc ;
     --Laranja-Botoes: #ff7203;
@@ -17,18 +17,23 @@
 }
 
 .toast{
+    position: fixed;
+    background: #95ff9e;
+    color: rgb(8, 51, 0);
+    padding: 20px;
     display: flex;
+    transform: translateY(-1000px);
     align-items: center;
     justify-content: center;
-    text-align: center;
-    width: 90%;
-    z-index: 9999;
-    position: fixed;
-    transition: ease 0.4s;
-    transform: translateY(-100px);
-    opacity: 0;
-    margin: 0;
-    border: none;
+    border-radius: 8px;
+    width: 100%;
+    font-weight: bold;
+    z-index: 999;
+    transition: 0.8s ease;
+}
+
+.toast.ativo{
+    transform: translateY(0);
 }
 
 textarea{
@@ -57,4 +62,52 @@ textarea{
 @font-face {
     font-family: "OpenSans";
     src: url("../assets/fonts/OpenSansFont.ttf");
+}
+
+.modalAviso{
+    display: flex;;
+    color: black;
+    margin-top: 3.0%;
+    width: 100%;
+    color: rgb(80, 0, 0);
+    position: absolute;
+    transform: translateY(-100px);
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    background-color: rgb(255, 167, 167);
+    z-index: 999;
+    transition: ease 0.5s;
+}
+
+.modalAviso.ativo{
+    transform: translateY(0);
+    color: rgb(80, 0, 0);
+}
+
+.modalAviso{
+    display: flex;;
+    color: black;
+    margin-top: 3.0%;
+    width: 100%;
+    color: rgb(80, 0, 0);
+    position: absolute;
+    transform: translateY(-100px);
+    justify-self: center;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    background-color: rgb(255, 167, 167);
+    z-index: 999;
+    transition: ease 0.5s;
+    font-size: 1.17em;
+}
+
+.modalAviso h3{
+    color: rgb(80, 0, 0);
+}
+
+main{
+    background-color: #f9f6f6;
 }

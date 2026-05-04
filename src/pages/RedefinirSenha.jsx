@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/RedefinirSenha.css"
 import logo from "../assets/images/LogoEscura.png"
 import { supabase } from "../services/supabase";
@@ -13,6 +13,7 @@ function RedefinirSenha(){
     const [mensagemCertoToast, setMensagemCertoToast] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const navigate = useNavigate()
     const [senhaConfirmar, setSenhaConfirmar] = useState("")
 
     async function enviarFormulario(e){
@@ -82,6 +83,13 @@ function RedefinirSenha(){
                         <input value={senhaConfirmar} onChange={(e) => setSenhaConfirmar(e.target.value)} type="password"></input>
                     </div>
                     <button className="TrocarSenha">Confirmar</button>
+                    <button
+                        type="button"
+                        className="loginBotaoSecundario"
+                        onClick={() => navigate("/")}
+                    >
+                        ← Voltar ao login
+                    </button>
                     <div className="links">
                         <a href="https://localhost:3000/cadastrostartup">Fazer Cadastro</a>
                         <Link to="/">Realizar Login</Link>

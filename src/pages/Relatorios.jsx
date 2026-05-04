@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { supabase } from "../services/supabase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { useNavigate } from "react-router-dom"
 import {
   faListCheck, faCircleCheck, faClock, faTriangleExclamation,
   faChartLine, faCalendarDays, faFileArrowDown, faFire,
@@ -32,6 +33,11 @@ function Relatorios() {
   const [carregando, setCarregando] = useState(true)
   const [periodoFiltro, setPeriodoFiltro] = useState("tudo")
   const relRef = useRef(null)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   const hoje = new Date(); hoje.setHours(0,0,0,0)
   const proxLimit = new Date(hoje); proxLimit.setDate(hoje.getDate() + DIAS_PROXIMO)

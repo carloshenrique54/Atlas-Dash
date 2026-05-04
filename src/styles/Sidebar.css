@@ -97,6 +97,8 @@
   white-space: nowrap;
   transition: background 0.18s, color 0.18s, border-color 0.18s;
   border-left: 3px solid transparent;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   min-width: 0;
 }
 
@@ -108,6 +110,8 @@
 .sidebarLink--ativo {
   background: var(--Azul-Escuro-Fundos);
   color: #ffffff;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
   border-left-color: var(--Azul-Claro);
   font-weight: 600;
 }

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "../services/supabase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faSquarePlus } from "@fortawesome/free-regular-svg-icons";
-import { faFilter, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faChevronDown, faPlus,faUpload, faFile, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/Tarefas.css";
 import Calendar from "react-calendar";
@@ -13,6 +14,11 @@ function Tarefas() {
   const [listaFuncionarios, setListaFuncionarios] = useState([]);
   const [listaProjetos, setListaProjetos] = useState([]);
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(!usuario){navigate("/dashboard")}
+  }, [navigate]) 
 
   // Toast
   const [abrirToastErro, setAbrirToastErro] = useState(false);
@@ -30,6 +36,9 @@ function Tarefas() {
   const [subtarefas, setSubtarefas] = useState([]);
   const [novaSubtarefa, setNovaSubtarefa] = useState("");
 
+  // Upload
+  const [uploadandoArquivo, setUploadandoArquivo] = useState({});
+
   const usuario = localStorage.getItem("usuario");
   const usuarioObj = usuario ? JSON.parse(usuario) : null;
 
@@ -45,11 +54,138 @@ function Tarefas() {
   const [tarefasAbertas, setTarefasAbertas] = useState({});
   const [filtro, setFiltro] = useState("todas");
 
-  // ── NOVO: filtros em pílula ──────────────────────────────────────────
   const [filtroPrioridade, setFiltroPrioridade] = useState("");
   const [filtroResponsavel, setFiltroResponsavel] = useState("");
 
   const [refreshTarefas, setRefreshTarefas] = useState(0);
+
+  async function deletarTarefa(idTarefa) {
+    if (isFuncionario) {
+      setMensagemErroToast("Funcionário não pode deletar tarefas.");
+      setAbrirToastErro(true);
+      await delay(2000);
+      setAbrirToastErro(false);
+      return;
+    }
+
+    const { error: erroSub } = await supabase
+      .from("subtarefas")
+      .delete()
+      .eq("id_tarefa", idTarefa);
+
+    if (erroSub) { console.error("Erro ao deletar subtarefas:", erroSub.message); return; }
+
+    const { error } = await supabase
+      .from("tarefas")
+      .delete()
+      .eq("id", idTarefa);
+
+    if (error) { console.error("Erro ao deletar tarefa:", error); return; }
+
+    setMensagemCertoToast("Tarefa deletada!");
+    setAbrirToastCerto(true);
+    await delay(2000);
+    setAbrirToastCerto(false);
+
+    setRefreshTarefas((v) => v + 1);
+  }
+
+  // ── NOVO: marcar/desmarcar tarefa como concluída ─────────────────────
+  async function toggleConcluirTarefa(idTarefa, concluido) {
+    const { error } = await supabase
+      .from("tarefas")
+      .update({ concluido: !concluido })
+      .eq("id", idTarefa);
+
+    if (error) { console.error("Erro ao atualizar tarefa:", error); return; }
+
+    setTarefas((prev) =>
+      prev.map((t) => t.id === idTarefa ? { ...t, concluido: !concluido } : t)
+    );
+
+    const msg = !concluido ? "Tarefa marcada como concluída!" : "Tarefa reaberta.";
+    setMensagemCertoToast(msg);
+    setAbrirToastCerto(true);
+    await delay(2000);
+    setAbrirToastCerto(false);
+  }
+
+  // ── NOVO: upload de arquivo para a tarefa ───────────────────────────
+  async function uploadArquivo(idTarefa, file) {
+    if (!file) return;
+
+    setUploadandoArquivo((prev) => ({ ...prev, [idTarefa]: true }));
+
+    const caminho = `${idTarefa}/${Date.now()}_${file.name}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("arquivos")
+      .upload(caminho, file);
+
+    if (uploadError) {
+      console.error("Erro no upload:", uploadError);
+      setMensagemErroToast("Erro ao enviar arquivo.");
+      setAbrirToastErro(true);
+      await delay(2000);
+      setAbrirToastErro(false);
+      setUploadandoArquivo((prev) => ({ ...prev, [idTarefa]: false }));
+      return;
+    }
+
+    const { error: dbError } = await supabase.from("arquivos").insert([{
+      nome_arquivo: file.name,
+      tamanho: String(file.size),
+      tipo: file.type,
+      caminho,
+      cpf_funcionario: CPF,
+      id_tarefa: idTarefa,
+      status: "enviado",
+      empresa_id: escopoTarefas === "empresa" ? idEmpresa : null,
+      startup_id: escopoTarefas === "startup" ? idEmpresa : null,
+    }]);
+
+    if (dbError) {
+      console.error("Erro ao salvar arquivo no banco:", dbError);
+      setMensagemErroToast("Erro ao registrar arquivo.");
+      setAbrirToastErro(true);
+      await delay(2000);
+      setAbrirToastErro(false);
+      setUploadandoArquivo((prev) => ({ ...prev, [idTarefa]: false }));
+      return;
+    }
+
+    // Atualiza estado local sem recarregar tudo
+    const novoArquivo = { nome_arquivo: file.name, caminho, tipo: file.type, cpf_funcionario: CPF };
+    setTarefas((prev) =>
+      prev.map((t) =>
+        t.id === idTarefa
+          ? { ...t, arquivos: [...(t.arquivos || []), novoArquivo] }
+          : t
+      )
+    );
+
+    setUploadandoArquivo((prev) => ({ ...prev, [idTarefa]: false }));
+    setMensagemCertoToast("Arquivo enviado com sucesso!");
+    setAbrirToastCerto(true);
+    await delay(2000);
+    setAbrirToastCerto(false);
+  }
+
+  // ── NOVO: baixar arquivo do Storage ─────────────────────────────────
+  async function baixarArquivo(caminho, nomeArquivo) {
+    const { data, error } = await supabase.storage
+      .from("arquivos")
+      .download(caminho);
+
+    if (error) { console.error("Erro ao baixar:", error); return; }
+
+    const url = URL.createObjectURL(data);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = nomeArquivo;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 
   useEffect(() => {
     async function detectarEscopo() {
@@ -74,14 +210,12 @@ function Tarefas() {
     setTarefasAbertas((prev) => ({ ...prev, [id]: !prev[id] }));
   }
 
-  // ── NOVO: marcar/desmarcar subtarefa ────────────────────────────────
   async function toggleSubtarefa(idSubtarefa, concluida) {
     const { error } = await supabase
       .from("subtarefas")
       .update({ concluida: !concluida })
       .eq("id_subtarefa", idSubtarefa);
     if (error) { console.error("Erro ao atualizar subtarefa:", error); return; }
-    // Atualiza estado local sem recarregar tudo
     setTarefas((prev) =>
       prev.map((t) => ({
         ...t,
@@ -137,6 +271,7 @@ function Tarefas() {
   useEffect(() => {
     async function listarTarefas() {
       if (!idEmpresa || !escopoTarefas) return;
+
       let query = supabase.from("tarefas").select("*");
       if (escopoTarefas === "startup") query = query.eq("id_startup", idEmpresa);
       else if (escopoTarefas === "empresa") query = query.eq("id_empresa", idEmpresa);
@@ -147,9 +282,14 @@ function Tarefas() {
         .from("subtarefas").select("*");
       if (erroSub) { console.error(erroSub); return; }
 
+      // ── NOVO: buscar arquivos de todas as tarefas ─────────────────
+      const { data: arquivosData } = await supabase
+        .from("arquivos").select("*");
+
       const tarefasComSub = (tarefasData || []).map((tarefa) => ({
         ...tarefa,
         subtarefas: (subtarefasData || []).filter((sub) => sub.id_tarefa === tarefa.id),
+        arquivos: (arquivosData || []).filter((arq) => arq.id_tarefa === tarefa.id),
       }));
 
       const tarefasFiltradasResponsavel = isFuncionario
@@ -201,6 +341,7 @@ function Tarefas() {
         .from("empresas").select("id").eq("dono_cpf", CPF).maybeSingle();
       if (empresa) idEmpresaTarefaSelecionada = empresa.id;
     }
+    console.log(nomeTarefa, descricaoTarefa, responsavelTarefa, prioridadeTarefa, projetoTarefa, prazoTarefa, idEmpresaTarefaSelecionada, idStartupSelecionado)
 
     const { data: tarefaCriada, error: errorTarefa } = await supabase
       .from("tarefas")
@@ -213,10 +354,11 @@ function Tarefas() {
         dia_prazo: prazoTarefa,
         id_empresa: idEmpresaTarefaSelecionada,
         id_startup: idStartupSelecionado,
+        concluido: false,
       }])
       .select().single();
 
-    if (errorTarefa) { alert("Erro: " + errorTarefa); return; }
+    if (errorTarefa) { alert(errorTarefa); return; }
 
     const idTarefa = tarefaCriada.id;
 
@@ -228,7 +370,7 @@ function Tarefas() {
         criado_subtarefa: new Date(),
       }));
       const { error: errorSub } = await supabase.from("subtarefas").insert(subtarefasFormatadas);
-      if (errorSub) { alert("Erro ao salvar subtarefas: " + errorSub.message); return; }
+      if (errorSub) { alert(errorSub); return; }
     }
 
     setMensagemCertoToast("Tarefa Cadastrada!");
@@ -241,7 +383,6 @@ function Tarefas() {
     setRefreshTarefas((v) => v + 1);
   }
 
-  // ── Filtros combinados ───────────────────────────────────────────────
   const tarefasBase = isFuncionario
     ? tarefas.filter((t) => t.cpf_responsavel === CPF)
     : tarefas;
@@ -251,11 +392,10 @@ function Tarefas() {
     const total = subt.length;
     const concluidas = subt.filter((s) => s.concluida).length;
 
-    if (filtro === "pendentes") return concluidas === 0;
-    if (filtro === "em_progresso") return concluidas > 0 && concluidas < total;
-    if (filtro === "concluidas") return total > 0 && concluidas === total;
+    if (filtro === "pendentes") return concluidas === 0 && !tarefa.concluido;
+    if (filtro === "em_progresso") return concluidas > 0 && concluidas < total && !tarefa.concluido;
+    if (filtro === "concluidas") return tarefa.concluido || (total > 0 && concluidas === total);
 
-    // filtros em pílula
     if (filtroPrioridade && tarefa.prioridade !== filtroPrioridade) return false;
     if (filtroResponsavel && tarefa.cpf_responsavel !== filtroResponsavel) return false;
 
@@ -266,49 +406,47 @@ function Tarefas() {
     <main className="mainTarefas">
       <div className="botoesTopTarefas">
         <div className="filtrosdotoptarefas">
-        {/* ── Filtros originais (botões) ── */}
-        <div className="filtrosTarefas">
-          {["todas","pendentes","em_progresso","concluidas"].map((f) => (
-            <button
-              key={f}
-              className={filtro === f ? "botaoFiltroTarefas ativo" : "botaoFiltroTarefas"}
-              onClick={() => setFiltro(f)}
-            >
-              {{ todas:"Todas", pendentes:"Pendentes", em_progresso:"Em progresso", concluidas:"Concluídas" }[f]}
-            </button>
-          ))}
-        </div>
-
-        {/* ── NOVO: selects em pílula ── */}
-        <div className="filtrosPilula">
-          <span className="filtrosPilulaIcone">
-            <FontAwesomeIcon icon={faFilter} /> Filtros:
-          </span>
-
-          <div className="filtrosPilulaSelect">
-            <select value={filtroPrioridade} onChange={(e) => setFiltroPrioridade(e.target.value)}>
-              <option value="">Todas as prioridades</option>
-              <option value="alta">Alta</option>
-              <option value="media">Média</option>
-              <option value="baixa">Baixa</option>
-            </select>
-            <FontAwesomeIcon icon={faChevronDown} className="filtrosPilulaChevron" />
+          <div className="filtrosTarefas">
+            {["todas","pendentes","em_progresso","concluidas"].map((f) => (
+              <button
+                key={f}
+                className={filtro === f ? "botaoFiltroTarefas ativo" : "botaoFiltroTarefas"}
+                onClick={() => setFiltro(f)}
+              >
+                {{ todas:"Todas", pendentes:"Pendentes", em_progresso:"Em progresso", concluidas:"Concluídas" }[f]}
+              </button>
+            ))}
           </div>
 
-          {!isFuncionario && (
+          <div className="filtrosPilula">
+            <span className="filtrosPilulaIcone">
+              <FontAwesomeIcon icon={faFilter} /> Filtros:
+            </span>
+
             <div className="filtrosPilulaSelect">
-              <select value={filtroResponsavel} onChange={(e) => setFiltroResponsavel(e.target.value)}>
-                <option value="">Todos os responsáveis</option>
-                {listaFuncionarios.map((f) => (
-                  <option key={f.cpf} value={f.cpf}>{f.nome}</option>
-                ))}
+              <select value={filtroPrioridade} onChange={(e) => setFiltroPrioridade(e.target.value)}>
+                <option value="">Todas as prioridades</option>
+                <option value="alta">Alta</option>
+                <option value="media">Média</option>
+                <option value="baixa">Baixa</option>
               </select>
               <FontAwesomeIcon icon={faChevronDown} className="filtrosPilulaChevron" />
             </div>
-          )}
 
-          <span className="filtrosResultados">{tarefasFiltradas.length} resultado(s)</span>
-        </div>
+            {!isFuncionario && (
+              <div className="filtrosPilulaSelect">
+                <select value={filtroResponsavel} onChange={(e) => setFiltroResponsavel(e.target.value)}>
+                  <option value="">Todos os responsáveis</option>
+                  {listaFuncionarios.map((f) => (
+                    <option key={f.cpf} value={f.cpf}>{f.nome}</option>
+                  ))}
+                </select>
+                <FontAwesomeIcon icon={faChevronDown} className="filtrosPilulaChevron" />
+              </div>
+            )}
+
+            <span className="filtrosResultados">{tarefasFiltradas.length} resultado(s)</span>
+          </div>
         </div>
 
         {!isFuncionario && (
@@ -316,7 +454,8 @@ function Tarefas() {
             className={abrirCriarTarefa ? "abrirFormsTarefaBotao escondido" : "abrirFormsTarefaBotao"}
             onClick={() => setAbrirCriarTarefa(!abrirCriarTarefa)}
           >
-            Adicionar Tarefa
+            <FontAwesomeIcon className="iconeMaisTarefa" icon={faPlus} />
+            Nova Tarefa 
           </button>
         )}
       </div>
@@ -327,13 +466,17 @@ function Tarefas() {
           const subs = tarefa.subtarefas || [];
           const total = subs.length;
           const concluidas = subs.filter((s) => s.concluida).length;
+          const arquivos = tarefa.arquivos || [];
+          const enviandoArquivo = uploadandoArquivo[tarefa.id];
 
-          const statusLabel =
-            total === 0 || concluidas === 0
+          // ── NOVO: concluido do campo direto ou todas subtarefas marcadas
+          const estaConcluida = tarefa.concluido || (total > 0 && concluidas === total);
+
+          const statusLabel = estaConcluida
+            ? "Concluída"
+            : total === 0 || concluidas === 0
               ? "À fazer"
-              : concluidas === total
-                ? "Concluída"
-                : "Em progresso";
+              : "Em progresso";
 
           const prioridadeLabel =
             tarefa.prioridade === "alta" ? "Alta"
@@ -341,9 +484,14 @@ function Tarefas() {
             : "Baixa";
 
           return (
-            <li key={tarefa.id} className={`tarefaItem prioridade-${tarefa.prioridade}`}>
+            <li key={tarefa.id} className={`tarefaItem prioridade-${tarefa.prioridade} ${estaConcluida ? "tarefa-concluida" : ""}`}>
               <div className="tarefaTop">
                 <div className="tarefaEsquerda">
+                  {!isFuncionario && (
+                    <button className="botaoDeletarTarefa">
+                      <FontAwesomeIcon onClick={() => deletarTarefa(tarefa.id)} icon={faCircleXmark}/>
+                    </button>
+                  )}
                   <span className={`dotPrioridade dot-${tarefa.prioridade}`}></span>
                   <div className="nomeDescricao" onClick={() => toggleTarefa(tarefa.id)}>
                     <h3>{tarefa.titulo}</h3>
@@ -352,16 +500,27 @@ function Tarefas() {
                 </div>
                 <div className="tarefaDireita">
                   <span className={`badgePrioridade badge-${tarefa.prioridade}`}>{prioridadeLabel}</span>
-                  <span className="badgeStatus">{statusLabel}</span>
+                  <span className={`badgeStatus ${estaConcluida ? "badge-concluida" : ""}`}>{statusLabel}</span>
                   {total > 0 && <span className="progressoTarefa">{concluidas}/{total}</span>}
+                  {/* ── NOVO: botão concluir para funcionário ── */}
+                  {isFuncionario && (
+                    <button
+                      className={`botaoConcluirTarefa ${tarefa.concluido ? "ativo" : ""}`}
+                      onClick={() => toggleConcluirTarefa(tarefa.id, tarefa.concluido)}
+                      title={tarefa.concluido ? "Reabrir tarefa" : "Marcar como concluída"}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                      {tarefa.concluido ? " Concluída" : " Concluir"}
+                    </button>
+                  )}
                   <button className="botaoToggle" onClick={() => toggleTarefa(tarefa.id)}>
                     {aberta ? "▲" : "▼"}
                   </button>
                 </div>
               </div>
 
-              {/* ── NOVO: subtarefas com checkbox ── */}
               <ul className={`subtarefasLista ${aberta ? "ativo" : ""}`}>
+                {/* Subtarefas */}
                 <h2>Sub-tarefas ({concluidas}/{total})</h2>
                 {subs.length === 0 ? (
                   <p className="semSubtarefas">Nenhuma subtarefa</p>
@@ -383,6 +542,56 @@ function Tarefas() {
                     </li>
                   ))
                 )}
+
+                {/* ── NOVO: seção de arquivos ─────────────────────────── */}
+                <div className="tarefaArquivosSecao">
+                  <h2>
+                    <FontAwesomeIcon icon={faFile} /> Arquivos ({arquivos.length})
+                  </h2>
+
+                  {/* Lista de arquivos já enviados */}
+                  {arquivos.length === 0 ? (
+                    <p className="semSubtarefas">Nenhum arquivo enviado</p>
+                  ) : (
+                    <ul className="listaArquivosTarefa">
+                      {arquivos.map((arq, i) => (
+                        <li key={i} className="arquivoItemTarefa">
+                          <FontAwesomeIcon icon={faFile} className="arquivoIcone" />
+                          <span className="arquivoNome">{arq.nome_arquivo}</span>
+                          <button
+                            className="botaoBaixarArquivo"
+                            onClick={() => baixarArquivo(arq.caminho, arq.nome_arquivo)}
+                          >
+                            Baixar
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Botão de upload — apenas para funcionário */}
+                  {isFuncionario && (
+                    <div className="uploadArquivoWrapper">
+                      <input
+                        type="file"
+                        id={`upload-${tarefa.id}`}
+                        style={{ display: "none" }}
+                        onChange={(e) => {
+                          if (e.target.files[0]) uploadArquivo(tarefa.id, e.target.files[0]);
+                          e.target.value = "";
+                        }}
+                      />
+                      <label
+                        htmlFor={`upload-${tarefa.id}`}
+                        className={`botaoUploadArquivo ${enviandoArquivo ? "enviando" : ""}`}
+                      >
+                        <FontAwesomeIcon icon={faUpload} />
+                        {enviandoArquivo ? " Enviando..." : " Enviar arquivo"}
+                      </label>
+                    </div>
+                  )}
+                </div>
+                {/* ─────────────────────────────────────────────────────── */}
               </ul>
             </li>
           );
@@ -400,7 +609,6 @@ function Tarefas() {
         </div>
 
         <div className="tarefasFormCorpo">
-          {/* Esquerda */}
           <div className="esquerdaTarefa">
             <label>Nome da tarefa</label>
             <input value={nomeTarefa} onChange={(e) => setNomeTarefa(e.target.value)} type="text" placeholder="Ex: Criar briefing da campanha" />
@@ -453,7 +661,6 @@ function Tarefas() {
             </div>
           </div>
 
-          {/* Direita */}
           <div className="direitaTarefa">
             <label>Prazo</label>
             <input

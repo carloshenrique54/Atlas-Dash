@@ -1,6 +1,6 @@
 /* ─── Página equipe ────────────────────────────────────────────────── */
 .equipePage {
-  max-height: 87vh;
+  max-height: 85vh;
   overflow-y: auto;
   background: var(--Azul-Claro);
   padding: 32px 40px 60px;
