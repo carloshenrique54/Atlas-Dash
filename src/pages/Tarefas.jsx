@@ -123,7 +123,7 @@ function Tarefas() {
       .upload(caminho, file);
 
     if (uploadError) {
-      console.error("Erro no upload:", uploadError);
+      console.error("Erro no upload:", uploadError.message);
       setMensagemErroToast("Erro ao enviar arquivo.");
       setAbrirToastErro(true);
       await delay(2000);
