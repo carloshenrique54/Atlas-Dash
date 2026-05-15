@@ -80,7 +80,7 @@ function Tarefas() {
       .delete()
       .eq("id", idTarefa);
 
-    if (error) { console.error("Erro ao deletar tarefa:", error); return; }
+    if (error) { console.error("Erro ao deletar tarefa:", error.message); return; }
 
     setMensagemCertoToast("Tarefa deletada!");
     setAbrirToastCerto(true);
@@ -97,7 +97,7 @@ function Tarefas() {
       .update({ concluido: !concluido })
       .eq("id", idTarefa);
 
-    if (error) { console.error("Erro ao atualizar tarefa:", error); return; }
+    if (error) { console.error("Erro ao atualizar tarefa:", error.message); return; }
 
     setTarefas((prev) =>
       prev.map((t) => t.id === idTarefa ? { ...t, concluido: !concluido } : t)
@@ -350,7 +350,7 @@ function Tarefas() {
         descricao: descricaoTarefa,
         cpf_responsavel: responsavelTarefa,
         prioridade: prioridadeTarefa,
-        projeto: projetoTarefa,
+        id_projeto: projetoTarefa,
         dia_prazo: prazoTarefa,
         id_empresa: idEmpresaTarefaSelecionada,
         id_startup: idStartupSelecionado,
@@ -358,7 +358,7 @@ function Tarefas() {
       }])
       .select().single();
 
-    if (errorTarefa) { alert(errorTarefa); return; }
+    if (errorTarefa) { alert(errorTarefa.message); return; }
 
     const idTarefa = tarefaCriada.id;
 
@@ -375,6 +375,7 @@ function Tarefas() {
 
     setMensagemCertoToast("Tarefa Cadastrada!");
     setAbrirToastCerto(true);
+    setAbrirCriarTarefa(false)
     await delay(2000);
     setAbrirToastCerto(false);
 

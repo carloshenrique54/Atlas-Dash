@@ -134,7 +134,7 @@ function DashboardDono({ usuarioObj }) {
       {/* Saudação */}
       <p className="dashSaudacao">
         Bom dia, <strong>{nome}</strong> — sua empresa tem{" "}
-        <strong className="dashDestAtraso">{atrasadas} atrasada(s)</strong> e{" "}
+        <strong className="dashDestAtraso">{atrasadas} tarefa(s) atrasada(s)</strong> e{" "}
         <strong className="dashDestInfo">{membros} membro(s)</strong> ativos.
       </p>
 
