@@ -470,7 +470,8 @@
   font-weight: 600;
   background: var(--Azul-Escuro);
   color: #ffffff;
-  border-radius: 8px;
+  border-top--radius: 8px;
+  border-top-left-radius: 8px;
   border-bottom: 2px solid transparent;
 }
 

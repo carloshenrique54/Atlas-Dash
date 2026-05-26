@@ -30,7 +30,9 @@ function EditableField({ label, value, onChange, multiline = false }) {
   const [edit, setEdit] = useState(false)
   const [local, setLocal] = useState(value || "")
 
-  useEffect(() => { setLocal(value || "") }, [value])
+  useEffect(() => {
+    setLocal(value || "") 
+  }, [value])
 
   function salvar() { onChange(local); setEdit(false) }
 

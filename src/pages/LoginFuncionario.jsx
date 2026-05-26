@@ -18,7 +18,21 @@ function LoginFuncionario() {
     const [abrirToastCerto, setAbrirToastcerto]       = useState(false)
     const [mensagemCertoToast, setMensagemCertoToast] = useState("")
 
-    if (usuario) navigate("/dashboard")
+    useEffect(() => {
+        if (usuario) { navigate("/dashboard") }
+    }, [navigate])
+
+    // Efeito de brilho seguindo o mouse
+    useEffect(() => {
+        const el = document.querySelector(".mainLogin")
+        if (!el) return
+        const handler = (e) => {
+            el.style.setProperty("--x", `${e.clientX}px`)
+            el.style.setProperty("--y", `${e.clientY}px`)
+        }
+        window.addEventListener("mousemove", handler)
+        return () => window.removeEventListener("mousemove", handler)
+    }, [])
 
     async function mostrarErro(msg) {
         setMensagemErroToast(msg)
@@ -30,11 +44,10 @@ function LoginFuncionario() {
     async function RealizarLogin(e) {
         e.preventDefault()
 
-        if (!email)          return mostrarErro("Insira seu email")
-        if (!senha)          return mostrarErro("Insira sua senha")
-        if (!codigoEmpresa)  return mostrarErro("Insira o código da sua empresa")
+        if (!email)         return mostrarErro("Insira seu email")
+        if (!senha)         return mostrarErro("Insira sua senha")
+        if (!codigoEmpresa) return mostrarErro("Insira o código da sua empresa")
 
-        // 1. Buscar funcionário
         const { data: funcionarios, error } = await supabase
             .from("funcionarios")
             .select("*")
@@ -45,8 +58,6 @@ function LoginFuncionario() {
             return mostrarErro("Usuário não encontrado")
 
         const funcionario = funcionarios[0]
-
-        // 2. Descobrir empresa pelo código
         let empresaId = null
 
         const { data: empresa } = await supabase
@@ -68,7 +79,6 @@ function LoginFuncionario() {
             empresaId = startup.id
         }
 
-        // 3. Verificar vínculo
         const { data: vinculo } = await supabase
             .from("funcionarios")
             .select("id")
@@ -78,7 +88,6 @@ function LoginFuncionario() {
 
         if (!vinculo) return mostrarErro("Você não pertence a essa empresa")
 
-        // 4. Salvar e redirecionar
         const usuarioFinal = { ...funcionario, cargo: "funcionario", empresa_id: empresaId }
         localStorage.setItem("usuario", JSON.stringify(usuarioFinal))
 
@@ -88,10 +97,6 @@ function LoginFuncionario() {
         setAbrirToastcerto(false)
         navigate("/dashboard", { replace: true })
     }
-
-    useEffect(() => {
-        if(usuario){navigate("/dashboard")}
-    }, [navigate]) 
 
     return (
         <>
@@ -107,8 +112,10 @@ function LoginFuncionario() {
                     <img className="logoForm" src={logo} alt="Logo" />
                     <h1>Login</h1>
 
+                    <span className="form-section-title">Código da Empresa</span>
+
                     <div className="loginInputs">
-                        <label>Código da empresa:</label>
+                        <label>Código de convite</label>
                         <input
                             placeholder="Ex: TNOV-2024"
                             onChange={e => setCodigoEmpresa(e.target.value)}
@@ -117,19 +124,32 @@ function LoginFuncionario() {
                         />
                     </div>
 
+                    <span className="form-section-title">Acesso</span>
+
                     <div className="loginInputs">
-                        <label>E-mail:</label>
-                        <input placeholder="exemplo@gmail.com" onChange={e => setEmail(e.target.value)} value={email} type="email" />
+                        <label>E-mail</label>
+                        <input
+                            placeholder="exemplo@gmail.com"
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            type="email"
+                        />
                     </div>
 
                     <div className="loginInputs">
-                        <label>Senha:</label>
-                        <input onChange={e => setSenha(e.target.value)} value={senha} type="password" />
+                        <label>Senha</label>
+                        <input
+                            onChange={e => setSenha(e.target.value)}
+                            value={senha}
+                            type="password"
+                            placeholder="Mínimo 8 caracteres"
+                        />
                     </div>
 
-                    <button className="loginFuncionarioBotao" type="submit">Entrar como Funcionário</button>
+                    <button className="loginFuncionarioBotao" type="submit">
+                        Entrar como Funcionário
+                    </button>
 
-                    {/* Botão para voltar ao login de dono */}
                     <button
                         type="button"
                         className="loginBotaoSecundario"

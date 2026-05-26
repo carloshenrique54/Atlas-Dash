@@ -9,16 +9,28 @@ function Login() {
     const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
-    const [senha, setSenha] = useState("")  
-    const [abrirToastErro, setAbrirToastErro]       = useState(false)
-    const [mensagemErroToast, setMensagemErroToast]  = useState("")
-    const [abrirToastCerto, setAbrirToastcerto]      = useState(false)
+    const [senha, setSenha] = useState("")
+    const [abrirToastErro, setAbrirToastErro]        = useState(false)
+    const [mensagemErroToast, setMensagemErroToast]   = useState("")
+    const [abrirToastCerto, setAbrirToastcerto]       = useState(false)
     const [mensagemCertoToast, setMensagemCertoToast] = useState("")
     const usuario = JSON.parse(localStorage.getItem("usuario"))
 
     useEffect(() => {
-        if(usuario){navigate("/dashboard")}
-    }, [navigate]) 
+        if (usuario) { navigate("/dashboard") }
+    }, [navigate])
+
+    // Efeito de brilho seguindo o mouse
+    useEffect(() => {
+        const el = document.querySelector(".mainLogin")
+        if (!el) return
+        const handler = (e) => {
+            el.style.setProperty("--x", `${e.clientX}px`)
+            el.style.setProperty("--y", `${e.clientY}px`)
+        }
+        window.addEventListener("mousemove", handler)
+        return () => window.removeEventListener("mousemove", handler)
+    }, [])
 
     async function RealizarLogin(e) {
         e.preventDefault()
@@ -86,19 +98,30 @@ function Login() {
                     <img className="logoForm" src={logo} alt="Logo" />
                     <h1>Login</h1>
 
+                    <span className="form-section-title">Acesso</span>
+
                     <div className="loginInputs">
-                        <label>E-mail:</label>
-                        <input placeholder="exemplo@gmail.com" onChange={e => setEmail(e.target.value)} value={email} type="email" />
+                        <label>E-mail</label>
+                        <input
+                            placeholder="exemplo@gmail.com"
+                            onChange={e => setEmail(e.target.value)}
+                            value={email}
+                            type="email"
+                        />
                     </div>
 
                     <div className="loginInputs">
-                        <label>Senha:</label>
-                        <input onChange={e => setSenha(e.target.value)} value={senha} type="password" />
+                        <label>Senha</label>
+                        <input
+                            onChange={e => setSenha(e.target.value)}
+                            value={senha}
+                            type="password"
+                            placeholder="Mínimo 8 caracteres"
+                        />
                     </div>
 
                     <button type="submit">Fazer Login</button>
 
-                    {/* Botão para login de funcionário */}
                     <button
                         type="button"
                         className="loginBotaoSecundario"

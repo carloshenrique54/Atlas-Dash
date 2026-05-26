@@ -11,6 +11,7 @@
 
 .perfilLoading {
   display: flex;
+  font-family: "Inter";
   align-items: center;
   justify-content: center;
   height: 60vh;
