@@ -20,7 +20,7 @@ function LoginFuncionario() {
 
     useEffect(() => {
         if (usuario) { navigate("/dashboard") }
-    }, [navigate])
+    }, [usuario, navigate])
 
     // Efeito de brilho seguindo o mouse
     useEffect(() => {
