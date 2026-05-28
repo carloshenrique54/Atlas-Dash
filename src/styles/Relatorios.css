@@ -599,3 +599,9 @@ body.modoEscuro .relGraficoCard h3{
   font-size: 15px;
   color: #8a97a8;
 }
+
+.relCardIcone--neutro svg { font-size: 14px; color: #818181; }
+.relCardIcone--verde svg { font-size: 14px; color: #1D9E75; }
+.relCardIcone--amarelo svg { font-size: 14px; color: #e5e238; }
+.relCardIcone--vermelho svg {  font-size: 14px;color: #9e1d1d; }
+.relCardIcone--azul svg { font-size: 14px; color: #2a1d9e; }

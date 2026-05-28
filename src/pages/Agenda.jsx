@@ -45,8 +45,10 @@ function Agenda() {
   const [salvandoEvento, setSalvandoEvento] = useState(false)
 
   const delay = (ms) => new Promise(r => setTimeout(r, ms))
-  const [toastMsg, setToastMsg] = useState("")
-  const [toastOn,  setToastOn]  = useState(false)
+  const [abrirToastErro, setAbrirToastErro]   = useState(false);
+  const [mensagemErroToast, setMensagemErroToast] = useState("");
+  const [abrirToastCerto, setAbrirToastCerto]  = useState(false);
+  const [mensagemCertoToast, setMensagemCertoToast] = useState("");
   async function showToast(msg) { setToastMsg(msg); setToastOn(true); await delay(2000); setToastOn(false) }
 
   useEffect(() => { if (!usuario) { navigate("/") } }, [navigate])
@@ -152,8 +154,8 @@ function Agenda() {
   // ── Criar evento ─────────────────────────────────────────────────────
   async function cadastrarEvento(e) {
     e.preventDefault()
-    if (!tituloEvento.trim()) { showToast("Dê um título ao evento"); return }
-    if (!dataEvento)          { showToast("Selecione uma data"); return }
+    if (!tituloEvento) { setMensagemErroToast("Coloque um titulo no evento"); setAbrirToastErro(true); await delay(2000); setAbrirToastErro(false); return; }
+    if (!dataEvento) { setMensagemErroToast("Coloque uma data no evento"); setAbrirToastErro(true); await delay(2000); setAbrirToastErro(false); return; }
 
     setSalvandoEvento(true)
 
@@ -179,10 +181,11 @@ function Agenda() {
 
     if (error) { showToast("Erro ao salvar evento"); return }
 
-    setEventos(prev => [...prev, novoEvento])
-    setModalEvento(false)
-    setTituloEvento(""); setDescEvento(""); setDataEvento(""); setHoraEvento(""); setTipoEvento("reuniao")
-    showToast("Evento criado!")
+    setMensagemCertoToast("Evento Cadastrado"); 
+    setAbrirToastCerto(true);
+    setModalEvento(false);
+    await delay(2000);
+    setAbrirToastCerto(false);
   }
 
   async function deletarEvento(idEvento) {
@@ -199,7 +202,8 @@ function Agenda() {
   return (
     <main className="mainAgenda">
       {/* Toast */}
-      <div className={`agendaToast ${toastOn ? "ativo" : ""}`}>{toastMsg}</div>
+      <div className={!abrirToastErro ? "modalAviso" : "modalAviso ativo"}><h3>{mensagemErroToast}</h3></div>
+      <div className={!abrirToastCerto ? "toast" : "toast ativo"}>{mensagemCertoToast}</div>
 
       {/* Modal criar evento */}
       {modalEvento && (

@@ -29,6 +29,28 @@
   min-height: 500px;
 }
 
+.modalAviso{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  z-index: 9999;
+  position: fixed;
+  background-color: #ffa7a7;
+  color: #500000;
+  transition: ease 0.4s;
+  transform: translateY(-100px);
+  opacity: 0;
+  margin: 0;
+  border: none;
+}
+
+.modalAviso.ativo{
+  transform: translateY(0);
+  opacity: 100%;
+}
+
 /* ─── Wrapper do calendário ─────────────────────────────────────────── */
 .calWrapper {
   width: 100%;
@@ -707,7 +729,7 @@
  
 .agendaFormSalvar {
   flex: 1;
-  background: var(--Azul-Escuro, #111650);
+  background: var(--Laranja-Botoes);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -717,9 +739,10 @@
   font-weight: 700;
   cursor: pointer;
   transition: opacity 0.2s;
+  transition: ease 0.3s;
 }
  
-.agendaFormSalvar:hover { opacity: 0.88; }
+.agendaFormSalvar:hover { box-shadow: 0px 0px 10px var(--Laranja-Botoes-Brilho); transform: scale(1.01, 1.01); }
 .agendaFormSalvar:disabled { opacity: 0.5; cursor: not-allowed; }
  
 .agendaFormCancelar {

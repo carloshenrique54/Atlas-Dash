@@ -177,7 +177,7 @@ function Relatorios() {
             ["Tarefas atrasadas",           String(atrasadas)],
             ["Taxa de conclusão",           `${taxaConc}%`],
           ],
-          styles:        { fontStyle: "normal", fontSize: 10 },
+          styles:        { fontStyle: "normal", fontSize: 20 },
           headStyles:    { fillColor: AZUL, textColor: [255,255,255], fontStyle: "bold" },
           alternateRowStyles: { fillColor: [245, 247, 250] },
           columnStyles:  { 0: { fontStyle: "bold" }, 1: { halign: "center" } },

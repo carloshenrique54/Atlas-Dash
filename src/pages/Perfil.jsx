@@ -519,7 +519,6 @@ function Perfil() {
           <div className="perfilCard">
             <div className="perfilCardHeader">
               <h3 className="perfilCardTitulo"><FontAwesomeIcon icon={faBuilding} /> Informações da Empresa</h3>
-              <span className="perfilCardSub">Clique em ✏️ para editar</span>
             </div>
             <div className="perfilEmpresaInfoGrid">
               <div className="perfilEmpresaInfoItem">

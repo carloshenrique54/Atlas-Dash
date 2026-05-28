@@ -350,7 +350,7 @@ function Tarefas() {
   // ── Render principal ──────────────────────────────────────────────────
   return (
     <>
-      <div className={!abrirToastErro ? "modalAvisoTarefas" : "modalAvisoTarefas ativo"}><h3>{mensagemErroToast}</h3></div>
+      <div className={!abrirToastErro ? "modalAviso" : "modalAviso ativo"}><h3>{mensagemErroToast}</h3></div>
       <div className={!abrirToastCerto ? "toast" : "toast ativo"}>{mensagemCertoToast}</div>
       {form}
 

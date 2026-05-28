@@ -467,7 +467,7 @@
 .projetosTagInput input { flex: 1; }
 
 .projetosTagInput button {
-  background: var(--Azul-Botao);
+  background: var(--Laranja-Botoes);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -479,10 +479,10 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background 0.15s;
+  transition: ease 0.3s;
 }
 
-.projetosTagInput button:hover { background: var(--Azul-Escuro-Fundos); }
+.projetosTagInput button:hover { box-shadow: 0px 0px 10px var(--Laranja-Botoes-Brilho); transform: scale(1.01, 1.01); }
 
 .projetosTagsList {
   display: flex;
@@ -591,34 +591,38 @@
 
 .projetosBotaoSalvar {
   flex: 1;
-  background: var(--Azul-Botao);
+  background: var(--Laranja-Botoes);
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 11px 0;
-  font-size: 14px;
+  padding: 11px;
   font-family: "Inter", sans-serif;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: opacity 0.2s;
+  transition: ease 0.3s;
 }
+ 
+.projetosBotaoSalvar:hover { box-shadow: 0px 0px 10px var(--Laranja-Botoes-Brilho); transform: scale(1.01, 1.01); }
 
-.projetosBotaoSalvar:hover { background: var(--Azul-Escuro-Fundos); }
-
-.projetosBotaoCancelar {
-  background: #f0f2f5;
-  color: var(--Azul-Escuro);
-  border: none;
+.projetosBotaoCancelar{
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.12);
   border-radius: 10px;
   padding: 11px 20px;
-  font-size: 14px;
   font-family: "Inter", sans-serif;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7a8d;
   cursor: pointer;
-  transition: background 0.15s;
+  width: 30%;
+  transition: all 0.2s;
 }
-
-.projetosBotaoCancelar:hover { background: var(--Azul-Claro); }
+ 
+.projetosBotaoCancelar:hover{ 
+  background: #f5f7fa; 
+}
 
 /* ─── Responsivo ───────────────────────────────────────────────────── */
 @media (max-width: 1100px) {

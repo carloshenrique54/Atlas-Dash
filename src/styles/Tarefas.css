@@ -209,26 +209,26 @@ select {
     gap: 10px;
 }
 
-.modalAvisoTarefas{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 90%;
-    z-index: 9999;
-    position: fixed;
-    background-color: #ffa7a7;
-    color: #500000;
-    transition: ease 0.4s;
-    transform: translateY(-100px);
-    opacity: 0;
-    margin: 0;
-    border: none;
+.modalAviso{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  z-index: 9999;
+  position: fixed;
+  background-color: #ffa7a7;
+  color: #500000;
+  transition: ease 0.4s;
+  transform: translateY(-100px);
+  opacity: 0;
+  margin: 0;
+  border: none;
 }
 
-.modalAvisoTarefas.ativo{
-    transform: translateY(0);
-    opacity: 100%;
+.modalAviso.ativo{
+  transform: translateY(0);
+  opacity: 100%;
 }
 
 .direitaTarefa {
@@ -311,16 +311,6 @@ select {
 .subtarefa button:hover{
     background-color: transparent;
     color: red;
-}
-
-.botaoFecharTarefas {
-    background-color: transparent;
-    color: var(--Azul-Escuro);
-    border: 3px solid rgba(0, 0, 0, 0.080);
-}
-
-.botaoFecharTarefas:hover {
-    background-color: transparent;
 }
 
 .abrirFormsTarefaBotao.escondido {
@@ -460,8 +450,13 @@ select {
 }
 
 .filtrosTarefas{
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 12px;
+  padding: 6px;
+  width: fit-content;
 }
 
 .filtrosdotoptarefas{
@@ -471,20 +466,20 @@ select {
 }
 
 .filtrosTarefas .botaoFiltroTarefas{
-    background-color: white;
-    border: none;
-    color: var(--Azul-Escuro);
-    padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 18px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(135, 135, 135, 0.254);
-    transition: ease 0.3s;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
 }
 
 .filtrosTarefas .botaoFiltroTarefas:hover{
-    transform: scale(1.05, 1.05);
+  color: var(--Azul-Escuro); 
+  background: #f5f7fa;
 }
 
 .botaoFiltroTarefas.ativo{
@@ -517,6 +512,7 @@ select {
     box-shadow: 0px 5px 15px rgba(119, 119, 119, 0.16);
     margin-bottom: 0;
     margin-top: 5px;
+    margin-left: 0;
 }
 
 .tarefaItem h3{
@@ -936,6 +932,7 @@ select {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+  margin-left: 0;
 }
  
 .filtrosdotoptarefas {
@@ -1246,6 +1243,7 @@ select {
   border-radius: 12px;
   border: 1.5px solid rgba(0,0,0,0.07);
   padding: 14px 16px;
+  margin-left: 0;
   margin-bottom: 10px;
   transition: box-shadow 0.2s;
 }
@@ -1548,4 +1546,22 @@ select {
     border: 1px solid rgba(0, 0, 0, 0.080);
     padding: 5px 10px;
     font-size: 14px;
+}
+
+.botaoFecharTarefas {
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  padding: 11px 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7a8d;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s;
+}
+ 
+.botaoFecharTarefas:hover{ 
+  background: #f5f7fa; 
 }
