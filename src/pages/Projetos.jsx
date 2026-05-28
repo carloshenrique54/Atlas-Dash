@@ -2,17 +2,11 @@ import { useEffect, useState } from "react"
 import { supabase } from "../services/supabase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
-  faMagnifyingGlass,
-  faFilter,
-  faChevronDown,
-  faCalendarDays,
-  faUsers,
-  faCircleXmark,
-  faPlus,
-  faXmark,
+  faMagnifyingGlass, faFilter, faChevronDown,
+  faCalendarDays, faUsers, faCircleXmark, faPlus, faXmark,
 } from "@fortawesome/free-solid-svg-icons"
 import "../styles/Projetos.css"
-import { useNavigate } from "react-router-dom"
+import ProjetoDetalhe from "./ProjetoDetalhe"
 
 function Projetos() {
   const usuario    = localStorage.getItem("usuario")
@@ -23,15 +17,18 @@ function Projetos() {
 
   const delay = (ms) => new Promise((r) => setTimeout(r, ms))
 
-  const [escopo, setEscopo]               = useState(null)
-  const [projetos, setProjetos]           = useState([])
-  const [tarefas, setTarefas]             = useState([])
-  const [funcionarios, setFuncionarios]   = useState([])
-  const [carregando, setCarregando]       = useState(true)
+  const [escopo, setEscopo]             = useState(null)
+  const [projetos, setProjetos]         = useState([])
+  const [tarefas, setTarefas]           = useState([])
+  const [funcionarios, setFuncionarios] = useState([])
+  const [carregando, setCarregando]     = useState(true)
+
+  // Detalhe do projeto selecionado
+  const [projetoSelecionado, setProjetoSelecionado] = useState(null)
 
   // Filtros
-  const [busca, setBusca]                 = useState("")
-  const [filtroStatus, setFiltroStatus]   = useState("")
+  const [busca, setBusca]               = useState("")
+  const [filtroStatus, setFiltroStatus] = useState("")
 
   // Form criar projeto
   const [abrirForm, setAbrirForm]         = useState(false)
@@ -40,7 +37,7 @@ function Projetos() {
   const [prazoProjeto, setPrazoProjeto]   = useState("")
   const [tagInput, setTagInput]           = useState("")
   const [tags, setTags]                   = useState([])
-  const [participantes, setParticipantes] = useState([]) // cpfs selecionados
+  const [participantes, setParticipantes] = useState([])
 
   // Toast
   const [abrirToastErro, setAbrirToastErro]       = useState(false)
@@ -66,20 +63,17 @@ function Projetos() {
     async function carregar() {
       setCarregando(true)
 
-      // projetos
       let pq = supabase.from("projetos").select("*")
       pq = escopo === "startup" ? pq.eq("startup_id", idEmpresa) : pq.eq("empresa_id", idEmpresa)
       const { data: p } = await pq
       setProjetos(p || [])
 
-      // tarefas (para calcular progresso)
       let tq = supabase.from("tarefas").select("id, id_projeto, concluido")
       tq = escopo === "startup" ? tq.eq("id_startup", idEmpresa) : tq.eq("id_empresa", idEmpresa)
       const { data: t } = await tq
       setTarefas(t || [])
 
-      // funcionários
-      let fq = supabase.from("funcionarios").select("nome, cpf")
+      let fq = supabase.from("funcionarios").select("nome, cpf, email, telefone")
       fq = escopo === "startup" ? fq.eq("startup_id", idEmpresa) : fq.eq("empresa_id", idEmpresa)
       const { data: f } = await fq
       setFuncionarios(f || [])
@@ -100,7 +94,6 @@ function Projetos() {
     const arr = projeto.cpf_participantes
     if (!arr) return 0
     if (Array.isArray(arr)) return arr.length
-    // Supabase retorna _text como string "{cpf1,cpf2}"
     return arr.replace(/[{}]/g, "").split(",").filter(Boolean).length
   }
 
@@ -132,7 +125,7 @@ function Projetos() {
     return "#E24B4A"
   }
 
-  // ── Projetos filtrados (funcionário vê só os seus) ───────────────────
+  // ── Projetos filtrados ───────────────────────────────────────────────
   const projetosVisiveis = projetos.filter(p => {
     if (isFuncionario) {
       const parts = participantesArray(p)
@@ -146,10 +139,8 @@ function Projetos() {
   // ── Criar projeto ────────────────────────────────────────────────────
   async function cadastrarProjeto(e) {
     e.preventDefault()
-    if (!nomeProjeto.trim()) { showToast("Dê um nome ao projeto", "erro"); return }
-    if (!prazoProjeto)       { showToast("Defina um prazo", "erro"); return }
-
-    const cpfParticipantesArr = participantes.length > 0 ? participantes : null
+    if (!nomeProjeto.trim()) { setMensagemErroToast("Dê um nome ao projeto"); setAbrirToastErro(true); await delay(2000); setAbrirToastErro(false); return }
+    if (!prazoProjeto)       { setMensagemErroToast("Defina um prazo"); setAbrirToastErro(true); await delay(2000); setAbrirToastErro(false); return }
 
     const payload = {
       nome_projeto:      nomeProjeto,
@@ -157,7 +148,7 @@ function Projetos() {
       responsavel_cpf:   CPF,
       prazo_projeto:     new Date(prazoProjeto + "T12:00:00").toISOString(),
       tags:              tags.length > 0 ? tags : null,
-      cpf_participantes: cpfParticipantesArr,
+      cpf_participantes: participantes.length > 0 ? participantes : null,
       criado_projeto:    new Date().toISOString(),
     }
 
@@ -165,18 +156,16 @@ function Projetos() {
     else payload.empresa_id = idEmpresa
 
     const { error } = await supabase.from("projetos").insert([payload])
+    if (error) { setMensagemErroToast("Erro: " + error.message); setAbrirToastErro(true); await delay(2000); setAbrirToastErro(false); return }
 
-    if (error) {setMensagemErroToast("Erro ao criar projeto: " + error.message, "erro"); setAbrirToastErro(true); await delay(2000) ; setAbrirToastErro(false) ; return }
-
-    setMensagemCertoToast("Projeto criado!");
-    setAbrirForm(false)
-    await delay(2000);
+    setMensagemCertoToast("Projeto criado!")
+    setAbrirToastcerto(true)
+    await delay(2000)
     setAbrirToastcerto(false)
     setAbrirForm(false)
     setNomeProjeto(""); setDescProjeto(""); setPrazoProjeto("")
     setTags([]); setParticipantes([])
 
-    // Recarregar
     let pq = supabase.from("projetos").select("*")
     pq = escopo === "startup" ? pq.eq("startup_id", idEmpresa) : pq.eq("empresa_id", idEmpresa)
     const { data: p } = await pq
@@ -190,234 +179,224 @@ function Projetos() {
   }
 
   function toggleParticipante(cpf) {
-    setParticipantes(prev =>
-      prev.includes(cpf) ? prev.filter(c => c !== cpf) : [...prev, cpf]
-    )
+    setParticipantes(prev => prev.includes(cpf) ? prev.filter(c => c !== cpf) : [...prev, cpf])
   }
 
   const STATUS_LABELS = { ativo: "Ativo", concluido: "Concluído", atrasado: "Atrasado" }
 
-  // ── Render ───────────────────────────────────────────────────────────
+  // ── Se projeto selecionado, renderiza detalhe ────────────────────────
+  if (projetoSelecionado) {
+    return (
+      <ProjetoDetalhe
+        projeto={projetoSelecionado}
+        funcionarios={funcionarios}
+        escopo={escopo}
+        idEmpresa={idEmpresa}
+        isDono={!isFuncionario}
+        onVoltar={() => setProjetoSelecionado(null)}
+      />
+    )
+  }
+
+  // ── Render principal ─────────────────────────────────────────────────
   return (
     <>
-    <div className={!abrirToastErro ? "modalAviso" : "modalAviso ativo"}>
-                <h3>{mensagemErroToast}</h3>
-            </div>
-            <div className={!abrirToastCerto ? "toast" : "toast ativo"}>
-                {mensagemCertoToast}
-            </div>
-    <div className="projetosPage">
-      {/* Barra topo */}
-      <div className="projetosTopBar">
-        <div className="projetosBusca">
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="projetosBuscaIcone" />
-          <input
-            type="text"
-            placeholder="Buscar projetos..."
-            value={busca}
-            onChange={e => setBusca(e.target.value)}
-          />
-        </div>
-
-        <div className="projetosFiltroDir">
-          <div className="projetosFiltroSelect">
-            <FontAwesomeIcon icon={faFilter} className="projetosFiltroIcone" />
-            <select value={filtroStatus} onChange={e => setFiltroStatus(e.target.value)}>
-              <option value="">Todos os Status</option>
-              <option value="ativo">Ativo</option>
-              <option value="concluido">Concluído</option>
-              <option value="atrasado">Atrasado</option>
-            </select>
-            <FontAwesomeIcon icon={faChevronDown} className="projetosChevron" />
-          </div>
-
-          {!isFuncionario && (
-            <button className="projetosBotaoNovo" onClick={() => setAbrirForm(true)}>
-              <FontAwesomeIcon icon={faPlus} /> Novo Projeto
-            </button>
-          )}
-        </div>
+      <div className={!abrirToastErro ? "modalAviso" : "modalAviso ativo"}>
+        <h3>{mensagemErroToast}</h3>
+      </div>
+      <div className={!abrirToastCerto ? "toast" : "toast ativo"}>
+        {mensagemCertoToast}
       </div>
 
-      {/* Formulário criar projeto */}
-      {abrirForm && (
-        <div className="projetosFormOverlay" onClick={(e) => { if (e.target === e.currentTarget) setAbrirForm(false) }}>
-          <form className="projetosForm" onSubmit={cadastrarProjeto}>
-            <div className="projetosFormHeader">
-              <h2 className="projetosFormHeaderTitulo">Novo Projeto</h2>
-              <button type="button" className="projetosFormFechar" onClick={() => setAbrirForm(false)}>
-                <FontAwesomeIcon icon={faXmark} />
+      <div className="projetosPage">
+        {/* Barra topo */}
+        <div className="projetosTopBar">
+          <div className="projetosBusca">
+            <FontAwesomeIcon icon={faMagnifyingGlass} className="projetosBuscaIcone" />
+            <input
+              type="text"
+              placeholder="Buscar projetos..."
+              value={busca}
+              onChange={e => setBusca(e.target.value)}
+            />
+          </div>
+
+          <div className="projetosFiltroDir">
+            <div className="projetosFiltroSelect">
+              <FontAwesomeIcon icon={faFilter} className="projetosFiltroIcone" />
+              <select value={filtroStatus} onChange={e => setFiltroStatus(e.target.value)}>
+                <option value="">Todos os Status</option>
+                <option value="ativo">Ativo</option>
+                <option value="concluido">Concluído</option>
+                <option value="atrasado">Atrasado</option>
+              </select>
+              <FontAwesomeIcon icon={faChevronDown} className="projetosChevron" />
+            </div>
+
+            {!isFuncionario && (
+              <button className="projetosBotaoNovo" onClick={() => setAbrirForm(true)}>
+                <FontAwesomeIcon icon={faPlus} /> Novo Projeto
               </button>
-            </div>
+            )}
+          </div>
+        </div>
 
-            <div className="projetosFormCorpo">
-              {/* Coluna esquerda */}
-              <div className="projetosFormCol">
-                <label>Nome do projeto</label>
-                <input
-                  type="text"
-                  value={nomeProjeto}
-                  onChange={e => setNomeProjeto(e.target.value)}
-                  placeholder="Ex: Campanha Verão 2026"
-                />
+        {/* Form criar projeto */}
+        {abrirForm && (
+          <div className="projetosFormOverlay" onClick={(e) => { if (e.target === e.currentTarget) setAbrirForm(false) }}>
+            <form className="projetosForm" onSubmit={cadastrarProjeto}>
+              <div className="projetosFormHeader">
+                <h2 className="projetosFormHeaderTitulo">Novo Projeto</h2>
+                <button type="button" className="projetosFormFechar" onClick={() => setAbrirForm(false)}>
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
 
-                <label>Descrição</label>
-                <textarea
-                  value={descProjeto}
-                  onChange={e => setDescProjeto(e.target.value)}
-                  placeholder="Descreva o objetivo do projeto..."
-                />
-
-                <label>Prazo</label>
-                <input
-                  type="date"
-                  value={prazoProjeto}
-                  onChange={e => setPrazoProjeto(e.target.value)}
-                />
-
-                <label>Tags</label>
-                <div className="projetosTagInput">
-                  <input
-                    type="text"
-                    value={tagInput}
-                    onChange={e => setTagInput(e.target.value)}
-                    placeholder="Digite e pressione Enter"
-                    onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); adicionarTag() } }}
-                  />
-                  <button type="button" onClick={adicionarTag}>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                </div>
-                {tags.length > 0 && (
-                  <div className="projetosTagsList">
-                    {tags.map(t => (
-                      <span key={t} className="projetoTagChip">
-                        {t}
-                        <button type="button" onClick={() => setTags(tags.filter(x => x !== t))}>
-                          <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                      </span>
-                    ))}
+              <div className="projetosFormCorpo">
+                <div className="projetosFormCol">
+                  <label>Nome do projeto</label>
+                  <input type="text" value={nomeProjeto} onChange={e => setNomeProjeto(e.target.value)} placeholder="Ex: Campanha Verão 2026" />
+                  <label>Descrição</label>
+                  <textarea value={descProjeto} onChange={e => setDescProjeto(e.target.value)} placeholder="Descreva o objetivo do projeto..." />
+                  <label>Prazo</label>
+                  <input type="date" value={prazoProjeto} onChange={e => setPrazoProjeto(e.target.value)} />
+                  <label>Tags</label>
+                  <div className="projetosTagInput">
+                    <input
+                      type="text"
+                      value={tagInput}
+                      onChange={e => setTagInput(e.target.value)}
+                      placeholder="Digite e pressione Enter"
+                      onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); adicionarTag() } }}
+                    />
+                    <button type="button" onClick={adicionarTag}><FontAwesomeIcon icon={faPlus} /></button>
                   </div>
-                )}
-              </div>
-
-              {/* Coluna direita: participantes */}
-              <div className="projetosFormCol">
-                <label>Participantes</label>
-                <div className="projetosParticipantesList">
-                  {funcionarios.length === 0 && (
-                    <p className="projetosVazio">Nenhum funcionário cadastrado</p>
+                  {tags.length > 0 && (
+                    <div className="projetosTagsList">
+                      {tags.map(t => (
+                        <span key={t} className="projetoTagChip">
+                          {t}
+                          <button type="button" onClick={() => setTags(tags.filter(x => x !== t))}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
                   )}
-                  {funcionarios.map(f => {
-                    const selecionado = participantes.includes(f.cpf)
-                    const iniciais = f.nome.split(" ").slice(0,2).map(n=>n[0]).join("").toUpperCase()
-                    return (
-                      <div
-                        key={f.cpf}
-                        className={`projetosParticipanteItem ${selecionado ? "selecionado" : ""}`}
-                        onClick={() => toggleParticipante(f.cpf)}
-                      >
-                        <div className="projetosParticipanteAvatar">{iniciais}</div>
-                        <span className="projetosParticipanteNome">{f.nome}</span>
-                        <span className="projetosParticipanteCheck">{selecionado ? "✓" : ""}</span>
-                      </div>
-                    )
-                  })}
                 </div>
 
-                <div className="projetosFormBotoes">
-                  <button type="submit" className="projetosBotaoSalvar">Criar Projeto</button>
-                  <button type="button" className="projetosBotaoCancelar" onClick={() => setAbrirForm(false)}>
-                    Cancelar
-                  </button>
+                <div className="projetosFormCol">
+                  <label>Participantes</label>
+                  <div className="projetosParticipantesList">
+                    {funcionarios.length === 0 && <p className="projetosVazio">Nenhum funcionário cadastrado</p>}
+                    {funcionarios.map(f => {
+                      const selecionado = participantes.includes(f.cpf)
+                      const iniciais = f.nome.split(" ").slice(0, 2).map(n => n[0]).join("").toUpperCase()
+                      return (
+                        <div
+                          key={f.cpf}
+                          className={`projetosParticipanteItem ${selecionado ? "selecionado" : ""}`}
+                          onClick={() => toggleParticipante(f.cpf)}
+                        >
+                          <div className="projetosParticipanteAvatar">{iniciais}</div>
+                          <span className="projetosParticipanteNome">{f.nome}</span>
+                          <span className="projetosParticipanteCheck">{selecionado ? "✓" : ""}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  <div className="projetosFormBotoes">
+                    <button type="submit" className="projetosBotaoSalvar">Criar Projeto</button>
+                    <button type="button" className="projetosBotaoCancelar" onClick={() => setAbrirForm(false)}>Cancelar</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
-        </div>
-      )}
+            </form>
+          </div>
+        )}
 
-      {/* Grid de projetos */}
-      {carregando ? (
-        <div className="projetosLoading">Carregando projetos...</div>
-      ) : projetosVisiveis.length === 0 ? (
-        <div className="projetosVazioEstado">
-          <p>Nenhum projeto encontrado</p>
-          {!isFuncionario && (
-            <button className="projetosBotaoNovo" onClick={() => setAbrirForm(true)}>
-              <FontAwesomeIcon icon={faPlus} /> Criar primeiro projeto
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="projetosGrid">
-          {projetosVisiveis.map(p => {
-            const pct     = progresso(p)
-            const status  = statusProjeto(p)
-            const cor     = corProgresso(pct)
-            const nPart   = numParticipantes(p)
-            const tagsArr = Array.isArray(p.tags) ? p.tags : (p.tags ? Object.values(p.tags) : [])
+        {/* Grid de projetos */}
+        {carregando ? (
+          <div className="projetosLoading">Carregando projetos...</div>
+        ) : projetosVisiveis.length === 0 ? (
+          <div className="projetosVazioEstado">
+            <p>Nenhum projeto encontrado</p>
+            {!isFuncionario && (
+              <button className="projetosBotaoNovo" onClick={() => setAbrirForm(true)}>
+                <FontAwesomeIcon icon={faPlus} /> Criar primeiro projeto
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="projetosGrid">
+            {projetosVisiveis.map(p => {
+              const pct    = progresso(p)
+              const status = statusProjeto(p)
+              const cor    = corProgresso(pct)
+              const nPart  = numParticipantes(p)
+              const tagsArr = Array.isArray(p.tags) ? p.tags : (p.tags ? Object.values(p.tags) : [])
 
-            return (
-              <div key={p.id_projeto} className="projetoCard">
-                {/* Cabeçalho */}
-                <div className="projetoCardTopo">
-                  <div>
-                    <h3 className="projetoNome">{p.nome_projeto}</h3>
-                    {p.descricao_projeto && (
-                      <p className="projetoDesc">{p.descricao_projeto}</p>
+              return (
+                <div
+                  key={p.id_projeto}
+                  className="projetoCard projetoCard--clicavel"
+                  onClick={() => setProjetoSelecionado(p)}
+                  title="Clique para ver detalhes"
+                >
+                  <div className="projetoCardTopo">
+                    <div>
+                      <h3 className="projetoNome">{p.nome_projeto}</h3>
+                      {p.descricao_projeto && (
+                        <p className="projetoDesc">{p.descricao_projeto}</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {tagsArr.length > 0 && (
+                    <div className="projetoTags">
+                      {tagsArr.slice(0, 3).map((t, i) => (
+                        <span key={i} className="projetoTagChip projetoTagChip--card">{t}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="projetoProgresso">
+                    <div className="projetoProgressoTopo">
+                      <span>Progresso</span>
+                      <strong style={{ color: cor }}>{pct}%</strong>
+                    </div>
+                    <progress
+                      className="projetoProgressoBar"
+                      value={pct}
+                      max={100}
+                      style={{ "--proj-cor": cor }}
+                    />
+                  </div>
+
+                  <div className="projetoCardRodape">
+                    <div className="projetoCardRodapeEsq">
+                      <span className={`projetoStatusBadge projetoStatus--${status}`}>
+                        {STATUS_LABELS[status]}
+                      </span>
+                      <span className="projetoMeta">
+                        <FontAwesomeIcon icon={faUsers} /> {nPart}
+                      </span>
+                    </div>
+                    {p.prazo_projeto && (
+                      <span className="projetoMeta">
+                        <FontAwesomeIcon icon={faCalendarDays} /> {formatarData(p.prazo_projeto)}
+                      </span>
                     )}
                   </div>
-                </div>
 
-                {/* Tags */}
-                {tagsArr.length > 0 && (
-                  <div className="projetoTags">
-                    {tagsArr.slice(0,3).map((t, i) => (
-                      <span key={i} className="projetoTagChip projetoTagChip--card">{t}</span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Progresso */}
-                <div className="projetoProgresso">
-                  <div className="projetoProgressoTopo">
-                    <span>Progresso</span>
-                    <strong style={{ color: cor }}>{pct}%</strong>
-                  </div>
-                  <progress
-                    className="projetoProgressoBar"
-                    value={pct}
-                    max={100}
-                    style={{ "--proj-cor": cor }}
-                  />
+                  <div className="projetoCardVerDetalhes">Ver detalhes →</div>
                 </div>
-
-                {/* Rodapé */}
-                <div className="projetoCardRodape">
-                  <div className="projetoCardRodapeEsq">
-                    <span className={`projetoStatusBadge projetoStatus--${status}`}>
-                      {STATUS_LABELS[status]}
-                    </span>
-                    <span className="projetoMeta">
-                      <FontAwesomeIcon icon={faUsers} />
-                      {nPart}
-                    </span>
-                  </div>
-                  {p.prazo_projeto && (
-                    <span className="projetoMeta">
-                      <FontAwesomeIcon icon={faCalendarDays} />
-                      {formatarData(p.prazo_projeto)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-      )}
-    </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
     </>
   )
 }

@@ -44,9 +44,10 @@
   align-items: center;
   gap: 10px;
   background: #ffffff;
-  border: 1.5px solid var(--Azul-Claro);
+  border: 1.5px solid rgba(0, 0, 0, 0.080);
   border-radius: 12px;
   padding: 10px 16px;
+  box-shadow: 0px 2px 10px rgba(154, 154, 154, 0.11);
   min-width: 200px;
   transition: border-color 0.15s;
 }
@@ -84,10 +85,11 @@
   align-items: center;
   gap: 8px;
   background: #ffffff;
-  border: 1.5px solid var(--Azul-Claro);
+  border: 1.5px solid rgba(0, 0, 0, 0.080);
   border-radius: 12px;
-  padding: 9px 14px;
+  padding: 1px 10px;
   position: relative;
+  box-shadow: 0px 2px 10px rgba(154, 154, 154, 0.11);
   transition: border-color 0.15s;
 }
 
@@ -117,9 +119,9 @@
 /* Botão novo projeto */
 .projetosBotaoNovo {
   background-color: var(--Laranja-Botoes);
-  padding: 15px;
+  padding: 12px;
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   font-family: "Inter";
   box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
   border: none;
@@ -138,6 +140,7 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
   max-height: calc(100vh - 160px);
+  padding-top: 10px;
   overflow-y: auto;
   padding-right: 4px; /* evita barra sobre os cards */
 }
@@ -150,6 +153,7 @@
 .projetoCard {
   background: #ffffff;
   border-radius: 16px;
+  box-shadow: 0px 0px 10px rgba(154, 154, 154, 0.11);
   border: 1.5px solid #e8edf3;
   padding: 22px 22px 18px;
   display: flex;
@@ -225,6 +229,18 @@
   background: #e8edf3;
   overflow: hidden;
 }
+
+.projetoParticipanteBar{
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  appearance: none;
+  overflow: hidden;
+}
+
+.projetoParticipanteBar::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
+.projetoParticipanteBar::-webkit-progress-value { background: var(--proj-cor, var(--Azul-Botao)); border-radius: 999px; transition: width .5s; }
+.projetoParticipanteBar::-moz-progress-bar      { background: var(--proj-cor, var(--Azul-Botao)); border-radius: 999px; }
 
 .projetoProgressoBar::-webkit-progress-bar   { background: #e8edf3; border-radius: 999px; }
 .projetoProgressoBar::-webkit-progress-value { background: var(--proj-cor, var(--Azul-Botao)); border-radius: 999px; transition: width .5s; }
@@ -331,9 +347,9 @@
   position: sticky;
   top: 0;
   background: #fff;
-  width: 93.2%;
+  width: 100%;
   z-index: 1;
-  border-radius: 20px 20px 0 0;
+  border-radius: 20px 20px 0 0; 
 }
 
 .projetosFormHeader h2 {
@@ -617,4 +633,29 @@
 
 .projetosFormHeaderTitulo{
   width: 20px;
+}
+
+.projetoDetalheHeaderContainer{
+  background-color: var(--Branco-Fundo);
+  box-shadow: 0px 0px 10px rgba(120, 120, 120, 0.161);
+  padding: 5px 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.detalheProgressoWrap{
+  background-color: var(--Branco-Fundo);
+  box-shadow: 0px 0px 10px rgba(120, 120, 120, 0.161);
+  padding: 15px 15px;
+  border-radius: 15px;
+  margin: 15px 0px;
+}
+
+.detalheProgressoWrap span strong{
+  color: var(--Azul-Escuro);
+}
+
+.detalhePage{
+  max-height: 89vh;
+  overflow-y: scroll;
 }

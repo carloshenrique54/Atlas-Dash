@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { supabase } from "../services/supabase"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -6,13 +6,42 @@ import {
   faEnvelope, faPhone, faLocationDot, faCalendarDays,
   faBriefcase, faGraduationCap, faBuilding, faLink,
   faUsers, faListCheck, faFolderOpen, faArrowTrendUp,
+  faIdCard, faFloppyDisk,
 } from "@fortawesome/free-solid-svg-icons"
-import {
-  faGithub, faLinkedin,
-} from "@fortawesome/free-brands-svg-icons"
+import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import "../styles/Perfil.css"
 
-// ── helpers ──────────────────────────────────────────────────────────
+// ── Componente auxiliar: campo editável inline ────────────────────────
+function EditableField({ label, value, onChange, multiline = false, type = "text" }) {
+  const [edit,  setEdit]  = useState(false)
+  const [local, setLocal] = useState(value || "")
+
+  useEffect(() => { setLocal(value || "") }, [value])
+
+  function salvar() { onChange(local); setEdit(false) }
+
+  return (
+    <div className="perfilEditableField">
+      {edit ? (
+        <div className="perfilEditableRow">
+          {multiline
+            ? <textarea value={local} onChange={e => setLocal(e.target.value)} rows={3} className="perfilInput" />
+            : <input type={type} value={local} onChange={e => setLocal(e.target.value)} className="perfilInput" />
+          }
+          <button className="perfilIconBtn perfilIconBtn--ok" onClick={salvar}><FontAwesomeIcon icon={faCheck} /></button>
+          <button className="perfilIconBtn perfilIconBtn--no" onClick={() => { setLocal(value || ""); setEdit(false) }}><FontAwesomeIcon icon={faXmark} /></button>
+        </div>
+      ) : (
+        <div className="perfilEditableRow">
+          <span className={local ? "" : "perfilPlaceholder"}>{local || `Adicionar ${label.toLowerCase()}...`}</span>
+          <button className="perfilIconBtn" onClick={() => setEdit(true)}><FontAwesomeIcon icon={faPen} /></button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Chip de habilidade ────────────────────────────────────────────────
 function Chip({ label, onRemove }) {
   return (
     <span className="perfilChip">
@@ -26,61 +55,46 @@ function Chip({ label, onRemove }) {
   )
 }
 
-function EditableField({ label, value, onChange, multiline = false }) {
-  const [edit, setEdit] = useState(false)
-  const [local, setLocal] = useState(value || "")
-
-  useEffect(() => {
-    setLocal(value || "") 
-  }, [value])
-
-  function salvar() { onChange(local); setEdit(false) }
-
-  return (
-    <div className="perfilEditableField">
-      {edit ? (
-        <div className="perfilEditableRow">
-          {multiline
-            ? <textarea value={local} onChange={e => setLocal(e.target.value)} rows={3} className="perfilInput" />
-            : <input value={local} onChange={e => setLocal(e.target.value)} className="perfilInput" />
-          }
-          <button className="perfilIconBtn perfilIconBtn--ok" onClick={salvar}><FontAwesomeIcon icon={faCheck} /></button>
-          <button className="perfilIconBtn perfilIconBtn--no" onClick={() => { setLocal(value||""); setEdit(false) }}><FontAwesomeIcon icon={faXmark} /></button>
-        </div>
-      ) : (
-        <div className="perfilEditableRow">
-          <span className={local ? "" : "perfilPlaceholder"}>{local || `Adicionar ${label.toLowerCase()}...`}</span>
-          <button className="perfilIconBtn" onClick={() => setEdit(true)}><FontAwesomeIcon icon={faPen} /></button>
-        </div>
-      )}
-    </div>
-  )
-}
-
 // ══════════════════════════════════════════════════════════════════════
 function Perfil() {
-  const usuario    = localStorage.getItem("usuario")
-  const usuarioObj = usuario ? JSON.parse(usuario) : null
-  const CPF        = usuarioObj?.cpf ?? ""
-  const idEmpresa  = parseInt(usuarioObj?.empresa_id)
+  const usuario       = localStorage.getItem("usuario")
+  const usuarioObj    = usuario ? JSON.parse(usuario) : null
+  const CPF           = usuarioObj?.cpf ?? ""
+  const idEmpresa     = parseInt(usuarioObj?.empresa_id)
   const isFuncionario = usuarioObj?.cargo === "funcionario"
 
-  const [escopo, setEscopo]         = useState(null)
-  const [perfil, setPerfil]         = useState(null)
-  const [funcionario, setFuncionario] = useState(null)
-  const [empresa, setEmpresa]       = useState(null)
-  const [projetos, setProjetos]     = useState([])
-  const [tarefas, setTarefas]       = useState([])
-  const [funcionarios, setFuncionarios] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const [escopo,       setEscopo]       = useState(null)
+  const [perfil,       setPerfil]       = useState(null)
+  const [funcionario,  setFuncionario]  = useState(null)  // dados do funcionario logado
+  const [usuarioDono,  setUsuarioDono]  = useState(null)  // dados do dono (usuarios table)
+  const [empresa,      setEmpresa]      = useState(null)  // dados da empresa/startup
+  const [projetos,     setProjetos]     = useState([])
+  const [tarefas,      setTarefas]      = useState([])
+  const [funcionarios, setFuncionarios] = useState([])    // lista da equipe (para dono)
+  const [carregando,   setCarregando]   = useState(true)
 
-  // Edição de habilidades
+  // Avatar / foto
+  const [fotoUrl,       setFotoUrl]       = useState(null)
+  const [uploadandoFoto,setUploadandoFoto]= useState(false)
+  const fotoInputRef = useRef(null)
+
+  // Habilidades
   const [novaHabilidade, setNovaHabilidade] = useState("")
-  const [editandoHab, setEditandoHab]       = useState(false)
+  const [editandoHab,    setEditandoHab]    = useState(false)
 
-  // Edição de experiência
+  // Modal de experiência (funcionário)
   const [modalExp, setModalExp] = useState(false)
-  const [expForm, setExpForm]   = useState({ cargo:"", empresa:"", inicio:"", fim:"", tipo:"trabalho" })
+  const [expForm,  setExpForm]  = useState({ cargo: "", empresa: "", inicio: "", fim: "", tipo: "trabalho" })
+
+  // Toast
+  const [toastMsg, setToastMsg] = useState("")
+  const [toastOn,  setToastOn]  = useState(false)
+
+  async function showToast(msg) {
+    setToastMsg(msg); setToastOn(true)
+    await new Promise(r => setTimeout(r, 2000))
+    setToastOn(false)
+  }
 
   // ── Detectar escopo ────────────────────────────────────────────────
   useEffect(() => {
@@ -100,15 +114,21 @@ function Perfil() {
     async function carregar() {
       setCarregando(true)
 
-      // Dados do funcionário / usuário logado
       if (isFuncionario) {
+        // Dados pessoais do funcionário
         const { data: f } = await supabase.from("funcionarios").select("*").eq("cpf", CPF).maybeSingle()
         setFuncionario(f)
+      } else {
+        // Dados pessoais do dono (tabela usuarios)
+        const { data: u } = await supabase.from("usuarios").select("nome, email, telefone, cpf").eq("cpf", CPF).maybeSingle()
+        setUsuarioDono(u)
       }
 
       // Perfil estendido
       const { data: p } = await supabase.from("perfis").select("*").eq("cpf", CPF).maybeSingle()
-      setPerfil(p || { cpf: CPF, bio:"", habilidades:[], experiencias:[], linkedin:"", github:"", portfolio:"", cidade:"", data_entrada:"" })
+      const perfilBase = p || { cpf: CPF, bio: "", habilidades: [], experiencias: [], linkedin: "", github: "", portfolio: "", cidade: "", data_entrada: "", foto_url: "" }
+      setPerfil(perfilBase)
+      setFotoUrl(perfilBase?.foto_url || null)
 
       // Projetos
       let pq = supabase.from("projetos").select("id_projeto, nome_projeto, descricao_projeto, prazo_projeto")
@@ -122,9 +142,9 @@ function Perfil() {
       const { data: ts } = await tq
       setTarefas(ts || [])
 
-      // Funcionários (para dono)
+      // Equipe (apenas para dono)
       if (!isFuncionario) {
-        let fq = supabase.from("funcionarios").select("nome, cpf, email")
+        let fq = supabase.from("funcionarios").select("nome, cpf, email, telefone")
         fq = escopo === "startup" ? fq.eq("startup_id", idEmpresa) : fq.eq("empresa_id", idEmpresa)
         const { data: fs } = await fq
         setFuncionarios(fs || [])
@@ -135,11 +155,59 @@ function Perfil() {
     carregar()
   }, [idEmpresa, escopo, CPF, isFuncionario])
 
-  // ── Persistir perfil ────────────────────────────────────────────────
+  // ── Upload de foto de perfil ────────────────────────────────────────
+  async function handleFotoUpload(e) {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploadandoFoto(true)
+
+    const extensao = file.name.split(".").pop()
+    const caminho  = `${CPF}/avatar.${extensao}`
+
+    // Remove foto antiga se existir
+    await supabase.storage.from("avatars").remove([caminho])
+
+    const { error: upErr } = await supabase.storage
+      .from("avatars")
+      .upload(caminho, file, { upsert: true })
+
+    if (upErr) { showToast("Erro ao enviar foto"); setUploadandoFoto(false); return }
+
+    const { data: { publicUrl } } = supabase.storage.from("avatars").getPublicUrl(caminho)
+
+    setFotoUrl(publicUrl)
+    await salvarPerfil("foto_url", publicUrl)
+    showToast("Foto atualizada!")
+    setUploadandoFoto(false)
+  }
+
+  // ── Salvar campo no perfil ──────────────────────────────────────────
   async function salvarPerfil(campo, valor) {
     const novo = { ...perfil, [campo]: valor }
     setPerfil(novo)
     await supabase.from("perfis").upsert({ ...novo, cpf: CPF }, { onConflict: "cpf" })
+  }
+
+  // ── Salvar campo no funcionário (table funcionarios) ────────────────
+  async function salvarFuncionario(campo, valor) {
+    setFuncionario(prev => ({ ...prev, [campo]: valor }))
+    await supabase.from("funcionarios").update({ [campo]: valor }).eq("cpf", CPF)
+    showToast("Salvo!")
+  }
+
+  // ── Salvar campo do usuário dono (table usuarios) ───────────────────
+  async function salvarUsuarioDono(campo, valor) {
+    setUsuarioDono(prev => ({ ...prev, [campo]: valor }))
+    await supabase.from("usuarios").update({ [campo]: valor }).eq("cpf", CPF)
+    showToast("Salvo!")
+  }
+
+  // ── Salvar campo da empresa/startup ────────────────────────────────
+  async function salvarEmpresa(campo, valor) {
+    setEmpresa(prev => ({ ...prev, [campo]: valor }))
+    const tabela = escopo === "startup" ? "startups" : "empresas"
+    await supabase.from(tabela).update({ [campo]: valor }).eq("id", idEmpresa)
+    showToast("Salvo!")
   }
 
   // ── Habilidades ─────────────────────────────────────────────────────
@@ -155,12 +223,12 @@ function Perfil() {
     salvarPerfil("habilidades", habs)
   }
 
-  // ── Experiências ────────────────────────────────────────────────────
+  // ── Experiências (funcionário) ──────────────────────────────────────
   function addExperiencia() {
     if (!expForm.cargo || !expForm.empresa) return
     const exps = [...(perfil?.experiencias || []), expForm]
     salvarPerfil("experiencias", exps)
-    setExpForm({ cargo:"", empresa:"", inicio:"", fim:"", tipo:"trabalho" })
+    setExpForm({ cargo: "", empresa: "", inicio: "", fim: "", tipo: "trabalho" })
     setModalExp(false)
   }
 
@@ -176,19 +244,16 @@ function Perfil() {
     return Math.round((tp.filter(t => t.concluido).length / tp.length) * 100)
   }
 
-  // ── Participações do funcionário ────────────────────────────────────
-  function meusProjetosFunc() {
-    return projetos // Na visão do funcionário, mostra todos da empresa por ora
-  }
-
   if (carregando) return <div className="perfilLoading">Carregando perfil...</div>
 
-  const habilidades   = perfil?.habilidades   || []
-  const experiencias  = perfil?.experiencias  || []
-  const nome          = isFuncionario ? (funcionario?.nome || usuarioObj?.nome) : (empresa?.nome || "")
-  const email         = isFuncionario ? (funcionario?.email || "") : (empresa?.dono_email || "")
-  const telefone      = isFuncionario ? (funcionario?.telefone || "") : ""
-  const iniciais      = nome.split(" ").slice(0,2).map(n=>n[0]||"").join("").toUpperCase()
+  const habilidades  = perfil?.habilidades  || []
+  const experiencias = perfil?.experiencias || []
+
+  // Avatar: foto ou iniciais
+  const nomeExibido = isFuncionario
+    ? (funcionario?.nome || usuarioObj?.nome || "")
+    : (empresa?.nome || "")
+  const iniciais = nomeExibido.split(" ").slice(0, 2).map(n => n[0] || "").join("").toUpperCase()
 
   // ══════════════════════════════════════════════════════
   // VISÃO DO FUNCIONÁRIO
@@ -196,44 +261,34 @@ function Perfil() {
   if (isFuncionario) {
     return (
       <div className="perfilPage">
+        {/* Toast */}
+        <div className={`perfilToast ${toastOn ? "ativo" : ""}`}>{toastMsg}</div>
 
-        {/* Modal adicionar experiência */}
+        {/* Modal experiência */}
         {modalExp && (
           <div className="perfilOverlay" onClick={e => { if (e.target === e.currentTarget) setModalExp(false) }}>
             <div className="perfilModal">
               <div className="perfilModalHeader">
                 <h3>Adicionar Experiência</h3>
-                <button className="perfilIconBtn perfilIconBtn--no" onClick={() => setModalExp(false)}>
-                  <FontAwesomeIcon icon={faXmark} />
-                </button>
+                <button className="perfilIconBtn perfilIconBtn--no" onClick={() => setModalExp(false)}><FontAwesomeIcon icon={faXmark} /></button>
               </div>
               <div className="perfilModalCorpo">
                 <label>Tipo</label>
                 <div className="perfilTipoRow">
-                  {["trabalho","educacao"].map(t => (
-                    <button
-                      key={t}
-                      className={`perfilTipoBotao ${expForm.tipo===t ? "ativo":""}`}
-                      onClick={() => setExpForm(p => ({...p, tipo:t}))}
-                    >
-                      <FontAwesomeIcon icon={t==="trabalho" ? faBriefcase : faGraduationCap} />
-                      {t==="trabalho" ? "Trabalho" : "Educação"}
+                  {["trabalho", "educacao"].map(t => (
+                    <button key={t} className={`perfilTipoBotao ${expForm.tipo === t ? "ativo" : ""}`} onClick={() => setExpForm(p => ({ ...p, tipo: t }))}>
+                      <FontAwesomeIcon icon={t === "trabalho" ? faBriefcase : faGraduationCap} />
+                      {t === "trabalho" ? "Trabalho" : "Educação"}
                     </button>
                   ))}
                 </div>
-                <label>{expForm.tipo==="trabalho" ? "Cargo" : "Curso / Grau"}</label>
-                <input className="perfilInput" value={expForm.cargo} onChange={e => setExpForm(p=>({...p,cargo:e.target.value}))} placeholder={expForm.tipo==="trabalho" ? "Ex: Gerente de Projetos" : "Ex: Bacharelado em TI"} />
-                <label>{expForm.tipo==="trabalho" ? "Empresa" : "Instituição"}</label>
-                <input className="perfilInput" value={expForm.empresa} onChange={e => setExpForm(p=>({...p,empresa:e.target.value}))} placeholder={expForm.tipo==="trabalho" ? "Ex: Atlas Corp" : "Ex: USP"} />
+                <label>{expForm.tipo === "trabalho" ? "Cargo" : "Curso / Grau"}</label>
+                <input className="perfilInput" value={expForm.cargo} onChange={e => setExpForm(p => ({ ...p, cargo: e.target.value }))} placeholder={expForm.tipo === "trabalho" ? "Ex: Gerente de Projetos" : "Ex: Bacharelado em TI"} />
+                <label>{expForm.tipo === "trabalho" ? "Empresa" : "Instituição"}</label>
+                <input className="perfilInput" value={expForm.empresa} onChange={e => setExpForm(p => ({ ...p, empresa: e.target.value }))} placeholder={expForm.tipo === "trabalho" ? "Ex: Atlas Corp" : "Ex: USP"} />
                 <div className="perfilModalLinha">
-                  <div>
-                    <label>Início</label>
-                    <input className="perfilInput" value={expForm.inicio} onChange={e => setExpForm(p=>({...p,inicio:e.target.value}))} placeholder="Ex: 2021" />
-                  </div>
-                  <div>
-                    <label>Fim</label>
-                    <input className="perfilInput" value={expForm.fim} onChange={e => setExpForm(p=>({...p,fim:e.target.value}))} placeholder="Presente" />
-                  </div>
+                  <div><label>Início</label><input className="perfilInput" value={expForm.inicio} onChange={e => setExpForm(p => ({ ...p, inicio: e.target.value }))} placeholder="Ex: 2021" /></div>
+                  <div><label>Fim</label><input className="perfilInput" value={expForm.fim} onChange={e => setExpForm(p => ({ ...p, fim: e.target.value }))} placeholder="Presente" /></div>
                 </div>
                 <button className="perfilSalvarBtn" onClick={addExperiencia}>Adicionar</button>
               </div>
@@ -242,26 +297,32 @@ function Perfil() {
         )}
 
         <div className="perfilLayout">
-          {/* ── Sidebar esquerda ── */}
+          {/* ── Sidebar ── */}
           <div className="perfilSidebar">
-
-            {/* Card principal */}
             <div className="perfilSideCard">
               <div className="perfilBanner">
-                <div className="perfilAvatarBig">{iniciais}</div>
+                {/* Avatar com upload */}
+                <div className="perfilAvatarUploadWrap">
+                  {fotoUrl
+                    ? <img src={fotoUrl} alt="foto" className="perfilAvatarBigImg" />
+                    : <div className="perfilAvatarBig">{iniciais}</div>
+                  }
+                  <button
+                    className="perfilAvatarUploadBtn"
+                    onClick={() => fotoInputRef.current?.click()}
+                    title="Alterar foto"
+                    disabled={uploadandoFoto}
+                  >
+                    <FontAwesomeIcon icon={faCamera} />
+                  </button>
+                  <input ref={fotoInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleFotoUpload} />
+                </div>
               </div>
               <div className="perfilSideInfo">
-                <div className="perfilNomeLinha">
-                  <h2>{nome}</h2>
-                </div>
+                <h2>{nomeExibido}</h2>
                 <p className="perfilCargo">{funcionario?.cargo || "Colaborador"}</p>
                 <p className="perfilBio">
-                  <EditableField
-                    label="Bio"
-                    value={perfil?.bio}
-                    onChange={v => salvarPerfil("bio", v)}
-                    multiline
-                  />
+                  <EditableField label="Bio" value={perfil?.bio} onChange={v => salvarPerfil("bio", v)} multiline />
                 </p>
                 <div className="perfilMetaLista">
                   <span className="perfilMetaItem">
@@ -283,46 +344,44 @@ function Perfil() {
             <div className="perfilSideCard">
               <h4 className="perfilSideTitulo">Links Sociais</h4>
               {[
-                { label:"GITHUB",    icon:faGithub,   campo:"github",    placeholder:"github.com/usuario" },
-                { label:"LINKEDIN",  icon:faLinkedin, campo:"linkedin",  placeholder:"linkedin.com/in/usuario" },
-                { label:"PORTFOLIO", icon:faLink,     campo:"portfolio", placeholder:"meuportfolio.com" },
+                { label: "GITHUB",    icon: faGithub,   campo: "github",    placeholder: "github.com/usuario" },
+                { label: "LINKEDIN",  icon: faLinkedin, campo: "linkedin",  placeholder: "linkedin.com/in/usuario" },
+                { label: "PORTFOLIO", icon: faLink,     campo: "portfolio", placeholder: "meuportfolio.com" },
               ].map(l => (
                 <div key={l.campo} className="perfilLinkItem">
-                  <div className="perfilLinkIcone">
-                    <FontAwesomeIcon icon={l.icon} />
-                  </div>
+                  <div className="perfilLinkIcone"><FontAwesomeIcon icon={l.icon} /></div>
                   <div className="perfilLinkConteudo">
                     <span className="perfilLinkLabel">{l.label}</span>
-                    <EditableField
-                      label={l.label}
-                      value={perfil?.[l.campo]}
-                      onChange={v => salvarPerfil(l.campo, v)}
-                    />
+                    <EditableField label={l.label} value={perfil?.[l.campo]} onChange={v => salvarPerfil(l.campo, v)} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ── Conteúdo principal ── */}
+          {/* ── Main ── */}
           <div className="perfilMain">
-
-            {/* Contato */}
+            {/* Contato pessoal */}
             <div className="perfilCard">
-              <h3 className="perfilCardTitulo">Informações de Contato</h3>
+              <h3 className="perfilCardTitulo">Contato</h3>
               <div className="perfilContatoGrid">
                 <div className="perfilContatoItem">
                   <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faEnvelope} /></div>
                   <div>
-                    <span className="perfilContatoLabel">EMAIL</span>
-                    <p className="perfilContatoValor">{email || "—"}</p>
+                    <span className="perfilContatoLabel">E-MAIL</span>
+                    <p className="perfilContatoValor">{funcionario?.email || "—"}</p>
                   </div>
                 </div>
                 <div className="perfilContatoItem">
                   <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faPhone} /></div>
-                  <div>
+                  <div style={{ flex: 1 }}>
                     <span className="perfilContatoLabel">TELEFONE</span>
-                    <p className="perfilContatoValor">{telefone || "—"}</p>
+                    <EditableField
+                      label="Telefone"
+                      value={funcionario?.telefone}
+                      onChange={v => salvarFuncionario("telefone", v)}
+                      type="tel"
+                    />
                   </div>
                 </div>
               </div>
@@ -342,16 +401,8 @@ function Perfil() {
                 ))}
                 {editandoHab && (
                   <div className="perfilAddChip">
-                    <input
-                      className="perfilInput perfilInput--sm"
-                      value={novaHabilidade}
-                      onChange={e => setNovaHabilidade(e.target.value)}
-                      placeholder="Nova habilidade"
-                      onKeyDown={e => { if (e.key==="Enter") addHabilidade() }}
-                    />
-                    <button className="perfilIconBtn perfilIconBtn--ok" onClick={addHabilidade}>
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
+                    <input className="perfilInput perfilInput--sm" value={novaHabilidade} onChange={e => setNovaHabilidade(e.target.value)} placeholder="Nova habilidade" onKeyDown={e => { if (e.key === "Enter") addHabilidade() }} />
+                    <button className="perfilIconBtn perfilIconBtn--ok" onClick={addHabilidade}><FontAwesomeIcon icon={faPlus} /></button>
                   </div>
                 )}
                 {!editandoHab && (
@@ -366,26 +417,18 @@ function Perfil() {
             <div className="perfilCard">
               <div className="perfilCardHeader">
                 <h3 className="perfilCardTitulo">Experiência</h3>
-                <button className="perfilTextBtn" onClick={() => setModalExp(true)}>
-                  Adicionar
-                </button>
+                <button className="perfilTextBtn" onClick={() => setModalExp(true)}>Adicionar</button>
               </div>
-              {experiencias.length === 0 && (
-                <p className="perfilVazio">Nenhuma experiência adicionada ainda</p>
-              )}
+              {experiencias.length === 0 && <p className="perfilVazio">Nenhuma experiência adicionada ainda</p>}
               {experiencias.map((exp, i) => (
                 <div key={i} className="perfilExpItem">
-                  <div className="perfilExpIcone">
-                    <FontAwesomeIcon icon={exp.tipo==="educacao" ? faGraduationCap : faBriefcase} />
-                  </div>
+                  <div className="perfilExpIcone"><FontAwesomeIcon icon={exp.tipo === "educacao" ? faGraduationCap : faBriefcase} /></div>
                   <div className="perfilExpInfo">
                     <p className="perfilExpCargo">{exp.cargo}</p>
                     <p className="perfilExpEmpresa">{exp.empresa}</p>
                     <p className="perfilExpPeriodo">{exp.inicio}{exp.fim ? ` - ${exp.fim}` : " - Presente"}</p>
                   </div>
-                  <button className="perfilIconBtn perfilIconBtn--no" onClick={() => removeExperiencia(i)}>
-                    <FontAwesomeIcon icon={faXmark} />
-                  </button>
+                  <button className="perfilIconBtn perfilIconBtn--no" onClick={() => removeExperiencia(i)}><FontAwesomeIcon icon={faXmark} /></button>
                 </div>
               ))}
             </div>
@@ -399,22 +442,15 @@ function Perfil() {
               {projetos.length === 0 && <p className="perfilVazio">Nenhum projeto vinculado</p>}
               {projetos.map(p => {
                 const pct = progressoProjeto(p.id_projeto)
-                const ativo = pct < 100
                 return (
                   <div key={p.id_projeto} className="perfilProjetoItem">
-                    <div className="perfilProjetoIcone">
-                      <FontAwesomeIcon icon={faFolderOpen} />
-                    </div>
+                    <div className="perfilProjetoIcone"><FontAwesomeIcon icon={faFolderOpen} /></div>
                     <div className="perfilProjetoInfo">
                       <div className="perfilProjetoNomeLinha">
                         <p className="perfilProjetoNome">{p.nome_projeto}</p>
-                        <span className={`perfilProjetoStatus ${ativo ? "perfilProjetoStatus--ativo" : "perfilProjetoStatus--conc"}`}>
-                          {ativo ? "Ativo" : "Concluído"}
-                        </span>
+                        <span className={`perfilProjetoStatus ${pct < 100 ? "perfilProjetoStatus--ativo" : "perfilProjetoStatus--conc"}`}>{pct < 100 ? "Ativo" : "Concluído"}</span>
                       </div>
-                      {p.descricao_projeto && (
-                        <p className="perfilProjetoDesc">{p.descricao_projeto}</p>
-                      )}
+                      {p.descricao_projeto && <p className="perfilProjetoDesc">{p.descricao_projeto}</p>}
                       <div className="perfilProjetoBarWrap">
                         <progress className="perfilProjetoBar" value={pct} max={100} />
                         <span className="perfilProjetoPct">{pct}%</span>
@@ -433,56 +469,151 @@ function Perfil() {
   // ══════════════════════════════════════════════════════
   // VISÃO DO DONO
   // ══════════════════════════════════════════════════════
-  const totalTarefas  = tarefas.length
-  const concluidas    = tarefas.filter(t => t.concluido).length
-  const taxaConc      = totalTarefas > 0 ? Math.round((concluidas/totalTarefas)*100) : 0
+  const totalTarefas = tarefas.length
+  const concluidas   = tarefas.filter(t => t.concluido).length
+  const taxaConc     = totalTarefas > 0 ? Math.round((concluidas / totalTarefas) * 100) : 0
 
   return (
     <div className="perfilPage">
+      {/* Toast */}
+      <div className={`perfilToast ${toastOn ? "ativo" : ""}`}>{toastMsg}</div>
+
       <div className="perfilLayout">
         {/* ── Sidebar ── */}
         <div className="perfilSidebar">
           <div className="perfilSideCard">
-            <div className="perfilBanner perfilBanner--empresa" />
-            <div className="perfilSideInfo">
-              <div className="perfilAvatarEmpresa">{iniciais}</div>
-              <h2 className="perfilEmpresaNome">{nome}</h2>
-              <p className="perfilCargo">{empresa?.areaatuacao || "Empresa"}</p>
-              {empresa?.cnpj && (
-                <p className="perfilCargo" style={{ fontSize:11 }}>CNPJ: {empresa.cnpj}</p>
-              )}
-              <div className="perfilMetaLista">
-                <span className="perfilMetaItem">
-                  <FontAwesomeIcon icon={faUsers} /> {funcionarios.length} colaboradores
-                </span>
-                <span className="perfilMetaItem">
-                  <FontAwesomeIcon icon={faFolderOpen} /> {projetos.length} projetos
-                </span>
+            <div className="perfilBanner perfilBanner--empresa">
+              {/* Avatar com upload */}
+              <div className="perfilAvatarUploadWrap perfilAvatarUploadWrap--empresa">
+                {fotoUrl
+                  ? <img src={fotoUrl} alt="logo" className="perfilAvatarEmpresaImg" />
+                  : <div className="perfilAvatarEmpresa">{iniciais}</div>
+                }
+                <button
+                  className="perfilAvatarUploadBtn"
+                  onClick={() => fotoInputRef.current?.click()}
+                  title="Alterar logo"
+                  disabled={uploadandoFoto}
+                >
+                  <FontAwesomeIcon icon={faCamera} />
+                </button>
+                <input ref={fotoInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handleFotoUpload} />
               </div>
             </div>
-          </div>
-
-          {/* Contato da empresa */}
-          <div className="perfilSideCard">
-            <h4 className="perfilSideTitulo">Contato</h4>
-            <div className="perfilMetaLista">
-              <span className="perfilMetaItem"><FontAwesomeIcon icon={faEnvelope} /> {empresa?.dono_email || "—"}</span>
+            <div className="perfilSideInfo">
+              <h2 className="perfilEmpresaNome">{empresa?.nome || "—"}</h2>
+              <p className="perfilCargo">{empresa?.areaatuacao || "Empresa"}</p>
+              {empresa?.cnpj && <p className="perfilCargo" style={{ fontSize: 11 }}>CNPJ: {empresa.cnpj}</p>}
+              <div className="perfilMetaLista">
+                <span className="perfilMetaItem"><FontAwesomeIcon icon={faUsers} /> {funcionarios.length} colaboradores</span>
+                <span className="perfilMetaItem"><FontAwesomeIcon icon={faFolderOpen} /> {projetos.length} projetos</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* ── Conteúdo principal ── */}
+        {/* ── Main ── */}
         <div className="perfilMain">
 
-          {/* Stats da empresa */}
+          {/* ── Card: Informações da Empresa (editável) ── */}
           <div className="perfilCard">
-            <h3 className="perfilCardTitulo">Visão Geral da Empresa</h3>
+            <div className="perfilCardHeader">
+              <h3 className="perfilCardTitulo"><FontAwesomeIcon icon={faBuilding} /> Informações da Empresa</h3>
+              <span className="perfilCardSub">Clique em ✏️ para editar</span>
+            </div>
+            <div className="perfilEmpresaInfoGrid">
+              <div className="perfilEmpresaInfoItem">
+                <span className="perfilContatoLabel">NOME DA EMPRESA</span>
+                <EditableField label="Nome" value={empresa?.nome} onChange={v => salvarEmpresa("nome", v)} />
+              </div>
+              <div className="perfilEmpresaInfoItem">
+                <span className="perfilContatoLabel">ÁREA DE ATUAÇÃO</span>
+                <EditableField label="Área de atuação" value={empresa?.areaatuacao} onChange={v => salvarEmpresa("areaatuacao", v)} />
+              </div>
+              {escopo === "empresa" && (
+                <>
+                  <div className="perfilEmpresaInfoItem">
+                    <span className="perfilContatoLabel">CNPJ</span>
+                    <EditableField label="CNPJ" value={empresa?.cnpj} onChange={v => salvarEmpresa("cnpj", v)} />
+                  </div>
+                  <div className="perfilEmpresaInfoItem">
+                    <span className="perfilContatoLabel">CEP</span>
+                    <EditableField label="CEP" value={empresa?.cep} onChange={v => salvarEmpresa("cep", v)} />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* ── Card: Contato da Empresa ── */}
+          <div className="perfilCard">
+            <h3 className="perfilCardTitulo"><FontAwesomeIcon icon={faBuilding} style={{ marginRight: 8 }} />Contato da Empresa</h3>
+            <p className="perfilCardSub" style={{ marginBottom: 16 }}>Informações de contato visíveis publicamente para a empresa</p>
+            <div className="perfilContatoGrid">
+              <div className="perfilContatoItem">
+                <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faEnvelope} /></div>
+                <div style={{ flex: 1 }}>
+                  <span className="perfilContatoLabel">E-MAIL DA EMPRESA</span>
+                  <EditableField
+                    label="E-mail da empresa"
+                    value={empresa?.dono_email}
+                    onChange={v => salvarEmpresa("dono_email", v)}
+                    type="email"
+                  />
+                </div>
+              </div>
+              <div className="perfilContatoItem">
+                <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faPhone} /></div>
+                <div style={{ flex: 1 }}>
+                  <span className="perfilContatoLabel">TELEFONE DA EMPRESA</span>
+                  {/* Campo telefone na tabela empresas/startups - ver INSTRUCOES.md */}
+                  <EditableField
+                    label="Telefone da empresa"
+                    value={empresa?.telefone}
+                    onChange={v => salvarEmpresa("telefone", v)}
+                    type="tel"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Card: Contato Pessoal do Dono ── */}
+          <div className="perfilCard">
+            <h3 className="perfilCardTitulo"><FontAwesomeIcon icon={faIdCard} style={{ marginRight: 8 }} />Contato Pessoal</h3>
+            <p className="perfilCardSub" style={{ marginBottom: 16 }}>Informações pessoais do responsável pela conta</p>
+            <div className="perfilContatoGrid">
+              <div className="perfilContatoItem">
+                <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faEnvelope} /></div>
+                <div>
+                  <span className="perfilContatoLabel">E-MAIL PESSOAL</span>
+                  <p className="perfilContatoValor">{usuarioDono?.email || "—"}</p>
+                </div>
+              </div>
+              <div className="perfilContatoItem">
+                <div className="perfilContatoIconeWrap"><FontAwesomeIcon icon={faPhone} /></div>
+                <div style={{ flex: 1 }}>
+                  <span className="perfilContatoLabel">TELEFONE PESSOAL</span>
+                  <EditableField
+                    label="Telefone pessoal"
+                    value={usuarioDono?.telefone}
+                    onChange={v => salvarUsuarioDono("telefone", v)}
+                    type="tel"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Stats da empresa ── */}
+          <div className="perfilCard">
+            <h3 className="perfilCardTitulo">Visão Geral</h3>
             <div className="perfilEmpresaStats">
               {[
-                { label:"Membros",        valor:funcionarios.length, icon:faUsers,          cor:"azul" },
-                { label:"Projetos",       valor:projetos.length,     icon:faFolderOpen,      cor:"verde" },
-                { label:"Tarefas",        valor:totalTarefas,        icon:faListCheck,       cor:"neutro" },
-                { label:"Taxa Conclusão", valor:`${taxaConc}%`,      icon:faArrowTrendUp,    cor:"amarelo" },
+                { label: "Membros",        valor: funcionarios.length, icon: faUsers,         cor: "azul" },
+                { label: "Projetos",       valor: projetos.length,     icon: faFolderOpen,     cor: "verde" },
+                { label: "Tarefas",        valor: totalTarefas,        icon: faListCheck,      cor: "neutro" },
+                { label: "Taxa Conclusão", valor: `${taxaConc}%`,      icon: faArrowTrendUp,   cor: "amarelo" },
               ].map(s => (
                 <div key={s.label} className={`perfilStatCard perfilStatCard--${s.cor}`}>
                   <FontAwesomeIcon icon={s.icon} className="perfilStatIcone" />
@@ -493,14 +624,14 @@ function Perfil() {
             </div>
           </div>
 
-          {/* Lista de funcionários */}
+          {/* ── Equipe ── */}
           <div className="perfilCard">
             <h3 className="perfilCardTitulo">Equipe ({funcionarios.length})</h3>
             {funcionarios.length === 0 && <p className="perfilVazio">Nenhum membro ainda</p>}
             {funcionarios.map(f => {
-              const inics = f.nome.split(" ").slice(0,2).map(n=>n[0]).join("").toUpperCase()
-              const tf = tarefas.filter(t => t.cpf_responsavel === f.cpf)
-              const conc = tf.filter(t => t.concluido).length
+              const inics = f.nome.split(" ").slice(0, 2).map(n => n[0]).join("").toUpperCase()
+              const tf    = tarefas.filter(t => t.cpf_responsavel === f.cpf)
+              const conc  = tf.filter(t => t.concluido).length
               return (
                 <div key={f.cpf} className="perfilMembroItem">
                   <div className="perfilMembroAvatar">{inics}</div>
@@ -516,7 +647,7 @@ function Perfil() {
             })}
           </div>
 
-          {/* Projetos da empresa */}
+          {/* ── Projetos da empresa ── */}
           <div className="perfilCard">
             <div className="perfilCardHeader">
               <h3 className="perfilCardTitulo">Projetos</h3>
@@ -526,15 +657,11 @@ function Perfil() {
               const pct = progressoProjeto(p.id_projeto)
               return (
                 <div key={p.id_projeto} className="perfilProjetoItem">
-                  <div className="perfilProjetoIcone">
-                    <FontAwesomeIcon icon={faFolderOpen} />
-                  </div>
+                  <div className="perfilProjetoIcone"><FontAwesomeIcon icon={faFolderOpen} /></div>
                   <div className="perfilProjetoInfo">
                     <div className="perfilProjetoNomeLinha">
                       <p className="perfilProjetoNome">{p.nome_projeto}</p>
-                      <span className={`perfilProjetoStatus ${pct<100 ? "perfilProjetoStatus--ativo":"perfilProjetoStatus--conc"}`}>
-                        {pct<100 ? "Ativo" : "Concluído"}
-                      </span>
+                      <span className={`perfilProjetoStatus ${pct < 100 ? "perfilProjetoStatus--ativo" : "perfilProjetoStatus--conc"}`}>{pct < 100 ? "Ativo" : "Concluído"}</span>
                     </div>
                     {p.descricao_projeto && <p className="perfilProjetoDesc">{p.descricao_projeto}</p>}
                     <div className="perfilProjetoBarWrap">

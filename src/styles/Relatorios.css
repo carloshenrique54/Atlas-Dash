@@ -589,3 +589,13 @@ body.modoEscuro .relGraficoCard{
 body.modoEscuro .relGraficoCard h3{
   color: white;
 }
+
+.relLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #8a97a8;
+}

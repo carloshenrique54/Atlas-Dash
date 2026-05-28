@@ -15,28 +15,30 @@ main{
 }
 
 .semTarefas .abrirFormsTarefaBotao {
-    background-color: var(--Laranja-Botoes);
-    padding: 15px;
-    color: white;
-    font-size: 18px;
-    font-family: "Inter";
-    box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
-    border: none;
-    border-radius: 15px;
-    transition: ease 0.3s;
+  background-color: var(--Laranja-Botoes);
+  padding: 12px;
+  color: white;
+  font-size: 14px;
+  font-family: "Inter";
+  box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
+  border: none;
+  border-radius: 15px;
+  transition: ease 0.3s;
 }
 
+
 .botoesTopTarefas .abrirFormsTarefaBotao{
-    background-color: var(--Laranja-Botoes);
-    padding: 15px;
-    color: white;
-    font-size: 18px;
-    font-family: "Inter";
-    box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
-    border: none;
-    border-radius: 15px;
-    transition: ease 0.3s;
+  background-color: var(--Laranja-Botoes);
+  padding: 12px;
+  color: white;
+  font-size: 14px;
+  font-family: "Inter";
+  box-shadow: 0px 1px 15px rgba(59, 59, 59, 0.349);
+  border: none;
+  border-radius: 15px;
+  transition: ease 0.3s;
 }
+
 
 .botoesTopTarefas{
     display: flex;
@@ -80,8 +82,9 @@ main{
     max-width: 840px;
     max-height: 100vh;
     overflow-y: auto;
-    padding: 10px;
     overflow-x: hidden;
+    margin-top: 80px;
+    margin-left: 130px;
     box-shadow: 0 20px 60px rgba(8,11,42,.25);
     box-sizing: border-box;
     animation: tarefaFormIn 0.2s ease;
@@ -149,6 +152,7 @@ main{
 .tarefasFormModal .direitaTarefa {
     flex: 1 1 50%;
     min-width: 0;
+    padding: 5px;
 }
 
 .tarefasFormModal label {
@@ -252,34 +256,61 @@ select {
 .inputSubtarefa{
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
+    gap: 10px;
 }
 
 .inputSubtarefa input{
-    width: 70%;
+    padding: 10px;
+    font-family: "OpenSans";
+    background-color: white;
+    border-radius: 13px;
+    outline: none;
+    width: 87%;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    transition: ease 0.3s;
 }
 
 .inputSubtarefa button{
-    width: 20%;
+  background: var(--Laranja-Botoes);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: ease 0.3s;
+  width: 13%;
+}
+
+.inputSubtarefa button:hover{
+    box-shadow: 0px 0px 10px var(--Laranja-Botoes-Brilho);
+    transform: scale(1.05, 1.05);
 }
 
 .subtarefa button{
     display: flex;
     color: black;
+    outline: none;
+    border: none;
     background-color: transparent;
     width: 10px;
     align-items: center;
+    transition: ease 0.3s;
     justify-content: center;
 }
 
 .listaSubtarefas{
     padding: 0;
-    max-height: 150px;
+    max-height: 100px;
     overflow-y: auto; 
 }
 
 .subtarefa button:hover{
     background-color: transparent;
-    color: var(--Laranja-Botoes);
+    color: red;
 }
 
 .botaoFecharTarefas {
@@ -463,11 +494,11 @@ select {
 
 .listaTarefas{
     display: flex;
-    width: 95%;
+    width: 100%;
     flex-direction: column;
     row-gap: 20px;
-    height: 450px;
-    max-height: 450px;
+    height: 69vh;
+    max-height: 69vh;
     padding-right: 10px;
     margin-bottom: 0;
     overflow-y: auto;
@@ -479,10 +510,13 @@ select {
     background-color: var(--Branco-Fundo);
     align-items: center;
     padding: 20px;
+    margin: 10px;
     justify-content: space-between;  
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.080);
-    box-shadow: 0px 5px 15px rgba(119, 119, 119, 0.246);
+    box-shadow: 0px 5px 15px rgba(119, 119, 119, 0.16);
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 .tarefaItem h3{
@@ -523,12 +557,14 @@ select {
     margin-top: 0;
     height: 0;
     transition: ease 0.3s;
-    opacity: 0;
+    opacity: 100%;
     list-style: none;
+    overflow: hidden;
 }
 
 .subtarefasLista.ativo{
     width: 100%;
+    transform: translateY(0);
     height: 100%;
     padding: 10px;
     border-top: 3px solid rgba(0, 0, 0, 0.080);
@@ -575,6 +611,7 @@ select {
     flex-direction: row;
     align-items: center;
     gap: 14px;
+    padding: 5px;
 }
 
 .tarefaDireita {
@@ -582,6 +619,7 @@ select {
     flex-direction: row;
     align-items: center;
     gap: 10px;
+    padding: 5px;
 }
 
 .dotPrioridade {
@@ -595,9 +633,9 @@ select {
 .dot-media { background-color: #fb8c00; }
 .dot-baixa { background-color: #43a047; }
 
-.prioridade-alta  { background-color: #fff5f5; border-left: none; }
-.prioridade-media { background-color: #fffbf0; border-left: none; }
-.prioridade-baixa { background-color: #f3fdf4; border-left: none; }
+.prioridade-alta  { background-color: var(--Branco-Fundo); }
+.prioridade-media { background-color: var(--Branco-Fundo); }
+.prioridade-baixa { background-color: var(--Branco-Fundo); }
 
 .badgePrioridade {
     padding: 4px 12px;
@@ -823,4 +861,691 @@ select {
 .botaoUploadArquivo:hover{
     transform: scale(1.03, 1.03);
     color: var(--Azul-Botao);
+}
+
+/* Loading screen */
+.tarefasLoading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  gap: 16px;
+}
+ 
+.tarefasLoadingSpinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(17, 22, 80, 0.12);
+  border-top-color: var(--Azul-Escuro, #111650);
+  border-radius: 50%;
+  animation: spinTarefas 0.75s linear infinite;
+}
+ 
+@keyframes spinTarefas {
+  to { transform: rotate(360deg); }
+}
+ 
+.tarefasLoading p {
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  color: #8a97a8;
+}
+ 
+/* View toggle lista/kanban */
+.viewToggle {
+  display: flex;
+  background: #f0f2f7;
+  border-radius: 10px;
+  padding: 3px;
+  gap: 2px;
+}
+ 
+.viewToggleBtn {
+  background: transparent;
+  border: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  color: #8a97a8;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.viewToggleBtn.ativo {
+  background: #fff;
+  color: var(--Azul-Escuro, #111650);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+}
+ 
+.viewToggleBtn:hover:not(.ativo) {
+  color: var(--Azul-Escuro, #111650);
+  background: transparent;
+}
+ 
+/* Topo das tarefas - layout */
+.mainTarefas {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+ 
+.botoesTopTarefas {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+ 
+.filtrosdotoptarefas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+.tarefasTopDir {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+ 
+/* Filtros extras (prioridade, responsável) */
+ 
+.filtrosPilulaIcone {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #8a97a8;
+}
+ 
+.filtrosPilulaSelect {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+ 
+.filtrosPilulaSelect select {
+  appearance: none;
+  background: #f5f7fa;
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: 20px;
+  padding: 5px 28px 5px 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--Azul-Escuro, #111650);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+ 
+.filtrosPilulaSelect select:focus {
+  outline: none;
+  border-color: var(--Azul-Escuro, #111650);
+}
+ 
+.filtrosPilulaChevron {
+  position: absolute;
+  right: 10px;
+  font-size: 10px;
+  color: #8a97a8;
+  pointer-events: none;
+}
+ 
+.filtrosResultados {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8a97a8;
+  white-space: nowrap;
+}
+ 
+/* Card de tarefa - estados */
+.tarefa-concluida .nomeDescricao h3 {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+ 
+.badge-concluida {
+  background: #d4edda;
+  color: #1D9E75;
+  font-weight: 600;
+}
+ 
+.badgeStatus--atrasada {
+  background: #ffe0e0;
+  color: #E24B4A;
+  font-weight: 600;
+}
+ 
+.badgeStatus--em_progresso {
+  background: #e8f0fe;
+  color: #3647ff;
+}
+ 
+/* Botão de deletar */
+.botaoDeletarTarefa {
+  background: transparent;
+  border: none;
+  color: #c5cdd8;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+ 
+.botaoDeletarTarefa:hover {
+  background: transparent;
+  color: #E24B4A;
+}
+ 
+/* Botão concluir (funcionário) */
+.botaoConcluirTarefa {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f0f2f7;
+  border: none;
+  color: var(--Azul-Escuro, #111650);
+  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.botaoConcluirTarefa.ativo {
+  background: #d4edda;
+  color: #1D9E75;
+}
+ 
+.botaoConcluirTarefa:hover {
+  background: #dde4f8;
+  color: #3647ff;
+}
+ 
+/* Checkbox customizado para subtarefas */
+.subtarefaCheckLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  color: #333;
+  padding: 4px 0;
+}
+ 
+.subtarefaCheckbox {
+  display: none;
+}
+ 
+.subtarefaCheckCustom {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid rgba(0,0,0,0.2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  background: #fff;
+}
+ 
+.subtarefaCheckbox:checked + .subtarefaCheckCustom {
+  background: var(--Azul-Escuro, #111650);
+  border-color: var(--Azul-Escuro, #111650);
+}
+ 
+.subtarefaCheckbox:checked + .subtarefaCheckCustom::after {
+  content: "✓";
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+ 
+.subtarefaTextoRiscado {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+ 
+/* Seção de arquivos dentro da tarefa */
+.tarefaArquivosSecao {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1.5px solid rgba(0,0,0,0.06);
+}
+ 
+.tarefaArquivosSecao h2 {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  color: var(--Azul-Escuro, #111650);
+  margin-bottom: 8px;
+}
+ 
+.listaArquivosTarefa {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.arquivoItemTarefa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f5f7fa;
+  border-radius: 8px;
+  font-family: "OpenSans", sans-serif;
+  font-size: 13px;
+}
+ 
+.arquivoIcone { color: #8a97a8; font-size: 14px; }
+ 
+.arquivoNome {
+  flex: 1;
+  color: var(--Azul-Escuro, #111650);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.botaoBaixarArquivo {
+  background: transparent;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  color: var(--Azul-Escuro, #111650);
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+ 
+.botaoBaixarArquivo:hover {
+  background: var(--Azul-Escuro, #111650);
+  color: #fff;
+}
+ 
+.uploadArquivoWrapper { margin-top: 8px; }
+ 
+.botaoUploadArquivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--Laranja-Botoes, #ff6b35);
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border: none;
+}
+ 
+.botaoUploadArquivo.enviando { opacity: 0.6; cursor: not-allowed; }
+ 
+/* Modal de criar tarefa */
+.tarefasFormOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+  overflow-y: auto;
+}
+ 
+.tarefasFormHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+ 
+.tarefasFormHeader h2 {
+  font-family: "Inter", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--Azul-Escuro, #111650);
+  margin: 0;
+}
+ 
+.tarefasFormFechar {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #8a97a8;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+ 
+.tarefasFormFechar:hover { background: #f0f2f7; color: #E24B4A; }
+ 
+.tarefasFormCorpo {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+}
+ 
+.iconeMaisTarefa { margin-right: 6px; }
+ 
+/* ProjetoDetalhe: detalhe task item */
+.detalheTarefaItem {
+  background: var(--Branco-Fundo, #fff);
+  border-radius: 12px;
+  border: 1.5px solid rgba(0,0,0,0.07);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s;
+}
+ 
+.detalheTarefaItem:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+ 
+.detalheTarefaTopo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+ 
+.detalheTarefaEsq {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+}
+ 
+.detalheTarefaEsq h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--Azul-Escuro, #111650);
+  margin: 0 0 4px;
+}
+ 
+.detalheTarefaEsq p {
+  font-family: "OpenSans", sans-serif;
+  font-size: 12px;
+  color: #8a97a8;
+  margin: 0;
+}
+ 
+.detalheTarefaDir {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+ 
+.projetoDetalheResponsavel {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--Azul-Escuro, #111650);
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.detalheSubLista {
+  list-style: none;
+  padding: 10px 0 0 0;
+  margin: 0;
+  border-top: 1.5px solid rgba(0,0,0,0.06);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.detalheSubLista li {
+  font-family: "OpenSans", sans-serif;
+  font-size: 13px;
+  color: #4a5568;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+ 
+/* ProjetoDetalhe header */
+.projetoDetalheHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 0 20px;
+  border-bottom: 1.5px solid rgba(0,0,0,0.07);
+  margin-bottom: 20px;
+}
+ 
+.projetoDetalheHeaderEsq { flex: 1; }
+.projetoDetalheHeaderEsq h2 {
+  font-family: "Inter", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--Azul-Escuro, #111650);
+  margin: 0 0 6px;
+}
+ 
+.projetoDetalheDesc {
+  font-family: "OpenSans", sans-serif;
+  font-size: 14px;
+  color: #6b7a8d;
+  margin: 6px 0 0;
+  line-height: 1.6;
+}
+ 
+.projetoDetalheHeaderDir {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+ 
+.projetoDetalheNomeLinha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+ 
+.projetoDetalheMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #8a97a8;
+}
+ 
+.projetoParticipanteCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1.5px solid rgba(0,0,0,0.06);
+}
+ 
+.projetoParticipanteInfo { flex: 1; }
+ 
+.projetoParticipanteTarefas {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: #8a97a8;
+  min-width: 100px;
+}
+ 
+.projetoParticipanteBar {
+  width: 80px;
+  height: 4px;
+  border-radius: 999px;
+  accent-color: var(--Azul-Escuro, #111650);
+}
+ 
+/* "Ver detalhes" no card de projeto */
+.projetoCard--clicavel { cursor: pointer; }
+ 
+.projetoCardVerDetalhes {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  color: var(--Laranja-Botoes, #ff6b35);
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+ 
+.projetoCard--clicavel:hover .projetoCardVerDetalhes { opacity: 1; }
+.projetoCard--clicavel:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+
+/* ── Header — sem width fixo ── */
+.tarefasFormHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px 18px;
+  border-bottom: 1.5px solid rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+  border-radius: 20px 20px 0 0;
+}
+
+/* ── Corpo duas colunas ── */
+.tarefasFormCorpo {
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  padding: 20px 28px 28px;
+  box-sizing: border-box;
+}
+
+/* ── Labels no estilo Projetos ── */
+.tarefasFormModal label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+  color: var(--Azul-Escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── Linha com dois campos: label ACIMA do select ── */
+.linhaInputTarefa {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-auto-flow: column;   /* preenche coluna por coluna: label→select, label→select */
+  gap: 4px 16px;
+  align-items: start;
+}
+
+/* Botões ficam na col 2 ocupando as duas linhas */
+.linhaInputTarefa .botoesTarefas {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 100%;
+}
+
+/* ── Inputs, textareas e selects dentro do modal ── */
+.tarefasFormModal .esquerdaTarefa input[type="text"],
+.tarefasFormModal .esquerdaTarefa textarea,
+.tarefasFormModal .esquerdaTarefa select,
+.tarefasFormModal .direitaTarefa input[type="date"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 13px;
+  border: 1.5px solid #d8e0ea;
+  border-radius: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--Azul-Escuro, #111650);
+  background: #fafbfc;
+  outline: none;
+  transition: border-color 0.15s;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.tarefasFormModal .esquerdaTarefa input:focus,
+.tarefasFormModal .esquerdaTarefa textarea:focus,
+.tarefasFormModal .esquerdaTarefa select:focus {
+  border-color: var(--Azul-Escuro, #111650);
+}
+
+.tarefasFormModal .esquerdaTarefa textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+/* ── Botão Criar Tarefa ── */
+.submitTarefaBotao {
+  background: var(--Laranja-Botoes);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 0;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: ease 0.3s;
+  width: 100%;
+}
+
+.submitTarefaBotao:hover {
+  box-shadow: 0px 0px 10px var(--Laranja-Botoes-Brilho);
+  transform: scale(1.05, 1.05);
+}
+
+/* ── Botão Fechar ── */
+.botaoFecharTarefas {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #8a97a8;
+    cursor: pointer;
+    padding: 4px 8px;
+    width: 5%;
+    border-radius: 8px;
+}
+
+.botaoFecharTarefas:hover {
+  background: #dde4f8;
+}
+
+
+.listaSubtarefas .subtarefa{
+    background-color: var(--Branco-Fundo);
+    border: 1px solid rgba(0, 0, 0, 0.080);
+    padding: 5px 10px;
+    font-size: 14px;
 }

@@ -144,7 +144,7 @@ function DashboardFuncionario({ usuarioObj }) {
       {/* Saudação */}
       <p className="dashSaudacao">
         Bom dia, <strong>{nome}</strong> — você tem{" "}
-        <strong className="dashDestAtraso">{atrasadas} atrasada(s)</strong> e{" "}
+        <strong className="dashDestAtraso">{atrasadas} tarefa(s) atrasada(s)</strong> e{" "}
         <strong className="dashDestInfo">{proximosPrazos} prazo(s) chegando</strong>{" "}
         nos próximos {DIAS_PROXIMO_PRAZO} dias.
       </p>

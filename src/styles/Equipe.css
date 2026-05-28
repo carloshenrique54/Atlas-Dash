@@ -1,6 +1,6 @@
 /* ─── Página equipe ────────────────────────────────────────────────── */
 .equipePage {
-  max-height: 85vh;
+  max-height: 89vh;
   overflow-y: auto;
   background: var(--Azul-Claro);
   padding: 32px 40px 60px;
@@ -239,7 +239,6 @@
 ══════════════════════════════════════════════════════ */
 
 .detalhePage {
-  min-height: 100vh;
   background: var(--Azul-Claro);
   padding: 28px 40px 60px;
   font-family: "Inter", sans-serif;
@@ -412,7 +411,10 @@
 }
 
 /* Progresso */
-.detalheProgressoWrap { }
+.detalheProgressoWrap {
+  box-shadow: none;
+  background-color: transparent;
+ }
 
 .detalheProgressoTopo {
   display: flex;
@@ -813,3 +815,23 @@
   .equipePage, .detalhePage { padding: 20px 16px 40px; }
   .detalheStatsGrid     { grid-template-columns: repeat(2, 1fr); }
 }
+
+.projetoStatusBadge {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+ 
+.projetoStatus--ativo     { background: #e8f0fe; color: #3647ff; }
+.projetoStatus--concluido { background: #eafaf3; color: #1D9E75; }
+.projetoStatus--atrasado  { background: #ffe8e8; color: #E24B4A; }
+ 
+.detalheProgressoBar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  accent-color: var(--proj-cor, #111650);
+}
+ 
