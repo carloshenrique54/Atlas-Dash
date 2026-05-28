@@ -124,6 +124,11 @@
   text-align: center;
 }
 
+body.modoEscuro .sidebar{
+    display: flex;
+    background-color: rgb(39, 26, 72);
+}
+
 /* Label some com transição */
 .sidebarLinkLabel {
   overflow: hidden;

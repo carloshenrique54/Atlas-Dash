@@ -774,3 +774,20 @@
   text-align: center;
   padding: 20px 0;
 }
+
+body.modoEscuro .perfilSideCard, .perfilCard{
+  background-color: rgb(26, 31, 46);
+  border-color: rgb(42, 49, 72);
+}
+
+body.modoEscuro h2, .perfilCardTitulo, .perfilEditableRow span{
+  color: white;
+}
+
+body.modoEscuro .perfilMetaItem, .perfilContatoItem p, .perfilMembroNome, .perfilProjetoNome{
+  color: white;
+}
+
+body.modoEscuro .perfilMetaItem svg{
+  color: white;
+}

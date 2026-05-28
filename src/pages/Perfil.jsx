@@ -6,7 +6,7 @@ import {
   faEnvelope, faPhone, faLocationDot, faCalendarDays,
   faBriefcase, faGraduationCap, faBuilding, faLink,
   faUsers, faListCheck, faFolderOpen, faArrowTrendUp,
-  faIdCard, faFloppyDisk,
+  faIdCard,
 } from "@fortawesome/free-solid-svg-icons"
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import "../styles/Perfil.css"

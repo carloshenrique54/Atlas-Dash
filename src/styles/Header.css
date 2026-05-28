@@ -68,6 +68,7 @@ header input:focus{
 body.modoEscuro header{
     display: flex;
     background-color: rgb(39, 26, 72);
+    box-shadow: none;
 }
 
 body.modoEscuro header h2{

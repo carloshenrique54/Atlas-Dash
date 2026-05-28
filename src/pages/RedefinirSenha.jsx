@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/RedefinirSenha.css"
 import logo from "../assets/images/LogoEscura.png"

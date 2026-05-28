@@ -605,3 +605,11 @@ body.modoEscuro .relGraficoCard h3{
 .relCardIcone--amarelo svg { font-size: 14px; color: #e5e238; }
 .relCardIcone--vermelho svg {  font-size: 14px;color: #9e1d1d; }
 .relCardIcone--azul svg { font-size: 14px; color: #2a1d9e; }
+
+body.modoEscuro .relCard, body.modoEscuro .relProgressoWrap, body.modoEscuro .relGraficoCard, body.modoEscuro .relProgressoWrap, body.modoEscuro .relComparacaoCard{
+  background-color: rgb(26, 31, 46);
+}
+
+body.modoEscuro .relCard--neutro, body.modoEscuro .relProgressoWrap, body.modoEscuro .relGraficoCard, body.modoEscuro .relComparacaoCard{
+  border-color: rgb(42, 49, 72);
+}

@@ -49,7 +49,6 @@ function Agenda() {
   const [mensagemErroToast, setMensagemErroToast] = useState("");
   const [abrirToastCerto, setAbrirToastCerto]  = useState(false);
   const [mensagemCertoToast, setMensagemCertoToast] = useState("");
-  async function showToast(msg) { setToastMsg(msg); setToastOn(true); await delay(2000); setToastOn(false) }
 
   useEffect(() => { if (!usuario) { navigate("/") } }, [navigate])
 
@@ -179,8 +178,6 @@ function Agenda() {
 
     setSalvandoEvento(false)
 
-    if (error) { showToast("Erro ao salvar evento"); return }
-
     setMensagemCertoToast("Evento Cadastrado"); 
     setAbrirToastCerto(true);
     setModalEvento(false);
@@ -191,7 +188,10 @@ function Agenda() {
   async function deletarEvento(idEvento) {
     await supabase.from("eventos").delete().eq("id", idEvento)
     setEventos(prev => prev.filter(e => e.id !== idEvento))
-    showToast("Evento removido")
+    setMensagemCertoToast("Evento Removido")
+    setAbrirToastCerto(true)
+    await delay(3000)
+    setAbrirToastCerto(false)
   }
 
   const tarefasDia  = tarefasDoDia(dataSelecionada)
