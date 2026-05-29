@@ -1,17 +1,20 @@
 
 .modalAviso{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    z-index: 9999999999;
-    position: fixed;
-    background-color: #ffa7a7;
-    color: #500000;
-    transition: ease 0.4s;
-    transform: translateY(-100px);
-    opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  z-index: 99999999999999;
+  position: fixed;
+  font-family: "Inter";
+  background-color: #ffa7a7;
+  color: #500000;
+  transition: ease 0.4s;
+  transform: translateY(-100px);
+  opacity: 0;
+  margin: 0;
+  border: none;
 }
 
 .modalAviso.ativo{
@@ -20,21 +23,89 @@
 }
 
 .toast{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    z-index: 99999999999;
-    position: fixed;
-    background-color: #95ff9e;
-    color: #083300;
-    transition: ease 0.4s;
-    transform: translateY(-100px);
-    opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  z-index: 999999999999;
+  position: fixed;
+  background: #1D9E75;
+  color: #fff;
+  transition: ease 0.4s;
+  transform: translateY(-100px);
+  opacity: 0;
+  margin: 0;
+  border: none;
 }
 
 .toast.ativo{
     transform: translateY(0);
     opacity: 100%;
+}
+
+.inputBox input{
+  width: 100%;
+  padding: 12px 10px;
+  background: #F8FAFF;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: #0A0E27;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  font-family: 'OpenSans', sans-serif;
+}
+
+.TrocarSenha {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: linear-gradient(135deg, #FF7A35, #D95E1A);
+  color: #fff;
+  padding: 11px;
+  border: none;
+  border-radius: 9px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 14px;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(255, 122, 53, 0.35);
+  font-family: 'Inter', sans-serif;
+}
+
+.TrocarSenha:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(255, 122, 53, 0.45);
+}
+
+.TrocarSenha:active{
+    transform: translateY(0);
+}
+
+.inputBox input:focus {
+  border-color: #4F6EF7;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79, 110, 247, 0.1);
+}
+
+.inputBox input::placeholder {
+  color: #B0B7C3;
+}
+
+.inputBox label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'OpenSans', sans-serif;
+}
+
+.inputBox{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 100%;
+  margin-top: 6px;
 }

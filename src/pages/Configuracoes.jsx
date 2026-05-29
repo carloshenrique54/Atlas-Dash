@@ -159,10 +159,6 @@ function Configuracoes() {
         <section className="cfgSecao">
           <h2 className="cfgSecaoTitulo">Segurança</h2>
           <div className="cfgLista">
-            <ConfigItem icon={faShield} iconCor="vermelho" titulo="Autenticação de 2 Fatores" subtitulo="Adicionar camada extra de segurança">
-              <Toggle value={auth2fa} onChange={setAuth2fa} />
-            </ConfigItem>
-
             <ConfigItem icon={faLock} iconCor="laranja" titulo="Bloqueio de Sessão" subtitulo="Bloquear após 15 min de inatividade">
               <Toggle value={bloqSessao} onChange={setBloqSessao} />
             </ConfigItem>

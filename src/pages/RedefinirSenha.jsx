@@ -15,6 +15,11 @@ function RedefinirSenha(){
     const [senha, setSenha] = useState("")
     const navigate = useNavigate()
     const [senhaConfirmar, setSenhaConfirmar] = useState("")
+    let logado = false
+
+    if (localStorage.getItem("usuario")){
+        logado = true
+    }
 
     async function enviarFormulario(e){
         e.preventDefault()
@@ -86,9 +91,9 @@ function RedefinirSenha(){
                     <button
                         type="button"
                         className="loginBotaoSecundario"
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(`/${logado ? "configuracoes" : ""}`)}
                     >
-                        ← Voltar ao login
+                     {!logado ? "← Voltar ao Login" : "← Voltar para o Configurações"}
                     </button>
                     <div className="links">
                         <a href="https://localhost:3000/cadastrostartup">Fazer Cadastro</a>

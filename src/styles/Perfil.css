@@ -775,16 +775,16 @@
   padding: 20px 0;
 }
 
-body.modoEscuro .perfilSideCard, .perfilCard{
+body.modoEscuro .perfilSideCard, body.modoEscuro .perfilCard{
   background-color: rgb(26, 31, 46);
   border-color: rgb(42, 49, 72);
 }
 
-body.modoEscuro h2, .perfilCardTitulo, .perfilEditableRow span{
+body.modoEscuro h2, body.modoEscuro .perfilCardTitulo, body.modoEscuro .perfilEditableRow span{
   color: white;
 }
 
-body.modoEscuro .perfilMetaItem, .perfilContatoItem p, .perfilMembroNome, .perfilProjetoNome{
+body.modoEscuro .perfilMetaItem, body.modoEscuro .perfilContatoItem p, body.modoEscuro .perfilMembroNome, body.modoEscuro .perfilProjetoNome{
   color: white;
 }
 

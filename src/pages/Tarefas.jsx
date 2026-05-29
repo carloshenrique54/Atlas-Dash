@@ -39,7 +39,7 @@ function Tarefas() {
   // Criação
   const [nomeTarefa, setNomeTarefa]           = useState("");
   const [descricaoTarefa, setDescricaoTarefa]  = useState("");
-  const [responsavelTarefa, setResponsavelTarefa] = useState("");
+  const [responsavelTarefa , setResponsavelTarefa] = useState("");
   const [prioridadeTarefa, setPrioridadeTarefa]   = useState("alta");
   const [projetoTarefa, setProjetoTarefa]     = useState(null);
   const [prazoTarefa, setPrazoTarefa]         = useState("");
