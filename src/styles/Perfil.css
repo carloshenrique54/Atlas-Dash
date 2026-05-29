@@ -1,5 +1,5 @@
 .perfilPage {
-  margin: 20px 0px 0px 20px;
+  margin: 15lpx 0px 0px 20px;
 }
  
 .perfilLoading {
@@ -29,7 +29,7 @@
   transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
   pointer-events: none;
 }
- 
+
 .perfilToast.ativo { transform: translateX(-50%) translateY(0); }
  
 .perfilLayout {

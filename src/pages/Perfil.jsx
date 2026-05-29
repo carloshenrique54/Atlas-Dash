@@ -11,8 +11,30 @@ import {
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons"
 import "../styles/Perfil.css"
 
+// ── Máscara de telefone ───────────────────────────────────────────────
+function formatarTelefone(valor) {
+  const nums = valor.replace(/\D/g, "").slice(0, 11)
+
+  if (nums.length <= 10) {
+    return nums
+      .replace(/^(\d{2})(\d)/g, "($1) $2")
+      .replace(/(\d{4})(\d)/, "$1-$2")
+  }
+
+  return nums
+    .replace(/^(\d{2})(\d)/g, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+}
+
 // ── Componente auxiliar: campo editável inline ────────────────────────
-function EditableField({ label, value, onChange, multiline = false, type = "text" }) {
+function EditableField({
+  label,
+  value,
+  onChange,
+  multiline = false,
+  type = "text",
+  maxLength
+}) {
   const [edit,  setEdit]  = useState(false)
   const [local, setLocal] = useState(value || "")
 
@@ -24,10 +46,29 @@ function EditableField({ label, value, onChange, multiline = false, type = "text
     <div className="perfilEditableField">
       {edit ? (
         <div className="perfilEditableRow">
-          {multiline
-            ? <textarea value={local} onChange={e => setLocal(e.target.value)} rows={3} className="perfilInput" />
-            : <input type={type} value={local} onChange={e => setLocal(e.target.value)} className="perfilInput" />
-          }
+          {multiline ? (
+  <textarea
+    value={local}
+    onChange={e => setLocal(e.target.value)}
+    rows={3}
+    className="perfilInput"
+  />
+) : (
+  <input
+    type={type}
+    value={local}
+    maxLength={maxLength}
+    onChange={e => {
+      const valor =
+        type === "tel"
+          ? formatarTelefone(e.target.value)
+          : e.target.value
+
+      setLocal(valor)
+    }}
+    className="perfilInput"
+  />
+)}
           <button className="perfilIconBtn perfilIconBtn--ok" onClick={salvar}><FontAwesomeIcon icon={faCheck} /></button>
           <button className="perfilIconBtn perfilIconBtn--no" onClick={() => { setLocal(value || ""); setEdit(false) }}><FontAwesomeIcon icon={faXmark} /></button>
         </div>
@@ -381,6 +422,7 @@ function Perfil() {
                       value={funcionario?.telefone}
                       onChange={v => salvarFuncionario("telefone", v)}
                       type="tel"
+                      maxlength={8}
                     />
                   </div>
                 </div>
@@ -571,6 +613,7 @@ function Perfil() {
                     value={empresa?.telefone}
                     onChange={v => salvarEmpresa("telefone", v)}
                     type="tel"
+                    maxlength={8}
                   />
                 </div>
               </div>

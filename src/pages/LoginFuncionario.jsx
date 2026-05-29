@@ -51,8 +51,7 @@ function LoginFuncionario() {
         const { data: funcionarios, error } = await supabase
             .from("funcionarios")
             .select("*")
-            .eq("email", email)
-            .eq("senha", senha)
+            .eq("email", email)            .eq("senha", senha)
 
         if (error || !funcionarios || funcionarios.length === 0)
             return mostrarErro("Usuário não encontrado")
@@ -121,6 +120,7 @@ function LoginFuncionario() {
                             onChange={e => setCodigoEmpresa(e.target.value)}
                             value={codigoEmpresa}
                             type="text"
+                            maxLength={5}
                         />
                     </div>
 
