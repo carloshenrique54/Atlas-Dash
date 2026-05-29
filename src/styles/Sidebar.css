@@ -126,7 +126,12 @@
 
 body.modoEscuro .sidebar{
     display: flex;
-    background-color: rgb(39, 26, 72);
+    background-color: #0b0d19;
+}
+
+body.modoEscuro .sidebarLink--ativo {
+  background: #1e2540;
+  border-left-color: var(--Azul-Botao);
 }
 
 /* Label some com transição */

@@ -774,20 +774,94 @@
   text-align: center;
   padding: 20px 0;
 }
-
-body.modoEscuro .perfilSideCard, body.modoEscuro .perfilCard{
-  background-color: rgb(26, 31, 46);
-  border-color: rgb(42, 49, 72);
+ 
+body.modoEscuro .perfilPage {
+  background: var(--Azul-Escuro);
 }
-
-body.modoEscuro h2, body.modoEscuro .perfilCardTitulo, body.modoEscuro .perfilEditableRow span{
-  color: white;
+ 
+body.modoEscuro .perfilSideCard,
+body.modoEscuro .perfilCard,
+body.modoEscuro .perfilModal {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
+  box-shadow: none;
 }
-
-body.modoEscuro .perfilMetaItem, body.modoEscuro .perfilContatoItem p, body.modoEscuro .perfilMembroNome, body.modoEscuro .perfilProjetoNome{
-  color: white;
+ 
+body.modoEscuro .perfilSideInfo h2,
+body.modoEscuro .perfilCardTitulo,
+body.modoEscuro .perfilEditableRow span,
+body.modoEscuro .perfilContatoValor,
+body.modoEscuro .perfilMembroNome,
+body.modoEscuro .perfilProjetoNome,
+body.modoEscuro .perfilExpCargo,
+body.modoEscuro .perfilModalHeader h3 {
+  color: #e0e6ef;
 }
-
-body.modoEscuro .perfilMetaItem svg{
-  color: white;
+ 
+body.modoEscuro .perfilBio,
+body.modoEscuro .perfilMetaItem,
+body.modoEscuro .perfilCargo,
+body.modoEscuro .perfilMembroEmail,
+body.modoEscuro .perfilProjetoDesc,
+body.modoEscuro .perfilExpEmpresa,
+body.modoEscuro .perfilModalCorpo label {
+  color: #8a97a8;
+}
+ 
+body.modoEscuro .perfilMetaItem svg,
+body.modoEscuro .perfilLinkIcone,
+body.modoEscuro .perfilContatoIconeWrap,
+body.modoEscuro .perfilProjetoIcone,
+body.modoEscuro .perfilExpIcone {
+  background: #232940;
+  color: #e0e6ef;
+}
+ 
+body.modoEscuro .perfilSideTitulo,
+body.modoEscuro .perfilModalHeader {
+  border-bottom-color: #2a3148;
+}
+ 
+body.modoEscuro .perfilLinkItem,
+body.modoEscuro .perfilMembroItem,
+body.modoEscuro .perfilProjetoItem,
+body.modoEscuro .perfilExpItem {
+  border-bottom-color: #2a3148;
+}
+ 
+body.modoEscuro .perfilInput {
+  background-color: #232940;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+ 
+body.modoEscuro .perfilInput:focus {
+  border-color: var(--Azul-Botao);
+}
+ 
+body.modoEscuro .perfilChip {
+  background: #232940;
+  color: #e0e6ef;
+}
+ 
+body.modoEscuro .perfilChipAdd {
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+ 
+body.modoEscuro .perfilChipAdd:hover {
+  border-color: var(--Azul-Botao);
+  color: #e0e6ef;
+}
+ 
+body.modoEscuro .perfilTipoBotao {
+  background: #232940;
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+ 
+body.modoEscuro .perfilTipoBotao.ativo {
+  border-color: var(--Azul-Botao);
+  background: #1a1f2e;
+  color: #e0e6ef;
 }

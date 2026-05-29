@@ -107,16 +107,40 @@ function Relatorios() {
   }
 
   function filtrarPorPeriodo(lista) {
-    const agora = new Date()
-    return lista.filter(t => {
-      if (!t.dia_criado) return true
-      const criado = new Date(t.dia_criado)
-      if (periodoFiltro === "hoje")   return criado.toDateString() === agora.toDateString()
-      if (periodoFiltro === "semana") { const ini = new Date(agora); ini.setDate(agora.getDate() - 7); return criado >= ini }
-      if (periodoFiltro === "mes")    { const ini = new Date(agora); ini.setMonth(agora.getMonth() - 1); return criado >= ini }
-      return true
-    })
-  }
+  const agora = new Date()
+
+  // zerar horas
+  agora.setHours(0, 0, 0, 0)
+
+  return lista.filter(t => {
+    if (!t.dia_criado) return true
+
+    const criado = new Date(t.dia_criado)
+
+    // zerar horas
+    criado.setHours(0, 0, 0, 0)
+
+    if (periodoFiltro === "hoje") {
+      return criado.getTime() === agora.getTime()
+    }
+
+    if (periodoFiltro === "semana") {
+      const iniSemana = new Date(agora)
+      iniSemana.setDate(agora.getDate() - 7)
+
+      return criado >= iniSemana
+    }
+
+    if (periodoFiltro === "mes") {
+      const iniMes = new Date(agora)
+      iniMes.setMonth(agora.getMonth() - 1)
+
+      return criado >= iniMes
+    }
+
+    return true
+  })
+}
 
   // ── Gerar PDF real com jsPDF ─────────────────────────────────────────
   async function exportarPDF() {
@@ -517,26 +541,27 @@ function Relatorios() {
   // ══════════════════════════════════════════════════════
   //  VISÃO DO DONO
   // ══════════════════════════════════════════════════════
-  const total      = tarefas.length
-  const concluidas = tarefas.filter(t => t.concluido).length
-  const atrasadas  = tarefas.filter(t => isAtrasada(t)).length
-  const pendentes  = tarefas.filter(t => !t.concluido && !isAtrasada(t)).length
+  const tarefasFiltradas = filtrarPorPeriodo(tarefas)
+  const total      = tarefasFiltradas.length
+  const concluidas = tarefasFiltradas.filter(t => t.concluido).length
+  const atrasadas  = tarefasFiltradas.filter(t => isAtrasada(t)).length
+  const pendentes  = tarefasFiltradas.filter(t => !t.concluido && !isAtrasada(t)).length
   const taxaConc   = total > 0 ? Math.round((concluidas / total) * 100) : 0
   const membros    = funcionarios.length
 
   const porFuncionario = funcionarios.map(f => {
-    const tf = tarefas.filter(t => t.cpf_responsavel === f.cpf)
+    const tf = tarefasFiltradas.filter(t => t.cpf_responsavel === f.cpf)
     return { nome: f.nome.split(" ")[0], Total: tf.length, Concluídas: tf.filter(t => t.concluido).length, Atrasadas: tf.filter(t => isAtrasada(t)).length }
   })
 
   const porPrioridade = [
-    { name: "Alta",  value: tarefas.filter(t => t.prioridade === "alta").length,  color: "#E24B4A" },
-    { name: "Média", value: tarefas.filter(t => t.prioridade === "media").length, color: "#EF9F27" },
-    { name: "Baixa", value: tarefas.filter(t => t.prioridade === "baixa").length, color: "#1D9E75" },
+    { name: "Alta",  value: tarefasFiltradas.filter(t => t.prioridade === "alta").length,  color: "#E24B4A" },
+    { name: "Média", value: tarefasFiltradas.filter(t => t.prioridade === "media").length, color: "#EF9F27" },
+    { name: "Baixa", value: tarefasFiltradas.filter(t => t.prioridade === "baixa").length, color: "#1D9E75" },
   ].filter(d => d.value > 0)
 
   const progressoProjetos = projetos.map(p => {
-    const tp  = tarefas.filter(t => t.id_projeto === p.id_projeto)
+    const tp  = tarefasFiltradas.filter(t => t.id_projeto === p.id_projeto)
     const pct = tp.length > 0 ? Math.round((tp.filter(t => t.concluido).length / tp.length) * 100) : 0
     return { nome: p.nome_projeto, pct }
   })
@@ -552,6 +577,14 @@ function Relatorios() {
         <button className="relExportBtn" onClick={exportarPDF} disabled={gerando}>
           <FontAwesomeIcon icon={faFileArrowDown} /> {gerando ? "Gerando PDF..." : "Exportar PDF"}
         </button>
+      </div>
+
+      <div className="relPeriodos">
+        {["hoje", "semana", "mes", "tudo"].map(p => (
+          <button key={p} className={`relPeriodoBotao ${periodoFiltro === p ? "ativo" : ""}`} onClick={() => setPeriodoFiltro(p)}>
+            {{ hoje: "Hoje", semana: "Semana", mes: "Mês", tudo: "Tudo" }[p]}
+          </button>
+        ))}
       </div>
 
       <div className="relCards">
@@ -597,12 +630,13 @@ function Relatorios() {
         <div className="relComparacaoCard">
           <div className="relComparacaoTituloLinha"><FontAwesomeIcon icon={faChartPie} /><h3>Por Prioridade</h3></div>
           {porPrioridade.length === 0 ? <p className="relVazio">Sem dados</p> : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={240}>
               <PieChart>
-                <Pie data={porPrioridade} cx="50%" cy="50%" innerRadius={55} outerRadius={85} dataKey="value" paddingAngle={3} label={({ percent }) => `${Math.round(percent * 100)}%`} labelLine={false}>
+                <Pie data={porPrioridade} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value" paddingAngle={3} label={({ name, percent, cx, cy, midAngle, outerRadius: oR }) => { const RADIAN = Math.PI / 180; const radius = oR + 22; const x = cx + radius * Math.cos(-midAngle * RADIAN); const y = cy + radius * Math.sin(-midAngle * RADIAN); return (<text x={x} y={y} fill="#4a5568" textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" style={{ fontSize: 12, fontFamily: "Inter", fontWeight: 600 }}>{name} {Math.round(percent * 100)}%</text>); }} labelLine={{ stroke: "#c4cdd8", strokeWidth: 1 }}>
                   {porPrioridade.map((e, i) => <Cell key={i} fill={e.color} />)}
                 </Pie>
-                <Legend iconType="circle" iconSize={10} wrapperStyle={{ fontSize: 12 }} />
+                <Legend iconType="circle" iconSize={10} wrapperStyle={{ fontSize: 12, fontFamily: "Inter" }} />
+                <Tooltip contentStyle={{ borderRadius: 8, fontFamily: "Inter", fontSize: 12 }} />
               </PieChart>
             </ResponsiveContainer>
           )}

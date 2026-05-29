@@ -1,4 +1,5 @@
 // Bibliotecas
+import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 
 // Components
@@ -23,6 +24,21 @@ import './styles/App.css'
 
 function App() { 
   const location = useLocation()
+
+  useEffect(() => {
+    try {
+      const dark = localStorage.getItem("cfg_modoEscuro")
+      if (dark !== null) {
+        document.body.classList.toggle("modoEscuro", JSON.parse(dark))
+      }
+      const compact = localStorage.getItem("cfg_modoCompacto")
+      if (compact !== null) {
+        document.body.classList.toggle("modoCompacto", JSON.parse(compact))
+      }
+    } catch (err) {
+      console.error("Erro ao carregar preferências de tema:", err)
+    }
+  }, [])
 
   const mostrarComponentes =
     location.pathname !== "/" &&

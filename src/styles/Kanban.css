@@ -249,3 +249,48 @@
 .kanbanCard.prioridade-alta  { border-top: 3px solid #E24B4A; border-left: none; }
 .kanbanCard.prioridade-media { border-top: 3px solid #EF9F27; border-left: none; }
 .kanbanCard.prioridade-baixa { border-top: 3px solid #1D9E75; border-left: none; }
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .kanbanColuna {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .kanbanColunaHeader {
+  border-bottom-color: #2a3148;
+}
+
+body.modoEscuro .kanbanColunaLabel {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .kanbanCount {
+  background: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .kanbanCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .kanbanCardTitulo {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .kanbanCardDesc {
+  color: #8a97a8;
+}
+
+body.modoEscuro .kanbanProgressoTrack {
+  background: #232940;
+}
+
+body.modoEscuro .kanbanVazio {
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+
+body.modoEscuro .kanbanColunaIcone {
+  color: #e0e6ef;
+}

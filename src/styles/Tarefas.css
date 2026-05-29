@@ -1565,3 +1565,159 @@ select {
 .botaoFecharTarefas:hover{ 
   background: #f5f7fa; 
 }
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .filtrosTarefas {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .filtrosTarefas .botaoFiltroTarefas {
+  color: #8a97a8;
+}
+
+body.modoEscuro .filtrosTarefas .botaoFiltroTarefas:hover {
+  color: #e0e6ef;
+  background: #232940;
+}
+
+body.modoEscuro .botaoFiltroTarefas.ativo {
+  background-color: var(--Azul-Escuro-Fundos);
+  color: white;
+}
+
+body.modoEscuro .tarefaItem {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.modoEscuro .nomeDescricao h3 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .tarefaItem p {
+  color: #8a97a8;
+}
+
+body.modoEscuro .badgeStatus {
+  background-color: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .progressoTarefa {
+  color: #8a97a8;
+}
+
+body.modoEscuro .botaoToggle {
+  color: #8a97a8;
+}
+
+body.modoEscuro .botaoToggle:hover {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .subtarefasLista.ativo {
+  border-top-color: #2a3148;
+}
+
+body.modoEscuro .subtarefasLista h2 {
+  color: #8a97a8;
+}
+
+body.modoEscuro .listaSubtarefas .subtarefa {
+  background-color: #232940;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .subtarefaCheckLabel {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .subtarefaCheckCustom {
+  border-color: #2a3148;
+  background: #1a1f2e;
+}
+
+body.modoEscuro .subtarefaCheckbox:checked + .subtarefaCheckCustom {
+  background: var(--Azul-Botao);
+  border-color: var(--Azul-Botao);
+}
+
+body.modoEscuro .semSubtarefas {
+  color: #8a97a8;
+}
+
+body.modoEscuro .filtrosPilulaIcone {
+  color: #8a97a8;
+}
+
+body.modoEscuro .filtrosPilulaSelect select {
+  background: #1a1f2e;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .filtrosResultados {
+  color: #8a97a8;
+}
+
+body.modoEscuro .tarefasFormModal {
+  background: #1a1f2e;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+body.modoEscuro .tarefasFormHeader {
+  background: #1a1f2e;
+  border-bottom-color: #2a3148;
+}
+
+body.modoEscuro .tarefasFormHeader h2 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .tarefasFormFechar {
+  color: #8a97a8;
+}
+
+body.modoEscuro .tarefasFormFechar:hover {
+  background: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .tarefasFormModal label {
+  color: #8a97a8;
+}
+
+body.modoEscuro .tarefasFormModal input,
+body.modoEscuro .tarefasFormModal select,
+body.modoEscuro .tarefasFormModal textarea {
+  background-color: #232940;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .tarefasFormModal input:focus,
+body.modoEscuro .tarefasFormModal select:focus,
+body.modoEscuro .tarefasFormModal textarea:focus {
+  border-color: var(--Azul-Botao);
+}
+
+body.modoEscuro .subtarefa {
+  background-color: #232940;
+}
+
+body.modoEscuro .inputSubtarefa input {
+  background-color: #232940;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .botaoFecharTarefas {
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+
+body.modoEscuro .botaoFecharTarefas:hover {
+  background: #232940;
+}

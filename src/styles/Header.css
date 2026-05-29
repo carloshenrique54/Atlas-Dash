@@ -67,10 +67,30 @@ header input:focus{
 
 body.modoEscuro header{
     display: flex;
-    background-color: rgb(39, 26, 72);
+    background-color: #1a1f2e;
     box-shadow: none;
+    border-bottom: 1.5px solid #2a3148;
 }
 
 body.modoEscuro header h2{
-    color: white;
+    color: #e0e6ef;
+}
+
+body.modoEscuro header h3{
+    color: #8a97a8;
+}
+
+body.modoEscuro header input {
+    background-color: #232940;
+    border-color: #2a3148;
+    color: #e0e6ef;
+}
+
+body.modoEscuro header input:focus {
+    border-color: var(--Azul-Botao);
+}
+
+body.modoEscuro .notificacao {
+    background-color: #232940;
+    color: #8a97a8;
 }

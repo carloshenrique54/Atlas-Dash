@@ -111,3 +111,15 @@ textarea{
 main{
     background-color: #f9f6f6;
 }
+
+body.modoEscuro main {
+    background-color: var(--Azul-Escuro);
+}
+
+body.modoEscuro ::-webkit-scrollbar-thumb {
+    background: #4758b8;
+}
+
+body.modoEscuro ::-webkit-scrollbar-thumb:hover {
+    background: #3647ff;
+}

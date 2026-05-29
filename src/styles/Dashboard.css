@@ -32,6 +32,38 @@ body {
 .dashDestAtraso { color: #E24B4A; }
 .dashDestInfo   { color: var(--Azul-Escuro-Fundos); }
 
+/* ─── Filtros de período ───────────────────────────────────────────── */
+.dashPeriodos {
+  display: flex;
+  gap: 6px;
+  background: #ffffff;
+  border: 1.5px solid #e8edf3;
+  border-radius: 12px;
+  padding: 6px;
+  width: fit-content;
+  margin: 8px 40px 0;
+}
+
+.dashPeriodoBotao {
+  background: none;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-family: "Inter", sans-serif;
+  color: #8a97a8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dashPeriodoBotao:hover { color: var(--Azul-Escuro); background: #f5f7fa; }
+
+.dashPeriodoBotao.ativo {
+  background: var(--Azul-Escuro);
+  color: #ffffff;
+  font-weight: 600;
+}
+
 /* ─── Cards topo ───────────────────────────────────────────────────── */
 .dashCards {
   display: grid;
@@ -674,4 +706,179 @@ body {
   .dashMeio,
   .dashFuncLista,
   .dashBaixo { padding-left: 16px; padding-right: 16px; }
+}
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .mainDashboard {
+  background-color: var(--Azul-Escuro);
+}
+
+body.modoEscuro .dashSaudacao {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashPeriodos {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashPeriodoBotao {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashPeriodoBotao:hover {
+  color: #e0e6ef;
+  background: #232940;
+}
+
+body.modoEscuro .dashPeriodoBotao.ativo {
+  background: var(--Azul-Escuro-Fundos);
+  color: #ffffff;
+}
+
+body.modoEscuro .dashCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashCard--neutro  { border-color: #2a3148; }
+body.modoEscuro .dashCard--verde   { border-color: rgba(29,158,117,.35); background: rgba(29,158,117,.08); }
+body.modoEscuro .dashCard--amarelo { border-color: rgba(239,159,39,.35); background: rgba(239,159,39,.08); }
+body.modoEscuro .dashCard--vermelho{ border-color: rgba(226,75,74,.35);  background: rgba(226,75,74,.08); }
+body.modoEscuro .dashCard--azul    { border-color: rgba(54,71,255,.3);   background: rgba(54,71,255,.08); }
+
+body.modoEscuro .dashCard h3 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCard p,
+body.modoEscuro .dashCard small {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashCardBadge--neutro {
+  background: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashProgresso {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashProgressoTopo {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashProgressoPct {
+  color: #5c6bc0;
+}
+
+body.modoEscuro .dashProgressoBar,
+body.modoEscuro .dashProjetoBar,
+body.modoEscuro .dashFuncBar,
+body.modoEscuro .dashProgress {
+  background: #232940;
+}
+
+body.modoEscuro .dashGraficoCard,
+body.modoEscuro .dashProjetosCard,
+body.modoEscuro .dashBaixoCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashGraficoCard h2,
+body.modoEscuro .dashProjetosCard h2,
+body.modoEscuro .dashBaixoCard h2 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashProjetoNomePct {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashProjetoPct {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashFuncCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashFuncCard:hover {
+  border-color: var(--Azul-Botao);
+}
+
+body.modoEscuro .dashFuncNome {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashFuncCargo {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashFuncStats {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashFuncStats small {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashFuncPct {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashStatusChip {
+  background: #232940;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__navigation__label {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__navigation__arrow {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__navigation__arrow:hover {
+  background: #232940;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__tile {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__tile:hover {
+  background: #232940;
+}
+
+body.modoEscuro .dashCal.react-calendar .react-calendar__tile--active,
+body.modoEscuro .dashCal.react-calendar .react-calendar__tile--active:hover {
+  background: #3647ff !important;
+}
+
+body.modoEscuro .dashCalEvento {
+  background: #232940;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .dashCalEventoTitulo {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashCalEventoSub {
+  color: #8a97a8;
+}
+
+body.modoEscuro .dashAtividadeTexto p {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .dashAtividadeTexto small {
+  color: #8a97a8;
 }

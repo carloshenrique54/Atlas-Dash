@@ -78,21 +78,26 @@ function Agenda() {
       const { data: tarefasData } = await tq
       setTarefas(tarefasData || [])
 
+      // Funcionários (sempre carregar para saber se o criador do evento é funcionário)
+      let fq = supabase.from("funcionarios").select("nome, cpf")
+      if (escopoAgenda === "startup") fq = fq.eq("startup_id", idEmpresa)
+      else fq = fq.eq("empresa_id", idEmpresa)
+      const { data: funcData } = await fq
+      const listFunc = funcData || []
+      setFuncionarios(listFunc)
+
       // Eventos customizados (tabela eventos)
       let eq = supabase.from("eventos").select("*")
       if (escopoAgenda === "startup") eq = eq.eq("startup_id", idEmpresa)
       else eq = eq.eq("empresa_id", idEmpresa)
       const { data: eventosData } = await eq
-      setEventos(eventosData || [])
-
-      // Funcionários (para dono)
-      if (!isFuncionario) {
-        let fq = supabase.from("funcionarios").select("nome, cpf")
-        if (escopoAgenda === "startup") fq = fq.eq("startup_id", idEmpresa)
-        else fq = fq.eq("empresa_id", idEmpresa)
-        const { data: funcData } = await fq
-        setFuncionarios(funcData || [])
+      let filteredEventos = eventosData || []
+      if (isFuncionario) {
+        filteredEventos = filteredEventos.filter(e => {
+          return e.cpf_criador === CPF || !listFunc.some(f => f.cpf === e.cpf_criador)
+        })
       }
+      setEventos(filteredEventos)
 
       setCarregando(false)
     }
@@ -177,6 +182,10 @@ function Agenda() {
       .single()
 
     setSalvandoEvento(false)
+
+    if (novoEvento) {
+      setEventos(prev => [...prev, novoEvento])
+    }
 
     setMensagemCertoToast("Evento Cadastrado"); 
     setAbrirToastCerto(true);
@@ -351,7 +360,7 @@ function Agenda() {
                       <span className="agendaEventoTipo" style={{ color: tipoInfo.cor }}>
                         <FontAwesomeIcon icon={tipoInfo.icon} /> {tipoInfo.label.toUpperCase()}
                       </span>
-                      {!isFuncionario && (
+                      {(!isFuncionario || evento.cpf_criador === CPF) && (
                         <button className="agendaDeletarEvento" onClick={() => deletarEvento(evento.id)} title="Remover evento">
                           <FontAwesomeIcon icon={faCircleXmark} />
                         </button>

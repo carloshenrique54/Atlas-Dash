@@ -663,3 +663,109 @@
   max-height: 89vh;
   overflow-y: scroll;
 }
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .projetosPage {
+  background: var(--Azul-Escuro);
+}
+
+body.modoEscuro .projetosBusca,
+body.modoEscuro .projetosFiltroSelect {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .projetosBusca input,
+body.modoEscuro .projetosFiltroSelect select {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetoCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .projetoNome {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetoDesc {
+  color: #8a97a8;
+}
+
+body.modoEscuro .projetoTagChip--card,
+body.modoEscuro .projetoTagChip {
+  background: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetoProgressoBar {
+  background: #232940;
+}
+
+body.modoEscuro .projetoProgressoTopo strong {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetosForm {
+  background: #1a1f2e;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+body.modoEscuro .projetosFormHeader {
+  background: #1a1f2e;
+  border-bottom-color: #2a3148;
+}
+
+body.modoEscuro .projetosFormHeader h2 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetosFormCorpo label {
+  color: #8a97a8;
+}
+
+body.modoEscuro .projetosForm input[type="text"],
+body.modoEscuro .projetosForm input[type="date"],
+body.modoEscuro .projetosForm textarea {
+  background-color: #232940 !important;
+  border-color: #2a3148 !important;
+  color: #e0e6ef !important;
+}
+
+body.modoEscuro .projetosParticipantesList {
+  background: #232940;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .projetosParticipanteItem:hover {
+  background: #1a1f2e;
+}
+
+body.modoEscuro .projetosParticipanteItem.selecionado {
+  background: rgba(54,71,255,.15);
+}
+
+body.modoEscuro .projetosParticipanteNome {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .projetosBotaoCancelar {
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+
+body.modoEscuro .projetosBotaoCancelar:hover {
+  background: #232940;
+}
+
+body.modoEscuro .projetoDetalheHeaderContainer,
+body.modoEscuro .detalheProgressoWrap {
+  background-color: #1a1f2e;
+  box-shadow: none;
+  border: 1.5px solid #2a3148;
+}
+
+body.modoEscuro .detalheProgressoWrap span strong {
+  color: #e0e6ef;
+}

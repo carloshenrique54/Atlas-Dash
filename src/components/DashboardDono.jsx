@@ -24,6 +24,7 @@ function DashboardDono({ usuarioObj }) {
   const [funcionarios, setFuncionarios] = useState([])
   const [projetos, setProjetos]     = useState([])
   const [carregando, setCarregando] = useState(true)
+  const [periodoFiltro, setPeriodoFiltro] = useState("tudo")
 
   const hoje = new Date()
   hoje.setHours(0, 0, 0, 0)
@@ -81,6 +82,18 @@ function DashboardDono({ usuarioObj }) {
     return prazo < hoje
   }
 
+  function filtrarPorPeriodo(lista) {
+    const agora = new Date()
+    return lista.filter(t => {
+      if (!t.dia_criado) return true
+      const criado = new Date(t.dia_criado)
+      if (periodoFiltro === "hoje")   return criado.toDateString() === agora.toDateString()
+      if (periodoFiltro === "semana") { const ini = new Date(agora); ini.setDate(agora.getDate() - 7); return criado >= ini }
+      if (periodoFiltro === "mes")    { const ini = new Date(agora); ini.setMonth(agora.getMonth() - 1); return criado >= ini }
+      return true
+    })
+  }
+
   function progressoProjeto(projeto) {
     const tp = tarefas.filter(t => t.id_projeto === projeto.id_projeto)
     if (tp.length === 0) return 0
@@ -89,17 +102,18 @@ function DashboardDono({ usuarioObj }) {
   }
 
   // ── stats topo ───────────────────────────────────────────────────────
-  const totalTarefas = tarefas.length
-  const concluidas   = tarefas.filter(t => t.concluido).length
-  const pendentes    = tarefas.filter(t => !t.concluido).length
-  const atrasadas    = tarefas.filter(isAtrasada).length
+  const tarefasFiltradas = filtrarPorPeriodo(tarefas)
+  const totalTarefas = tarefasFiltradas.length
+  const concluidas   = tarefasFiltradas.filter(t => t.concluido).length
+  const pendentes    = tarefasFiltradas.filter(t => !t.concluido).length
+  const atrasadas    = tarefasFiltradas.filter(isAtrasada).length
   const emAndamento  = totalTarefas - concluidas - atrasadas - (pendentes - atrasadas)
   const membros      = funcionarios.length
   const progGeral    = totalTarefas > 0 ? Math.round((concluidas / totalTarefas) * 100) : 0
 
   // ── gráfico: atribuídas x atrasadas por colaborador ─────────────────
   const chartData = funcionarios.map(f => {
-    const tf = tarefas.filter(t => t.cpf_responsavel === f.cpf)
+    const tf = tarefasFiltradas.filter(t => t.cpf_responsavel === f.cpf)
     return {
       nome:       f.nome.split(" ")[0],
       Atribuídas: tf.length,
@@ -110,7 +124,7 @@ function DashboardDono({ usuarioObj }) {
 
   // ── lista de colaboradores ───────────────────────────────────────────
   const listaFuncionarios = funcionarios.map(f => {
-    const tf       = tarefas.filter(t => t.cpf_responsavel === f.cpf)
+    const tf       = tarefasFiltradas.filter(t => t.cpf_responsavel === f.cpf)
     const total    = tf.length
     const feitas   = tf.filter(t => t.concluido).length
     const atraso   = tf.filter(isAtrasada).length

@@ -559,57 +559,136 @@ body.modoEscuro .relPage h1, h3, h2{
   .relCards { grid-template-columns: repeat(2, 1fr); }
 }
 
-body.modoEscuro .relCard{
-  background-color: rgb(39, 26, 72);
-  color: white;
+body.modoEscuro .relPage {
+  background-color: var(--Azul-Escuro);
 }
 
-body.modoEscuro .relPage .relCard strong{
-  color: rgb(206, 206, 206);
+body.modoEscuro .relTitulo {
+  color: #e0e6ef;
 }
 
-body.modoEscuro .relPage .relProgressoWrap{
-  background-color: rgb(39, 26, 72);
-  color: white;
-}
-
-body.modoEscuro .relPage .relProgressoWrap strong{
-  background-color: rgb(39, 26, 72);
-  color: white;
-}
-
-body.modoEscuro .relPage .relPeriodos{
-  background-color: rgb(39, 26, 72);
-}
-
-body.modoEscuro .relGraficoCard{
-  background-color: rgb(39, 26, 72);
-}
-
-body.modoEscuro .relGraficoCard h3{
-  color: white;
-}
-
-.relLoading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 60vh;
-  font-family: "Inter", sans-serif;
-  font-size: 15px;
+body.modoEscuro .relSubtitulo {
   color: #8a97a8;
 }
 
-.relCardIcone--neutro svg { font-size: 14px; color: #818181; }
-.relCardIcone--verde svg { font-size: 14px; color: #1D9E75; }
-.relCardIcone--amarelo svg { font-size: 14px; color: #e5e238; }
-.relCardIcone--vermelho svg {  font-size: 14px;color: #9e1d1d; }
-.relCardIcone--azul svg { font-size: 14px; color: #2a1d9e; }
-
-body.modoEscuro .relCard, body.modoEscuro .relProgressoWrap, body.modoEscuro .relGraficoCard, body.modoEscuro .relProgressoWrap, body.modoEscuro .relComparacaoCard{
-  background-color: rgb(26, 31, 46);
+body.modoEscuro .relCard {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
 }
 
-body.modoEscuro .relCard--neutro, body.modoEscuro .relProgressoWrap, body.modoEscuro .relGraficoCard, body.modoEscuro .relComparacaoCard{
-  border-color: rgb(42, 49, 72);
+body.modoEscuro .relCard h3 {
+  color: #8a97a8;
+}
+
+body.modoEscuro .relCard p {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relCard--neutro  { border-color: #2a3148; }
+body.modoEscuro .relCard--verde   { border-color: rgba(29,158,117,.35); background: rgba(29,158,117,.08); }
+body.modoEscuro .relCard--amarelo { border-color: rgba(239,159,39,.35); background: rgba(239,159,39,.08); }
+body.modoEscuro .relCard--vermelho{ border-color: rgba(226,75,74,.35);  background: rgba(226,75,74,.08); }
+body.modoEscuro .relCard--azul    { border-color: rgba(54,71,255,.3);   background: rgba(54,71,255,.08); }
+
+body.modoEscuro .relProgressoWrap {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relProgressoTitulo {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relProgressoBar,
+body.modoEscuro .relProjetoBar {
+  background: #232940;
+}
+
+body.modoEscuro .relPeriodos {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .relPeriodoBotao {
+  color: #8a97a8;
+}
+
+body.modoEscuro .relPeriodoBotao:hover {
+  color: #e0e6ef;
+  background: #232940;
+}
+
+body.modoEscuro .relPeriodoBotao.ativo {
+  background: var(--Azul-Escuro-Fundos);
+  color: #ffffff;
+}
+
+body.modoEscuro .relGraficoCard,
+body.modoEscuro .relComparacaoCard,
+body.modoEscuro .relPrioridadesCard,
+body.modoEscuro .relHistoricoCard,
+body.modoEscuro .relProjetosCard {
+  background-color: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .relGraficoCard h2,
+body.modoEscuro .relComparacaoCard h2,
+body.modoEscuro .relPrioridadesCard h3,
+body.modoEscuro .relHistoricoCard h3,
+body.modoEscuro .relProjetosCard h2 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relPrioItem,
+body.modoEscuro .relHistItem {
+  background: #232940;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .relPrioItem:hover,
+body.modoEscuro .relHistItem:hover {
+  border-color: #4758b8;
+}
+
+body.modoEscuro .relPrioTexto h4,
+body.modoEscuro .relHistTexto p {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relPrioTexto p,
+body.modoEscuro .relHistTexto small {
+  color: #8a97a8;
+}
+
+body.modoEscuro .relProjetoNome {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .relProjetoMetas {
+  color: #8a97a8;
+}
+
+/* Recharts styling in dark mode */
+body.modoEscuro .recharts-text {
+  fill: #8a97a8 !important;
+}
+
+body.modoEscuro .recharts-cartesian-grid-horizontal line,
+body.modoEscuro .recharts-cartesian-grid-vertical line {
+  stroke: #2a3148 !important;
+}
+
+body.modoEscuro .recharts-legend-item-text {
+  color: #e0e6ef !important;
+}
+
+body.modoEscuro .recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: #1a1f2e !important;
+  border-color: #2a3148 !important;
+}
+
+body.modoEscuro .recharts-tooltip-item {
+  color: #e0e6ef !important;
 }

@@ -834,4 +834,133 @@
   border-radius: 999px;
   accent-color: var(--proj-cor, #111650);
 }
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .equipePage,
+body.modoEscuro .detalhePage {
+  background: var(--Azul-Escuro);
+}
+
+body.modoEscuro .equipeBusca {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .equipeBusca input {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .equipeCard,
+body.modoEscuro .detalheFuncCard,
+body.modoEscuro .detalheTarefaItem,
+body.modoEscuro .detalheArquivoItem,
+body.modoEscuro .detalheRelCard {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .equipeCardNomeLinha h3,
+body.modoEscuro .detalheNomeLinha h2,
+body.modoEscuro .detalheTarefaEsq h3,
+body.modoEscuro .detalheArquivoNome,
+body.modoEscuro .detalheRelCard h3,
+body.modoEscuro .detalheSubLabel {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .equipeTag {
+  background: #232940;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .equipeCardDivider,
+body.modoEscuro .detalheCardDivider {
+  background: #2a3148;
+}
+
+body.modoEscuro .detalhVoltar {
+  background: #1a1f2e;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalhVoltar:hover {
+  background: #232940;
+}
+
+body.modoEscuro .detalheStatCard--neutro  { background: rgba(54,71,255,.15); }
+body.modoEscuro .detalheStatCard--verde   { background: rgba(29,158,117,.15); }
+body.modoEscuro .detalheStatCard--amarelo { background: rgba(239,159,39,.15); }
+body.modoEscuro .detalheStatCard--vermelho{ background: rgba(226,75,74,.15); }
+
+body.modoEscuro .detalheStatCard strong {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalheProgressoTopo strong {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalheProgressoBar {
+  background: #232940;
+}
+
+body.modoEscuro .detalheAbas {
+  border-bottom-color: #2a3148;
+}
+
+body.modoEscuro .detalheAba:hover {
+  color: #e0e6ef;
+  background: #232940;
+}
+
+body.modoEscuro .detalheAba.ativo {
+  background: var(--Azul-Escuro-Fundos);
+  color: #ffffff;
+}
+
+body.modoEscuro .detalheTarefaExpand {
+  border-top-color: #2a3148;
+}
+
+body.modoEscuro .detalheSubLista li {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalheUploadBotao {
+  background: #1a1f2e;
+  border-color: #2a3148;
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalheUploadBotao:hover {
+  background: #232940;
+}
+
+body.modoEscuro .detalheArquivoIconeWrap {
+  background: #232940;
+  color: #8a97a8;
+}
+
+body.modoEscuro .detalheArqBotao {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .detalheRelStatItem {
+  background: #232940;
+}
+
+body.modoEscuro .detalheRelStatItem strong {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .detalhePerfilItem {
+  background: #232940;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .detalhePerfilValor {
+  color: #e0e6ef;
+}
  

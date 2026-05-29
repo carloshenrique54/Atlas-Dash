@@ -759,3 +759,79 @@
 }
  
 .agendaFormCancelar:hover { background: #f5f7fa; }
+
+/* ─── Modo Escuro ──────────────────────────────────────────────────── */
+body.modoEscuro .mainAgenda {
+  background: var(--Azul-Escuro);
+}
+
+body.modoEscuro .agendaDireita {
+  background: #1a1f2e;
+  border-color: #2a3148;
+}
+
+body.modoEscuro .AgendaCal.react-calendar {
+  border-color: #2a3148;
+  background: #1a1f2e;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__navigation {
+  background: #1a1f2e;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__navigation__label {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__navigation__arrow {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__navigation__arrow:hover {
+  background: #232940;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__tile {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__tile:hover {
+  background: #232940;
+}
+
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__tile--active,
+body.modoEscuro .AgendaCal.react-calendar .react-calendar__tile--active:hover {
+  background: #3647ff !important;
+}
+
+body.modoEscuro .agendaForm {
+  background: #1a1f2e;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+body.modoEscuro .agendaFormHeader {
+  border-bottom-color: #2a3148;
+}
+
+body.modoEscuro .agendaFormHeader h2 {
+  color: #e0e6ef;
+}
+
+body.modoEscuro .agendaFormInput {
+  border-color: #2a3148;
+  color: #e0e6ef;
+  background: #232940;
+}
+
+body.modoEscuro .agendaFormInput:focus {
+  border-color: var(--Azul-Botao);
+}
+
+body.modoEscuro .agendaFormCancelar {
+  border-color: #2a3148;
+  color: #8a97a8;
+}
+
+body.modoEscuro .agendaFormCancelar:hover {
+  background: #232940;
+}
